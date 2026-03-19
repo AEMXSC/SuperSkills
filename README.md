@@ -1,13 +1,13 @@
 # AEM XSC Super Soldier Skill Pack
 
-> Encode 10 years of XSC field experience into your AI assistant.
+> Encode master level XSC field and product experience into your AI assistant.
 > Works in Claude, GitHub Copilot, Gemini, Cursor, Windsurf, or any AI assistant.
 
 ---
 
 ## What Is This?
 
-Think of it as the most experienced AEM XSC on your team — available at 11pm the night before a CMO call, instantly current on every product, every competitive situation, and every environment constraint in the portfolio.
+Think of it as a team of the most experienced AEM XSC's — available at 11pm the night before a CMO call, instantly current on every product, every competitive situation, and every environment constraint in the portfolio.
 
 XSCs do two things: they **advise** (position, script, strategize) and they **build** (custom demos, POCs, block code, imported pages). This skill does both. That is the job.
 
