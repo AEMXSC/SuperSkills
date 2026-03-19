@@ -451,6 +451,121 @@ curl -s https://www.aem.live/docpages-index.json | \
 
 ---
 
+## Content Fragment → EDS Build Pattern
+
+> **Source docs:** [json2html](https://www.aem.live/developer/json2html) · [CF Overlay](https://www.aem.live/developer/content-fragment-overlay)
+
+Publish AEM Content Fragments as **full semantic HTML pages** on EDS — no GraphQL endpoints, no custom blocks, no dev handoff. CFs become real web pages (press releases, blog posts, product announcements) with PageSpeed 100 and full LLM/SEO indexing.
+
+### What This Replaces
+
+The old approach required: CF model + GraphQL query + custom block + frontend rendering. This approach replaces all of that with a path mapping + Mustache template + the `json2html` Cloudflare Worker.
+
+### Architecture
+
+```
+AEM CF (Cloud Service)
+  └── Path mapping: /content/dam/.../press/ → /press/
+  └── Allow-listed CF model
+  └── Overlay → json2html Worker
+        └── Endpoint: AEM JSON API (with {{id}} placeholder)
+        └── Template: Mustache .html file in your repo
+        └── Output: Full semantic HTML → EDS CDN
+```
+
+### Prerequisites
+
+- AEM as a Cloud Service with CF feature enabled for the site
+- Config Service enabled in Edge Delivery Services
+- Site based on `adobe-rnd/aem-boilerplate-xwalk` (or similar)
+- AEM Admin API token for config POST
+
+### Step-by-Step Build
+
+**Step 1 — Configure path mapping + overlay via Config Service**
+
+POST to `/config/` with your Admin API token:
+```json
+{
+  "path": "/press/",
+  "overlay": {
+    "url": "https://json2html.adobeaem.workers.dev/<ORG>/<SITE>/<BRANCH>",
+    "type": "markup"
+  }
+}
+```
+
+Also configure the allow-listed CF model and path mapping (`/content/dam/.../press/` → `/press/`).
+
+**Step 2 — Configure the json2html service**
+
+```json
+{
+  "path": "/press/",
+  "endpoint": "https://<aem-env>.adobeaemcloud.com/api/assets/press/{{id}}.json",
+  "regex": "/press/([^/]+)",
+  "template": "/templates/press-release.html",
+  "relativeURLPrefix": "https://<aem-env>.adobeaemcloud.com",
+  "headers": { "Authorization": "Bearer <token>" },
+  "forwardHeaders": ["cookie"]
+}
+```
+
+**Step 3 — Write the Mustache template**
+
+Create `/templates/press-release.html` in your repo. EDS-compatible Mustache:
+```html
+<header>
+  <h1>{{title}}</h1>
+  <p class="date">{{publishDate}}</p>
+</header>
+<main>
+  <div class="hero-image">
+    <img src="{{heroImage.url}}" alt="{{heroImage.altText}}">
+  </div>
+  <div class="body-content">
+    {{{bodyContent}}}
+  </div>
+  <aside class="contact">
+    <p>{{contactName}} — {{contactEmail}}</p>
+  </aside>
+</main>
+```
+
+**Mustache syntax quick ref:**
+- `{{field}}` — escaped output
+- `{{{field}}}` — raw HTML (use for rich text body)
+- `{{#array}}...{{/array}}` — iterate
+- `{{#condition}}...{{/condition}}` — conditional
+
+**Step 4 — Preview and validate**
+
+```bash
+# Preview the dynamic path before publishing
+curl https://main--<repo>--<org>.aem.page/press/<fragment-name>
+
+# Should return fully rendered HTML (not JSON, not placeholder)
+```
+
+### What the XSC Can Build with Current Skills
+
+| Step | Covered by |
+|---|---|
+| Design the CF model (fields, types) | `/content-modeling` |
+| Write the Mustache template | `/building-blocks` (block HTML structure guidance) |
+| Push the template to DA repo | `da_update_source` or `hlx-admin-mcp da_write` |
+| Validate the rendered page | `/testing-blocks` + `/pagespeed-audit` |
+
+**What requires human/Admin access:** Config Service POST, CF feature flag enablement, AEM CS environment setup. These are environment prerequisites — not block work.
+
+### Demo Angle
+
+**For omni-channel/headless deals:** "You manage this press release once in AEM. It publishes as a full web page to EDS — PageSpeed 100, fully indexed by Google and every LLM. No GraphQL. No frontend team. No cache invalidation headaches."
+
+**Time savings:** Old approach (CF model → GraphQL endpoint → custom block → deploy) = 2–3 dev days. This approach = config + one Mustache template = 2–4 hours.
+
+---
+
 ## CLI Tools
 
 ```bash
