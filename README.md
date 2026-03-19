@@ -7,18 +7,22 @@
 
 ## What Is This?
 
-A portable, LLM-agnostic skill package that turns any AI assistant into a senior AEM XSC. One skill file loaded and your AI can:
+Think of it as the most experienced AEM XSC on your team — available at 11pm the night before a CMO call, instantly current on every product, every competitive situation, and every environment constraint in the portfolio.
 
-- Design a full 4-stage demo plan tailored to deal stage, audience, and available environment
-- Script exact AI agent prompts with constraints, fallbacks, and business value hooks
-- Navigate 30+ pre-built enterprise demo repos by vertical and pick the right one instantly
-- Run competitive positioning live — Sitecore, Contentful, Optimizely, WordPress VIP, Vercel
-- Counter "Optimizely is #1 in Gartner" or "Midjourney is good enough" with data
-- Select and set up the right environment (Showcase vs Trial vs Playground vs Customer Org)
-- Build a custom demo site from scratch using the right boilerplate and EDS dev skills
-- Push content programmatically via MCP tools without ever opening da.live
-- Bridge DA vs Universal Editor authoring for any audience, any use case
-- Quote the $1.9B Semrush acquisition, the Firefly indemnification play, and the Volvo 60→100 stat cold
+**This is an expert advisor, not an executor.** It does not run the demo for you. What it does is what a 10-year senior XSC does when you walk into their office and say "I have a CSC deal with a retail CMO on Tuesday, they're on Wrike and Canva, what's my play?" — except it does it in 10 seconds, at any hour, for any XSC on the team regardless of their tenure.
+
+One skill file loaded and your AI:
+
+- Reads the deal signals you give it (audience, stage, stack, vertical) and tailors the approach
+- Tells you the current play — not the 3-year-old product brief, the 2026 GenStudio-first narrative
+- Flags the competitive displacement angle before you walk in blind
+- Gives you the exact discovery questions that surface the pain your demo answers
+- Scripts the 3-beat executive narrative, not a feature tour
+- Tells you which environment you need and what will break if it is not pre-configured
+- Hands you the objection responses before the objections come
+- Routes you to the right repo, the right boilerplate, the right dev skill when you need to build
+
+When MCP tools are connected (`hlx-admin-mcp`, Adobe DA MCP), it goes further — actually pushing content, triggering preview and publish, updating demo pages without touching a browser. But the core value is the advisor layer every XSC gets regardless of MCP setup.
 
 ---
 
@@ -227,18 +231,53 @@ confirms identity with `da_whoami`, then executes. Demo is updated before your n
 
 ---
 
-### 9. CSC Deal — CMO Wants the Full Content Supply Chain
+### 9. CSC Deal — The Expert Advisor in Action
+
+This scenario shows exactly what the skill is built for. Not execution — expert preparation.
 
 ```
-This is a Content Supply Chain deal. The CMO wants to see how AEM, Workfront,
-and Firefly work together from campaign brief to published content to measurement.
-45-minute executive demo. Script it.
+I have a CSC discovery call with a retail CMO on Tuesday.
+They mentioned they use Wrike for project management and Canva for creative.
+What is my play and what do I actually demo?
 ```
 
-Builds the full arc: campaign brief in Workfront → content generation in Firefly/Express →
-review and approval → publish via AEM → measurement in Analytics.
-AEM is the anchor, Workfront is the orchestrator, Firefly is the content engine.
-Closes with the ROI story: content cycle from 3 weeks to 3 days, with audit trail.
+A junior XSC pulls the product brief and builds a feature tour.
+This skill does what a senior XSC does — reads the deal and reframes everything:
+
+**Reads the signals.** Wrike + Canva = mid-market creative team trying to scale.
+CMO title = lead with velocity and brand risk, not infrastructure or product names.
+
+**Resets the narrative.** GenStudio for Performance Marketing is the 2026 play for this
+audience — not "AEM as anchor, Workfront as orchestrator." For a CMO, the story is one
+place to brief, generate, review, activate, and measure. They do not need to know which
+product is which layer.
+
+**Gives the competitive displacement angle.** Do not open with "Workfront replaces Wrike."
+Open with: *"How many campaigns did you delay last quarter because creative was the
+bottleneck?"* That question reframes the conversation before you show a single screen.
+
+**Flags the environment trap before you hit it.** This demo requires the Firefly-enabled
+Showcase sandbox with GenStudio pre-configured — XSC Showcase only, not available in
+trial orgs. Confirm with your SE that it is live before Tuesday. If it is not ready,
+run the recorded walkthrough and position the hands-on as their trial milestone.
+
+**Outputs the 3-beat CMO demo arc** — not a feature tour, three business moments:
+- Beat 1: Brief enters → Firefly generates on-brand variants in 2 minutes → CMO approves in one click
+- Beat 2: Asset live in AEM → same asset reformatted for web, email, social via DMwOA automatically
+- Beat 3: Analytics shows which variant drove conversion → feeds the next brief
+
+**Hands you the discovery questions** that surface the pain the demo answers:
+- "What happens between a campaign brief being approved and the first asset going live — how many handoffs?"
+- "How do you enforce brand guidelines when creative is distributed across agencies?"
+- "What percentage of your Canva output gets flagged for brand review before it ships?"
+
+**Gives you the Canva objection response** before they raise it:
+*"Canva is great for individuals. What it does not solve is brand governance at scale —
+who approves before it goes live, where is the audit trail, and how does it connect to
+your analytics?"*
+
+That is the difference between a product brief and an expert advisor. The skill does
+not script the demo. It prepares you for the room.
 
 ---
 
