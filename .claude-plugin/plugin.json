@@ -1,0 +1,11 @@
+{
+  "name": "aem-xsc-super-soldier",
+  "description": "AEM XSC Super Soldier Skill Pack — demo-to-win presales skills for AEM Experience Solution Consultants. Covers all sales plays (ASO, AI Agents, LLMO, CSC, EDS, DMwOA, ExMod), environment constraints, competitive intel, 30+ vertical demo repos, MCP tools, and the full 4-stage demo lifecycle.",
+  "version": "1.0.0",
+  "author": {
+    "name": "AEMXSC"
+  },
+  "repository": "https://github.com/AEMXSC/SuperSkills",
+  "license": "Apache-2.0",
+  "keywords": ["aem", "xsc", "presales", "demo", "edge-delivery-services", "adobe", "aso", "llmo", "ai-agents", "csc", "competitive"]
+}

@@ -191,3 +191,28 @@ Walk me through the pre-demo checklist and the right environment setup.
 ## Questions / Feedback
 
 Open an issue in this repo or ping the XSC team directly. If a demo play worked especially well or a competitive response landed, add it here so the whole team benefits.
+
+---
+
+## LLM Plugin Support
+
+This repo includes native plugin/integration files for every major AI assistant — no manual setup required.
+
+| AI Assistant | Plugin File | How It Works |
+|---|---|---|
+| **Claude Code** | `.claude-plugin/plugin.json` | Auto-discovered by Claude Code. Install with `npx skills add https://github.com/AEMXSC/SuperSkills` |
+| **GitHub Copilot** | `.github/copilot-instructions.md` | Auto-loaded in any repo that clones SuperSkills. Activates XSC persona in Copilot Chat. |
+| **Cursor** | `.cursor/rules` | Auto-applied as Cursor rules when you open this folder. |
+| **Windsurf** | `.windsurfrules` | Auto-applied as Windsurf rules when you open this folder. |
+| **Gemini / ChatGPT** | `SKILL.md` | Paste content as system prompt. No plugin format yet — SKILL.md is the install. |
+
+### Install via Claude Code skills CLI
+```bash
+npx skills add https://github.com/AEMXSC/SuperSkills
+```
+
+### Clone and open (Cursor / Windsurf / Copilot)
+```bash
+git clone https://github.com/AEMXSC/SuperSkills
+# Open the folder — rules activate automatically
+```
