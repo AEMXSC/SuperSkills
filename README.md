@@ -142,6 +142,7 @@ Runs the full import pipeline — not a walkthrough, actual execution:
 5. **`/authoring-analysis`** — recommends DA vs UE per section based on content type
 6. **`/generate-import-html`** — produces EDS-ready HTML for each imported page
 7. **`/preview-import`** — validates first preview is live before the demo call
+8. **Block spec PRD auto-generated** from the block inventory — each identified pattern (hero-banner, specialty-cards, stats-grid, tabs, etc.) becomes a structured spec with fields, DA table input format, and UE model requirements. `/building-blocks` generates the working JS + CSS + UE model JSON for each block directly — same output as aemcoder.adobe.io but via API, no browser required
 
 The customer watches their own pages appear as a live EDS site during the demo. That is not a slide.
 
