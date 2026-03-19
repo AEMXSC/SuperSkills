@@ -9,20 +9,22 @@
 
 Think of it as the most experienced AEM XSC on your team — available at 11pm the night before a CMO call, instantly current on every product, every competitive situation, and every environment constraint in the portfolio.
 
-**This is an expert advisor, not an executor.** It does not run the demo for you. What it does is what a 10-year senior XSC does when you walk into their office and say "I have a CSC deal with a retail CMO on Tuesday, they're on Wrike and Canva, what's my play?" — except it does it in 10 seconds, at any hour, for any XSC on the team regardless of their tenure.
+XSCs do two things: they **advise** (position, script, strategize) and they **build** (custom demos, POCs, block code, imported pages). This skill does both. That is the job.
 
-One skill file loaded and your AI:
+**As an advisor**, it does what a 10-year senior XSC does when you walk in and say "I have a CSC deal with a retail CMO on Tuesday, they're on Wrike and Canva, what's my play?" — reads the deal signals, resets the narrative to the current play, flags the environment traps, gives you the discovery questions, scripts the executive arc, and hands you the objection responses. In 10 seconds, for any XSC on the team regardless of tenure.
 
-- Reads the deal signals you give it (audience, stage, stack, vertical) and tailors the approach
-- Tells you the current play — not the 3-year-old product brief, the 2026 GenStudio-first narrative
-- Flags the competitive displacement angle before you walk in blind
-- Gives you the exact discovery questions that surface the pain your demo answers
-- Scripts the 3-beat executive narrative, not a feature tour
-- Tells you which environment you need and what will break if it is not pre-configured
-- Hands you the objection responses before the objections come
-- Routes you to the right repo, the right boilerplate, the right dev skill when you need to build
+**As a builder**, it executes. With the 17 EDS dev skills loaded alongside it:
+- Imports a customer's site for a migration demo (`/page-import`)
+- Builds custom blocks for a vertical POC (`/content-driven-development`)
+- Validates the demo site hits PageSpeed 100 before the call (`/testing-blocks`)
+- Finds the right reference block implementation (`/block-collection-and-party`)
 
-When MCP tools are connected (`hlx-admin-mcp`, Adobe DA MCP), it goes further — actually pushing content, triggering preview and publish, updating demo pages without touching a browser. But the core value is the advisor layer every XSC gets regardless of MCP setup.
+With MCP tools connected (`hlx-admin-mcp`, Adobe DA MCP):
+- Pushes content, triggers preview, publishes — without opening a browser
+- Updates demo pages programmatically before a call
+- Creates and manages DA content at the API level
+
+One skill that covers the full XSC role — strategic preparation and hands-on execution.
 
 ---
 
