@@ -61,6 +61,23 @@ SuperSkills/
 
 ---
 
+## How the Skill Is Grounded
+
+Every scenario in this skill covers all six dimensions of the XSC role:
+
+| Dimension | What it means in practice |
+|---|---|
+| **Intent** | What is the customer actually trying to solve — not what product they asked about |
+| **Discovery** | The exact questions that surface pain before you show a single screen |
+| **Advisory** | The narrative, the competitive angle, the objection responses |
+| **Key Tech Concepts** | What the XSC needs to understand to demo it credibly |
+| **Development** | What gets built — repos, blocks, models, imports, content — with real execution |
+| **AI** | Where AI augments the work: generating code, analyzing sites, optimizing content, pushing via MCP |
+
+The build scenarios (1, 2, 4, 8) are not walkthroughs — they execute. The advisory scenarios (3, 5, 6, 7, 9, 10) prepare you for the room. Both are the XSC job.
+
+---
+
 ## What This Skill Actually Does
 
 Real scenarios. Copy any of these into your AI assistant after loading the skill.
@@ -68,51 +85,71 @@ Real scenarios. Copy any of these into your AI assistant after loading the skill
 ---
 
 ### 1. Build a Custom Healthcare POC Before Tomorrow
+**This is a BUILD scenario — the skill executes, not just advises.**
 
 ```
-I have a discovery call tomorrow with a health system — CMO + digital VP.
-I want to show a custom demo with their industry look and feel, DA authoring,
-and the AI content optimization agent workflow. What do I build and how?
+I have a discovery call with Memorial Health System tomorrow — CMO + digital VP.
+They want to see a healthcare-branded demo site with DA authoring for the content team
+and Universal Editor for the IT team, plus the AI content optimization agent workflow.
+Build it. Base on ise-boilerplate. Deploy to a new GitHub repo.
 ```
 
-The skill scans every org we have — AEMXSC, AdobeDevXSC, aemdemos — for existing
-healthcare assets before suggesting you build anything from scratch:
+**What the skill actually does:**
 
-- **AdobeDevXSC**: `blue-shield-ca`, `hillrom-baxter`, `baxter`, `stryker`, `stryker-da`
-- **AEMXSC**: `poc-cr-nationwide` (insurance/health adjacent, has CLAUDE.md + AGENTS.md pre-wired),
-  `poc-cr-nationwide-mutual`
-- **aemdemos**: summit series demos with health-adjacent content blocks
+First scans every org for existing healthcare assets before building anything new:
+- `AdobeDevXSC`: `blue-shield-ca`, `hillrom-baxter`, `baxter`, `stryker`, `stryker-da`
+- `AEMXSC`: `poc-cr-nationwide` (CLAUDE.md + AGENTS.md pre-wired), `poc-cr-nationwide-mutual`
+- `aemdemos`: summit series with health-adjacent blocks
 
-If a match exists, you clone it and customize. If not, it picks `ise-boilerplate`
-for DA + UE dual authoring, routes to `content-driven-development` and `building-blocks`
-skills, and maps the exact build sequence to get to first preview before the call.
+If a match exists — clones it and adapts branding. If not — scaffolds from `ise-boilerplate` and executes the full build sequence:
 
-Flags the one constraint that will bite you in demo: COA (Content Optimization Agent)
-requires DMwOA enabled in your environment — verify before you promise it live.
+1. `fstab.yaml` configured for DA content mount
+2. Custom blocks built for the healthcare demo narrative (`/content-driven-development`)
+3. DA authoring configured — content structure, table format, Sidekick setup
+4. Universal Editor wired — `component-definition.json`, `component-filters.json`, `component-models.json`, per-block UE model files for every block
+5. Demo content pages created in DA table structure
+6. GitHub repo created, `aem-code-sync` app installed, code live on CDN
+7. PageSpeed validated at 100 before you walk into the call (`/testing-blocks`)
+
+Flags the one constraint that bites every XSC: COA requires DMwOA enabled — verify your Showcase environment has it before you promise it live.
+
+**Time comparison:**
+- Last year without AI: 2–3 developer days minimum. XSC either waited for SE support or showed a generic demo
+- With SuperSkills: 4–6 hours to first live preview. Run it overnight, walk in with a branded healthcare site the customer has never seen before
 
 ---
 
 ### 2. ExMod Migration — Sitecore Customer, 4,000 Pages
+**This is a BUILD scenario — produces real migration artifacts, not slides.**
 
 ```
-The customer is on Sitecore 9 with roughly 4,000 pages.
-They want to see what AEM migration actually looks like end to end — not a slide.
-Script the Experience Modernization demo from site analysis to first deployed page.
+The customer is on Sitecore 9, roughly 4,000 pages, healthcare vertical.
+I have a 2-hour technical demo in 3 days. I need:
+1. Site scope analysis of their public site showing AI-analyzed complexity
+2. Migration report — page templates identified, block patterns, effort estimate
+3. First 5 pages imported and running as EDS as proof they can see live
+Script the demo AND execute phases 1 and 2.
 ```
 
-Pulls the full ExMod playbook: opens with the Site Scope Analyzer at
-`main--site-scope--aemsites.aem.live` — paste their URL, AI analyzes block patterns
-and complexity in real time. Then walks the three-phase story:
+**What the skill actually builds:**
 
-1. **Analyze** — AI maps page templates, identifies reusable block patterns, estimates effort
-2. **Generate** — `aemcoder.adobe.io` writes EDS block code from the analysis; no manual dev
-3. **Validate + Publish** — developer reviews, not authors; Lighthouse 100 on first deploy
+Runs the full import pipeline — not a walkthrough, actual execution:
 
-The line that always lands: *"Your developers review AI-generated code — they do not write it.
-That is the difference between 18 months and 6 weeks."*
+1. **Site Scope Analyzer** (`main--site-scope--aemsites.aem.live`) — paste the customer URL, AI maps every page template, identifies repeating block patterns, scores migration complexity. Output is a real artifact you show in the demo
+2. **`/page-import` orchestrator** — scrapes the 5 representative pages the customer chose
+3. **`/identify-page-structure`** — analyzes each page's section boundaries and content types
+4. **`/page-decomposition`** — breaks sections into named block candidates
+5. **`/authoring-analysis`** — recommends DA vs UE per section based on content type
+6. **`/generate-import-html`** — produces EDS-ready HTML for each imported page
+7. **`/preview-import`** — validates first preview is live before the demo call
 
-Includes the talk track for turning a Sitecore migration anxiety conversation into
-an AEM modernization excitement conversation.
+The customer watches their own pages appear as a live EDS site during the demo. That is not a slide.
+
+The line that always lands: *"Your developers review AI-generated code — they do not write it. That is the difference between 18 months and 6 weeks."*
+
+**Time comparison:**
+- Last year without AI: Migration scoping alone = 2–4 weeks. A page-by-page import proof point required a full developer sprint. Most XSCs showed PowerPoint
+- With SuperSkills: Site analyzed in 30 minutes. 5 pages imported, converted, and previewing in 2–3 hours. Show it live in the demo
 
 ---
 
@@ -145,31 +182,31 @@ trial vs Showcase behavior, and the honest pilot recommendation for each.
 ---
 
 ### 4. Omni-Channel Content Activation — Content Fragments + GraphQL
+**This is a BUILD scenario — sets up a working headless demo with live queries.**
 
 ```
-The customer is a healthcare system with a patient portal, a mobile app,
-a clinical staff intranet, and a public marketing site — all needing the same
-core content structured differently per channel. They asked:
-"Can AEM be our single source of truth and push to all four channels automatically?"
-Show me the architecture and demo this end to end.
+The customer is a healthcare system: patient portal, mobile app, clinical staff intranet,
+and public marketing site — all need the same core clinical content, structured differently
+per channel. Build a demo showing one Content Fragment authored in AEM delivered to
+3 channel renditions via GraphQL. Include DMwOA for adaptive asset delivery.
+Set up the CF model, sample content, and the GraphQL queries I can run live in the demo.
 ```
 
-This is the AEM headless story at its best. The skill maps the full architecture:
+**What the skill actually builds:**
 
-1. **Author once** — structured Content Fragments in AEM Sites (fields: headline, body,
-   CTA, channel-specific overrides)
-2. **Expose everywhere** — GraphQL Persisted Queries serve the same fragment to web
-   (EDS), mobile app (React Native), kiosk, and partner portal — each channel
-   queries only the fields it needs
-3. **Assets adapt automatically** — DMwOA delivers the same asset at the right format,
-   crop, and resolution per channel from one URL; no rendition management
-4. **AI optimizes per channel** — COA rewrites content for reading level and tone
-   per destination (patient-facing vs clinical staff vs marketing)
+1. **Content Fragment model** — defines the schema (headline, body, CTA, channel overrides, compliance fields). Configuration files written and committed
+2. **Sample content** — 3 representative healthcare Content Fragments created with real content (patient-facing, clinical staff, marketing tone variants)
+3. **GraphQL persisted queries** — one query per channel, each returning only the fields that channel needs. Ready to execute live in AEM's GraphQL Explorer during the demo
+4. **Channel preview pages** — simple renditions showing the same CF displayed as patient portal card, mobile app tile, and clinical staff alert — same source, three outputs, visible simultaneously
+5. **DMwOA delivery** — single asset URL configured to serve web crop, mobile crop, and thumbnail automatically with no rendition management
 
-The skill walks through a live demo using AEM's built-in GraphQL explorer,
-shows a Content Fragment being updated once and rendered differently in two
-channel previews simultaneously, and closes with the governance angle:
-one approval workflow controls what goes live everywhere.
+The demo moment: update one field in the Content Fragment, save, all three channel previews refresh. One author, zero ops tickets.
+
+Closes with the governance angle: one approval workflow controls what goes live everywhere — patient-safe content cannot ship without compliance sign-off regardless of channel.
+
+**Time comparison:**
+- Last year without AI: AEM architect + developer + 3–5 days to define CF schema, write GraphQL queries, build channel renditions, populate sample content
+- With SuperSkills: Full working demo with live queries in 1–2 hours
 
 ---
 
@@ -219,17 +256,32 @@ we already analyzed — then we will run yours live in the trial."*
 
 ---
 
-### 8. Push Demo Content via MCP Before a Call
+### 8. Personalize the Demo Site via MCP — No Browser Required
+**This is a BUILD scenario — the skill executes API calls, not instructions.**
 
 ```
-I need to update the hero headline and two product pages on my demo site
-at main--refdemo--adobe-demopoc.aem.live before a call in 90 minutes.
-Use the MCP tools to make the changes without me touching da.live.
+My demo at main--refdemo--adobe-demopoc.aem.live needs these updates before the 2pm call:
+- Hero headline: "Transform Patient Engagement with AI-Powered Content"
+- Homepage sub-headline: "Purpose-built for Memorial Health System"
+- Products page: rewrite all 3 product descriptions for healthcare context
+Do it now. Do not open a browser.
 ```
 
-Uses `hlx-admin-mcp da_write` to write content + trigger preview + publish in one call.
-No browser, no Sidekick click. Handles auth via `da_login` if the token has expired,
-confirms identity with `da_whoami`, then executes. Demo is updated before your next coffee.
+**What the skill actually executes** (with `hlx-admin-mcp` connected):
+
+1. `da_login` → checks token, re-authenticates via OAuth if expired
+2. `da_whoami` → confirms identity before writing
+3. `da_write` → updates hero headline → CDN preview triggered → published ✓
+4. `da_write` → updates sub-headline → CDN preview triggered → published ✓
+5. `da_get_source` → reads current products page to preserve structure
+6. `da_write` × 3 → rewrites each product description with healthcare context → preview → published ✓
+7. Returns confirmation: all 5 changes live, preview URLs for each
+
+The customer sees a site that looks like it was built for them. It took one prompt.
+
+**Time comparison:**
+- Last year without MCP: Open da.live, navigate to each page, edit manually, click Sidekick preview, click publish — 15–20 minutes per page, over an hour for a full personalization pass
+- With SuperSkills + MCP: One prompt, all pages updated and published in under 5 minutes. Run it while you review your notes for the call
 
 ---
 
