@@ -1,178 +1,291 @@
 # AEM XSC Super Soldier Skill Pack
 
-> Turn any XSC into a Captain America-level AEM technical presales hero.
+> Encode 10 years of XSC field experience into your AI assistant.
 > Works in Claude, GitHub Copilot, Gemini, Cursor, Windsurf, or any AI assistant.
 
 ---
 
 ## What Is This?
 
-A portable, LLM-agnostic skill package that encodes everything a senior AEM XSC knows:
-- Every demo play (ASO, AI Agents, LLMO, CSC, EDS, DMwOA, ExMod)
-- Every environment constraint (what breaks in trial vs. sandbox vs. showcase)
-- Every competitive angle (Sitecore, Contentful, Optimizely, WordPress, Drupal, Vercel)
-- Every repo in the AdobeDevXSC / AEMXSC / adobe-demopoc org
-- Every MCP tool, EDS dev skill, and authoring mode
-- A full 4-stage demo lifecycle with output templates
+A portable, LLM-agnostic skill package that turns any AI assistant into a senior AEM XSC. One skill file loaded and your AI can:
 
-Drop it into your AI assistant of choice. From that point on, when you ask "how do I demo AI agents to a healthcare CIO?" or "what do I say when they ask about Optimizely?" — your AI knows.
+- Design a full 4-stage demo plan tailored to deal stage, audience, and available environment
+- Script exact AI agent prompts with constraints, fallbacks, and business value hooks
+- Navigate 30+ pre-built enterprise demo repos by vertical and pick the right one instantly
+- Run competitive positioning live — Sitecore, Contentful, Optimizely, WordPress VIP, Vercel
+- Counter "Optimizely is #1 in Gartner" or "Midjourney is good enough" with data
+- Select and set up the right environment (Showcase vs Trial vs Playground vs Customer Org)
+- Build a custom demo site from scratch using the right boilerplate and EDS dev skills
+- Push content programmatically via MCP tools without ever opening da.live
+- Bridge DA vs Universal Editor authoring for any audience, any use case
+- Quote the $1.9B Semrush acquisition, the Firefly indemnification play, and the Volvo 60→100 stat cold
 
 ---
 
 ## File Structure
 
 ```
-aem-xsc/
-├── README.md               ← You are here. Install guide + contribution guide.
-├── SKILL.md                ← Master orchestrator. Load this file first (or only this file).
-│                             Contains: persona, routing tables, Demo Brief template,
-│                             DA vs UE guide, quick reference plays, top 5 differentiators,
-│                             instant demo URLs.
+SuperSkills/
+├── README.md               ← You are here. Install guide + use cases + contribution guide.
+├── SKILL.md                ← Master orchestrator. Load this file to activate the skill.
+│                             Contains: XSC persona, routing tables, Demo Brief template,
+│                             4-stage demo lifecycle, DA vs UE guide, MCP toolbox,
+│                             quick reference plays, top 5 differentiators, instant URLs.
 │
-├── demo-plays.md           ← Full demo scripts + exact AI prompts
-│                             Covers: ExMod, ASO, COA, EPA, Governance Agent,
-│                             Developer Agent, Content Advisor Agent, LLMO, CSC, EDS, DMwOA,
+├── demo-plays.md           ← Full demo scripts + exact AI prompts for every play
+│                             ExMod, ASO, COA, EPA, Governance Agent, Developer Agent,
+│                             Content Advisor Agent, LLMO, CSC, EDS/XWalk, DMwOA,
 │                             Cross-play objection handling
 │
-├── environment-matrix.md   ← What works where
-│                             Covers: capability × environment grid, pre-demo setup checklist,
-│                             9 failure modes + fixes, decision flowchart
+├── environment-matrix.md   ← What works where — capability x environment grid
+│                             XSC Showcase / Ref Demo Shared / Trial / Playground / Customer Org
+│                             Pre-demo setup checklist, 9 failure modes + fixes
 │
-├── tech-depth.md           ← Repos, build mode, MCP tools, EDS dev skills
-│                             Covers: which boilerplate to use, AEMXSC org repos,
-│                             AdobeDevXSC vertical demo library (30+ brands),
-│                             all 17 EDS dev skills bridged to XSC use cases,
-│                             DA + UE dual authoring setup, MCP tool reference,
-│                             CLI tools, aem.live docs, GitHub apps, AI coding tools
+├── tech-depth.md           ← Build mode: repos, boilerplates, MCP tools, dev skills
+│                             AEMXSC org repos, AdobeDevXSC 30+ vertical demos,
+│                             17 EDS dev skills bridged to XSC use cases,
+│                             DA + UE dual authoring setup, CLI tools, aem.live docs
 │
-└── competitive-intel.md    ← Win the room when competitors come up
-                              Covers: Top 5 differentiators, Gartner 2025 MQ counter-narrative,
-                              full breakdowns vs. Sitecore/Contentful/Optimizely/WP VIP/Drupal/Vercel,
-                              ASO vs BrightEdge/Conductor/Semrush ($1.9B acquisition),
-                              LLMO first-mover advantage, Firefly indemnification play,
-                              win/loss patterns, 20+ quick-fire stats with sources
+└── competitive-intel.md    ← Win the room when a competitor comes up
+                              Full breakdowns: Sitecore, Contentful, Optimizely,
+                              WordPress VIP, Drupal, Next.js/Vercel
+                              Gartner 2025 MQ counter-narrative, ASO vs BrightEdge/Conductor/Semrush,
+                              Firefly indemnification play, LLMO first-mover, 20+ stats with sources
 ```
+
+---
+
+## What This Skill Actually Does
+
+Real scenarios. Copy any of these into your AI assistant after loading the skill.
+
+---
+
+### Competitive RFP — Three-Way Bake-Off
+
+```
+We are in a 3-way bake-off: Adobe vs Sitecore vs Contentful.
+The customer is a global pharma company — marketing + IT both in the room.
+Deal stage: technical validation. They want a 60-minute deep-dive.
+I have access to my XSC Showcase. What is my full demo strategy?
+```
+
+The skill builds a complete demo brief, selects the right plays (EDS performance + AI Agents + CSC),
+routes to the exact competitive counters for both Sitecore AND Contentful, flags every environment
+constraint, and outputs a scripted 60-minute narrative arc with exact agent prompts.
+
+---
+
+### Skeptical IT Architect — The Honest AI Agent Breakdown
+
+```
+The customer IT architect said: "These AI agents sound like marketing.
+What do they actually do, what infrastructure do they require, and what breaks in a trial?"
+Give me the full honest technical answer.
+```
+
+The skill walks through every agent (COA, EPA, Governance, Developer, Content Advisor),
+maps each to its exact infrastructure requirement, flags what is broken in trial orgs vs Showcase,
+and frames the limitations as proof points — "we tell you this because we want your pilot to succeed."
+
+---
+
+### LLMO — Customer Asking About AI Search Traffic Loss
+
+```
+The customer said: "We are seeing our organic traffic drop because ChatGPT is
+answering questions that used to send people to our site. What does Adobe do about this?"
+Script me a 20-minute LLMO demo. They have never heard of GEO.
+```
+
+Opens with the AI citation problem, walks through the LLMO "Optimize at Edge" mechanism,
+uses the external-safe play.llmo.now demo URL, cites the adobe.com customer zero stats
+(traffic indexed, structured data automatically enriched, CDN-level delivery),
+and closes with the Semrush $1.9B acquisition as proof Adobe is making the biggest
+bet in the market on this being the future of SEO.
+
+---
+
+### Build a Custom Healthcare POC Before Tomorrow
+
+```
+I have a discovery call tomorrow with a health system — CMO + digital VP.
+I want to show a custom demo with their industry look and feel, DA authoring,
+and the AI content optimization agent workflow. What do I build and how?
+```
+
+Checks AdobeDevXSC for existing healthcare repos (blue-shield-ca, hillrom-baxter, stryker),
+picks ise-boilerplate for DA + UE dual authoring, routes to content-driven-development
+and building-blocks skills, maps the full build sequence, and flags the one constraint:
+"Content Advisor Agent needs approval workflow configured in Showcase — not possible in trial."
+
+---
+
+### Pre-Demo Crisis: 30 Minutes to Call Time
+
+```
+I am running ASO on the customer URL and getting zero issues found on everything.
+The call is in 30 minutes. What is wrong and how do I fix it fast?
+```
+
+Routes to the environment-matrix troubleshooting guide, identifies the most likely causes
+(URL behind auth wall, CDN caching clean state, wrong URL format),
+gives the fastest fallback sequence (switch to Frescopa demo URL in under 5 minutes),
+and has a backup narrative ready: "Let me show you what this looks like on a site
+we already analyzed — then we will run yours in the trial."
+
+---
+
+### ExMod Migration Demo — Sitecore Customer, 4,000 Pages
+
+```
+The customer is on Sitecore 9 with roughly 4,000 pages.
+They want to see what AEM migration actually looks like end to end.
+Script the Experience Modernization demo from site analysis to first deployed page.
+```
+
+Pulls the full ExMod script including the Site Scope Analyzer at
+main--site-scope--aemsites.aem.live, walks the three-phase story
+(analyze with AI → generate EDS blocks → validate and publish),
+gives exact prompts for the aemcoder.adobe.io demo session,
+and includes the line that always lands:
+"The AI does not just help migrate — it writes the block code. Your developers review, not author."
+
+---
+
+### Push Demo Content via MCP Before a Call
+
+```
+I need to update the hero headline and two product pages on my demo site
+at main--refdemo--adobe-demopoc.aem.live before a call in 90 minutes.
+Use the MCP tools to make the changes without me touching da.live.
+```
+
+Uses hlx-admin-mcp da_write to write content + trigger preview + publish in one call.
+No browser, no Sidekick click. Reads the MCP tool reference for the exact call sequence,
+handles auth via da_login if the token has expired, and confirms with da_whoami.
+The demo is ready before you finish your coffee.
+
+---
+
+### Firefly Objection — "We Already Use Midjourney"
+
+```
+The customer said: "We are already using Midjourney for all our image generation.
+Why would we switch to Firefly?" How do I respond?
+```
+
+Leads with the commercial indemnification angle: Adobe absorbs the legal liability
+for every Firefly-generated image. With Midjourney, that liability sits with your company.
+Adds the workflow integration story (Firefly inside Express, GenStudio, and AEM —
+not a separate tab you switch to). Closes with the question that stops the conversation:
+"Has your legal team reviewed your Midjourney commercial use policy?"
+
+---
+
+### CSC Deal — CMO Wants the Full Content Supply Chain
+
+```
+This is a Content Supply Chain deal. The CMO wants to see how AEM, Workfront,
+and Firefly work together from campaign brief to published content to measurement.
+45-minute executive demo. Script it.
+```
+
+Builds the full arc: campaign brief in Workfront → content generation in Firefly/Express →
+review and approval workflow → publish via AEM → measurement in Analytics.
+Assigns each product its supporting role, not a feature tour.
+AEM is the anchor, Workfront is the orchestrator, Firefly is the content engine.
+Closes with the ROI story: content cycle from 3 weeks to 3 days.
+
+---
+
+### Gartner MQ Objection — "Optimizely Is Number One"
+
+```
+The prospect said: "Optimizely was rated number one in the Gartner DXP Magic Quadrant.
+Why would we choose Adobe?" What do I say?
+```
+
+Pulls the full Gartner 2025 counter-narrative: Adobe is number two but has been a
+consecutive Leader for 8 years. The MQ scores narrow DXP capability — it does not
+measure Lighthouse 100 by architecture, LLMO for AI search, the Semrush acquisition,
+or Firefly indemnification. Then pivots: "Gartner measures where the market is today.
+The question for you is where your content strategy needs to be in 2027."
 
 ---
 
 ## Install in 60 Seconds
 
-### Claude Code (this repo)
-The skill is already installed. Invoke with:
-```
-/aem-xsc
-```
-Or just reference it in any prompt: *"Using the aem-xsc skill, design a demo plan for..."*
-
-### Claude Code (another machine / new XSC)
+### Claude Code
 ```bash
-# 1. Clone or download the aem-xsc/ folder
-# 2. Drop it into your Claude skills directory
-cp -r aem-xsc/ ~/.claude/skills/
+# One-line install
+npx skills add https://github.com/AEMXSC/SuperSkills
 
-# 3. For project-level install (shared with team via git)
-cp -r aem-xsc/ /your-project/.agents/skills/
+# Or clone manually
+git clone https://github.com/AEMXSC/SuperSkills
+cp -r SuperSkills/ ~/.claude/skills/aem-xsc/
 ```
-Skills are auto-discovered. Invoke with `/aem-xsc`.
+Invoke with `/aem-xsc` or just start asking — the skill is auto-discovered.
 
 ### GitHub Copilot (VS Code)
-```
-# Add to your workspace instructions (.github/copilot-instructions.md):
-@workspace Read .agents/skills/aem-xsc/SKILL.md and act as an AEM XSC for this session.
-```
-Or use Copilot Chat custom instructions to paste SKILL.md as your system prompt addition.
+Clone this repo into your project — `.github/copilot-instructions.md` auto-activates
+the XSC persona in Copilot Chat. No setup required.
 
-### Cursor / Windsurf / Cody
-1. Open **Rules** or **System Prompt** settings
-2. Paste the contents of `SKILL.md`
-3. For deeper topics (demo scripts, competitive), reference the companion files: *"Read demo-plays.md and give me the ASO script"*
+### Cursor
+Open this folder in Cursor — `.cursor/rules` activates automatically.
 
-### Gemini / ChatGPT / Other
-1. Start a new conversation
-2. Paste `SKILL.md` content as your first message with: *"Here are my working instructions for this session:"*
-3. When you need deep scripts or competitive details, paste the relevant companion file
+### Windsurf
+Open this folder in Windsurf — `.windsurfrules` activates automatically.
 
-### Agentic / n8n / Make / API
-Reference `SKILL.md` as a system prompt in your AI node. The file is self-contained and works without any tool-calling — pure markdown reasoning.
+### Gemini / ChatGPT / Any other LLM
+Open `SKILL.md`, paste its full contents as your first message:
+*"These are your working instructions for this session:"*
+For deep scripts or competitive details, paste the relevant companion file.
+
+### Agentic / n8n / API
+Reference `SKILL.md` as a system prompt. Pure markdown — no tool-calling required.
 
 ---
 
-## Example Use Cases
+## LLM Plugin Support
 
-Copy these prompts directly into your AI assistant:
-
-**Design a demo plan:**
-```
-Design a 30-minute demo plan for a mid-market insurance company (IT architect + marketing director).
-Deal stage: competitive RFP vs. Sitecore. I have access to my XSC Showcase environment.
-```
-
-**Get a script:**
-```
-Give me the full LLMO demo script. The customer is a B2B tech company asking
-"why should we care about AI search optimization?"
-```
-
-**Handle an objection:**
-```
-The prospect just said "Optimizely was rated #1 in the Gartner MQ. Why would we choose Adobe?"
-What do I say?
-```
-
-**Pick an environment:**
-```
-I want to show the Developer Agent and EPA to a technical architect.
-What environment do I use and what are the constraints?
-```
-
-**Build a custom demo:**
-```
-I need a custom demo site for a luxury apparel brand. They want to see DA authoring
-and the AI image variant workflow. What repo do I start from and what blocks do I build?
-```
-
-**Prep for a call:**
-```
-I have a 60-minute technical deep-dive with a financial services architect tomorrow.
-Walk me through the pre-demo checklist and the right environment setup.
-```
+| AI Assistant | File | Activation |
+|---|---|---|
+| **Claude Code** | `.claude-plugin/plugin.json` | Auto-discovered. `npx skills add https://github.com/AEMXSC/SuperSkills` |
+| **GitHub Copilot** | `.github/copilot-instructions.md` | Auto-loads in any repo that clones SuperSkills |
+| **Cursor** | `.cursor/rules` | Auto-applied when you open this folder |
+| **Windsurf** | `.windsurfrules` | Auto-applied when you open this folder |
+| **Gemini / ChatGPT** | `SKILL.md` | Paste as system prompt — no plugin format yet |
 
 ---
 
 ## How to Update This Skill
 
-**The golden rule:** Each file has a clear scope. Add to the right file.
+**Rule:** Each file has a clear scope. Add to the right file.
 
 | If you want to add... | Edit this file |
 |---|---|
 | A new demo script or AI prompt | `demo-plays.md` |
-| Environment constraint / capability flag | `environment-matrix.md` |
+| Environment constraint or capability flag | `environment-matrix.md` |
 | A new repo, boilerplate, or build pattern | `tech-depth.md` |
 | A competitive fact, stat, or objection response | `competitive-intel.md` |
-| A new routing entry / demo play category | `SKILL.md` (Intent Detection table) |
-| A new instant demo URL | `SKILL.md` (Instant Demo URLs table) |
+| A new routing entry or demo play category | `SKILL.md` — Intent Detection table |
+| A new instant demo URL | `SKILL.md` — Instant Demo URLs table |
 
 ### Contribution Steps
 
-1. **Fork or branch** the repo
-2. **Edit the relevant file** — files use plain markdown, no special syntax
-3. **Mark outdated content** with `⚠ LEGACY:` prefix rather than deleting, unless you're sure it's gone
-4. **Add your name or a date comment** if the change is time-sensitive: `<!-- Updated: 2026-03 -->`
-5. **Submit a PR** with a one-line description of what changed and why
+1. Branch off main
+2. Edit the relevant file — plain markdown, no special syntax
+3. Mark outdated content with `LEGACY:` prefix rather than deleting
+4. Source competitive stats — include where you got the number
+5. PR with a one-line description of what changed and why
 
 ### What Makes a Good Update
 
-- **Verified in a real demo** — if you ran the script and it worked (or broke), document it
-- **Concrete** — "ASO shows top 10 issues for Frescopa" beats "ASO shows issues"
-- **Current** — flag anything that might expire (beta features, pricing, release dates)
-- **Source it** — for competitive stats, include where you got the number
-
-### Naming Conventions
-
-- Section headers use `##` and `###`
-- Demo scripts use the standard format: `Scenario → Step → Result → Value → Constraint`
-- Tables preferred over bullet lists for lookup content
-- Use `⚠` for guardrails, `→` for routing, `✅/❌/⚠` for capability matrix
+- Verified in a real demo — if you ran it and it worked or broke, document it
+- Concrete — "ASO shows top 10 issues for Frescopa" beats "ASO shows issues"
+- Honest about limitations — this skill is trusted because it does not oversell
+- Time-stamped for anything that might expire: beta features, pricing, release dates
 
 ---
 
@@ -190,29 +303,5 @@ Walk me through the pre-demo checklist and the right environment setup.
 
 ## Questions / Feedback
 
-Open an issue in this repo or ping the XSC team directly. If a demo play worked especially well or a competitive response landed, add it here so the whole team benefits.
-
----
-
-## LLM Plugin Support
-
-This repo includes native plugin/integration files for every major AI assistant — no manual setup required.
-
-| AI Assistant | Plugin File | How It Works |
-|---|---|---|
-| **Claude Code** | `.claude-plugin/plugin.json` | Auto-discovered by Claude Code. Install with `npx skills add https://github.com/AEMXSC/SuperSkills` |
-| **GitHub Copilot** | `.github/copilot-instructions.md` | Auto-loaded in any repo that clones SuperSkills. Activates XSC persona in Copilot Chat. |
-| **Cursor** | `.cursor/rules` | Auto-applied as Cursor rules when you open this folder. |
-| **Windsurf** | `.windsurfrules` | Auto-applied as Windsurf rules when you open this folder. |
-| **Gemini / ChatGPT** | `SKILL.md` | Paste content as system prompt. No plugin format yet — SKILL.md is the install. |
-
-### Install via Claude Code skills CLI
-```bash
-npx skills add https://github.com/AEMXSC/SuperSkills
-```
-
-### Clone and open (Cursor / Windsurf / Copilot)
-```bash
-git clone https://github.com/AEMXSC/SuperSkills
-# Open the folder — rules activate automatically
-```
+Open an issue or ping the XSC team. If a demo play worked especially well or a competitive
+response landed in a real deal, add it here — the whole team benefits.
