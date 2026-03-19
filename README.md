@@ -61,7 +61,113 @@ Real scenarios. Copy any of these into your AI assistant after loading the skill
 
 ---
 
-### Competitive RFP — Three-Way Bake-Off
+### 1. Build a Custom Healthcare POC Before Tomorrow
+
+```
+I have a discovery call tomorrow with a health system — CMO + digital VP.
+I want to show a custom demo with their industry look and feel, DA authoring,
+and the AI content optimization agent workflow. What do I build and how?
+```
+
+The skill scans every org we have — AEMXSC, AdobeDevXSC, aemdemos — for existing
+healthcare assets before suggesting you build anything from scratch:
+
+- **AdobeDevXSC**: `blue-shield-ca`, `hillrom-baxter`, `baxter`, `stryker`, `stryker-da`
+- **AEMXSC**: `poc-cr-nationwide` (insurance/health adjacent, has CLAUDE.md + AGENTS.md pre-wired),
+  `poc-cr-nationwide-mutual`
+- **aemdemos**: summit series demos with health-adjacent content blocks
+
+If a match exists, you clone it and customize. If not, it picks `ise-boilerplate`
+for DA + UE dual authoring, routes to `content-driven-development` and `building-blocks`
+skills, and maps the exact build sequence to get to first preview before the call.
+
+Flags the one constraint that will bite you in demo: COA (Content Optimization Agent)
+requires DMwOA enabled in your environment — verify before you promise it live.
+
+---
+
+### 2. ExMod Migration — Sitecore Customer, 4,000 Pages
+
+```
+The customer is on Sitecore 9 with roughly 4,000 pages.
+They want to see what AEM migration actually looks like end to end — not a slide.
+Script the Experience Modernization demo from site analysis to first deployed page.
+```
+
+Pulls the full ExMod playbook: opens with the Site Scope Analyzer at
+`main--site-scope--aemsites.aem.live` — paste their URL, AI analyzes block patterns
+and complexity in real time. Then walks the three-phase story:
+
+1. **Analyze** — AI maps page templates, identifies reusable block patterns, estimates effort
+2. **Generate** — `aemcoder.adobe.io` writes EDS block code from the analysis; no manual dev
+3. **Validate + Publish** — developer reviews, not authors; Lighthouse 100 on first deploy
+
+The line that always lands: *"Your developers review AI-generated code — they do not write it.
+That is the difference between 18 months and 6 weeks."*
+
+Includes the talk track for turning a Sitecore migration anxiety conversation into
+an AEM modernization excitement conversation.
+
+---
+
+### 3. Skeptical IT/AI Architect — Product Truth Wins the Room
+
+```
+The customer IT architect pushed back hard: "We evaluated AEM AI agents 6 months ago
+and half of them were not GA. What has actually shipped, what still requires workarounds,
+and what is the realistic infrastructure ask to run this in production?"
+Give me the honest answer that wins this person over.
+```
+
+This is where most XSCs lose architects — by overselling. The skill does the opposite.
+It gives the **complete product truth table**: GA vs Limited Availability vs Preview,
+exact infrastructure requirement per agent, what breaks in trial orgs, and what the
+real onboarding path looks like.
+
+The skill frames every limitation as a proof of enterprise readiness:
+- "Developer Agent requires Cloud Manager — that is not a limitation, that is a guardrail
+  so it cannot deploy untested code to production."
+- "Content Advisor Agent needs approval workflow pre-configured — that is the governance
+  story, not a constraint."
+
+Architects respect candor. The skill gives you the talking points that make a skeptic
+say *"finally, someone who knows the product"* — and that is when the deal opens up.
+
+Outputs a full agent truth table: availability status, infrastructure requirements,
+trial vs Showcase behavior, and the honest pilot recommendation for each.
+
+---
+
+### 4. Omni-Channel Content Activation — Content Fragments + GraphQL
+
+```
+The customer is a healthcare system with a patient portal, a mobile app,
+a clinical staff intranet, and a public marketing site — all needing the same
+core content structured differently per channel. They asked:
+"Can AEM be our single source of truth and push to all four channels automatically?"
+Show me the architecture and demo this end to end.
+```
+
+This is the AEM headless story at its best. The skill maps the full architecture:
+
+1. **Author once** — structured Content Fragments in AEM Sites (fields: headline, body,
+   CTA, channel-specific overrides)
+2. **Expose everywhere** — GraphQL Persisted Queries serve the same fragment to web
+   (EDS), mobile app (React Native), kiosk, and partner portal — each channel
+   queries only the fields it needs
+3. **Assets adapt automatically** — DMwOA delivers the same asset at the right format,
+   crop, and resolution per channel from one URL; no rendition management
+4. **AI optimizes per channel** — COA rewrites content for reading level and tone
+   per destination (patient-facing vs clinical staff vs marketing)
+
+The skill walks through a live demo using AEM's built-in GraphQL explorer,
+shows a Content Fragment being updated once and rendered differently in two
+channel previews simultaneously, and closes with the governance angle:
+one approval workflow controls what goes live everywhere.
+
+---
+
+### 5. Competitive RFP — Three-Way Bake-Off
 
 ```
 We are in a 3-way bake-off: Adobe vs Sitecore vs Contentful.
@@ -70,27 +176,14 @@ Deal stage: technical validation. They want a 60-minute deep-dive.
 I have access to my XSC Showcase. What is my full demo strategy?
 ```
 
-The skill builds a complete demo brief, selects the right plays (EDS performance + AI Agents + CSC),
-routes to the exact competitive counters for both Sitecore AND Contentful, flags every environment
-constraint, and outputs a scripted 60-minute narrative arc with exact agent prompts.
+The skill builds a complete demo brief, selects plays (EDS performance + AI Agents + CSC),
+routes to the exact competitive counters for both Sitecore AND Contentful simultaneously,
+flags every environment constraint for the plays selected, and outputs a scripted
+60-minute narrative arc with exact agent prompts and fallback options.
 
 ---
 
-### Skeptical IT Architect — The Honest AI Agent Breakdown
-
-```
-The customer IT architect said: "These AI agents sound like marketing.
-What do they actually do, what infrastructure do they require, and what breaks in a trial?"
-Give me the full honest technical answer.
-```
-
-The skill walks through every agent (COA, EPA, Governance, Developer, Content Advisor),
-maps each to its exact infrastructure requirement, flags what is broken in trial orgs vs Showcase,
-and frames the limitations as proof points — "we tell you this because we want your pilot to succeed."
-
----
-
-### LLMO — Customer Asking About AI Search Traffic Loss
+### 6. LLMO — Customer Watching Their Organic Traffic Disappear
 
 ```
 The customer said: "We are seeing our organic traffic drop because ChatGPT is
@@ -98,30 +191,14 @@ answering questions that used to send people to our site. What does Adobe do abo
 Script me a 20-minute LLMO demo. They have never heard of GEO.
 ```
 
-Opens with the AI citation problem, walks through the LLMO "Optimize at Edge" mechanism,
-uses the external-safe play.llmo.now demo URL, cites the adobe.com customer zero stats
-(traffic indexed, structured data automatically enriched, CDN-level delivery),
+Opens with the AI citation problem, walks through LLMO "Optimize at Edge" at CDN layer,
+uses the external-safe `play.llmo.now` demo URL, cites the adobe.com customer zero stats,
 and closes with the Semrush $1.9B acquisition as proof Adobe is making the biggest
-bet in the market on this being the future of SEO.
+structural bet in the market on AI search being the future of SEO.
 
 ---
 
-### Build a Custom Healthcare POC Before Tomorrow
-
-```
-I have a discovery call tomorrow with a health system — CMO + digital VP.
-I want to show a custom demo with their industry look and feel, DA authoring,
-and the AI content optimization agent workflow. What do I build and how?
-```
-
-Checks AdobeDevXSC for existing healthcare repos (blue-shield-ca, hillrom-baxter, stryker),
-picks ise-boilerplate for DA + UE dual authoring, routes to content-driven-development
-and building-blocks skills, maps the full build sequence, and flags the one constraint:
-"Content Advisor Agent needs approval workflow configured in Showcase — not possible in trial."
-
----
-
-### Pre-Demo Crisis: 30 Minutes to Call Time
+### 7. Pre-Demo Crisis: 30 Minutes to Call Time
 
 ```
 I am running ASO on the customer URL and getting zero issues found on everything.
@@ -129,31 +206,14 @@ The call is in 30 minutes. What is wrong and how do I fix it fast?
 ```
 
 Routes to the environment-matrix troubleshooting guide, identifies the most likely causes
-(URL behind auth wall, CDN caching clean state, wrong URL format),
-gives the fastest fallback sequence (switch to Frescopa demo URL in under 5 minutes),
-and has a backup narrative ready: "Let me show you what this looks like on a site
-we already analyzed — then we will run yours in the trial."
+(URL behind auth wall, CDN caching a clean state, wrong URL format),
+gives the fastest fallback (switch to Frescopa demo URL in under 5 minutes),
+and arms you with the backup narrative: *"Let me show you what this looks like on a site
+we already analyzed — then we will run yours live in the trial."*
 
 ---
 
-### ExMod Migration Demo — Sitecore Customer, 4,000 Pages
-
-```
-The customer is on Sitecore 9 with roughly 4,000 pages.
-They want to see what AEM migration actually looks like end to end.
-Script the Experience Modernization demo from site analysis to first deployed page.
-```
-
-Pulls the full ExMod script including the Site Scope Analyzer at
-main--site-scope--aemsites.aem.live, walks the three-phase story
-(analyze with AI → generate EDS blocks → validate and publish),
-gives exact prompts for the aemcoder.adobe.io demo session,
-and includes the line that always lands:
-"The AI does not just help migrate — it writes the block code. Your developers review, not author."
-
----
-
-### Push Demo Content via MCP Before a Call
+### 8. Push Demo Content via MCP Before a Call
 
 ```
 I need to update the hero headline and two product pages on my demo site
@@ -161,29 +221,13 @@ at main--refdemo--adobe-demopoc.aem.live before a call in 90 minutes.
 Use the MCP tools to make the changes without me touching da.live.
 ```
 
-Uses hlx-admin-mcp da_write to write content + trigger preview + publish in one call.
-No browser, no Sidekick click. Reads the MCP tool reference for the exact call sequence,
-handles auth via da_login if the token has expired, and confirms with da_whoami.
-The demo is ready before you finish your coffee.
+Uses `hlx-admin-mcp da_write` to write content + trigger preview + publish in one call.
+No browser, no Sidekick click. Handles auth via `da_login` if the token has expired,
+confirms identity with `da_whoami`, then executes. Demo is updated before your next coffee.
 
 ---
 
-### Firefly Objection — "We Already Use Midjourney"
-
-```
-The customer said: "We are already using Midjourney for all our image generation.
-Why would we switch to Firefly?" How do I respond?
-```
-
-Leads with the commercial indemnification angle: Adobe absorbs the legal liability
-for every Firefly-generated image. With Midjourney, that liability sits with your company.
-Adds the workflow integration story (Firefly inside Express, GenStudio, and AEM —
-not a separate tab you switch to). Closes with the question that stops the conversation:
-"Has your legal team reviewed your Midjourney commercial use policy?"
-
----
-
-### CSC Deal — CMO Wants the Full Content Supply Chain
+### 9. CSC Deal — CMO Wants the Full Content Supply Chain
 
 ```
 This is a Content Supply Chain deal. The CMO wants to see how AEM, Workfront,
@@ -192,25 +236,24 @@ and Firefly work together from campaign brief to published content to measuremen
 ```
 
 Builds the full arc: campaign brief in Workfront → content generation in Firefly/Express →
-review and approval workflow → publish via AEM → measurement in Analytics.
-Assigns each product its supporting role, not a feature tour.
+review and approval → publish via AEM → measurement in Analytics.
 AEM is the anchor, Workfront is the orchestrator, Firefly is the content engine.
-Closes with the ROI story: content cycle from 3 weeks to 3 days.
+Closes with the ROI story: content cycle from 3 weeks to 3 days, with audit trail.
 
 ---
 
-### Gartner MQ Objection — "Optimizely Is Number One"
+### 10. Gartner MQ Objection — "Optimizely Is Number One"
 
 ```
 The prospect said: "Optimizely was rated number one in the Gartner DXP Magic Quadrant.
 Why would we choose Adobe?" What do I say?
 ```
 
-Pulls the full Gartner 2025 counter-narrative: Adobe is number two but has been a
-consecutive Leader for 8 years. The MQ scores narrow DXP capability — it does not
-measure Lighthouse 100 by architecture, LLMO for AI search, the Semrush acquisition,
-or Firefly indemnification. Then pivots: "Gartner measures where the market is today.
-The question for you is where your content strategy needs to be in 2027."
+Pulls the Gartner 2025 counter-narrative: Adobe is number two but has been a consecutive
+Leader for 8 years. The MQ scores today's DXP — it does not score Lighthouse 100 by
+architecture, LLMO for AI search, the Semrush $1.9B acquisition, or the AI agent layer.
+Pivots with: *"Gartner measures where the market is today. The question is where your
+content strategy needs to be in 2027 — and that is a different conversation."*
 
 ---
 
