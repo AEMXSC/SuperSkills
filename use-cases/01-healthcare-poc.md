@@ -29,5 +29,5 @@ If a match exists — clones it and adapts branding. If not — scaffolds from `
 Flags the one constraint that bites every XSC: COA requires DMwOA enabled — verify your Showcase environment has it before you promise it live.
 
 **Time comparison:**
-- Last year without AI: 2–3 developer days minimum. XSC either waited for SE support or showed a generic demo
+- Last year without AI: 2–3 developer days minimum. XSC either waited for  Dev support or showed a generic demo
 - With SuperSkills: 4–6 hours to first live preview. Run it overnight, walk in with a branded healthcare site the customer has never seen before
