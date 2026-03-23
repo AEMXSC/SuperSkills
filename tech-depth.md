@@ -695,3 +695,52 @@ body.<template> p > img + img { display: none; }
 9. **Use % not px for layout widths** — Never hardcode pixel values from measurements. Use `%` building blocks matching the original site's responsive approach.
 
 10. **Auto-convert hook** — If project has `auto-convert-md.js` hook: never manually create `.html` files. If decoration breaks, delete `.html` and re-save `.md` to retrigger.
+
+---
+
+## Experience Modernization Agent — AEM Authoring Workflow
+
+> Source: https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/ai-in-aem/agents/brand-experience/modernization/getting-started-aem-authoring
+
+This is the **AEM Authoring project path** for the ExMod agent — distinct from the standard EDS-only flow. Use when the customer needs Universal Editor WYSIWYG editing in-context (AEM Cloud Service required).
+
+**⚠️ Template note:** This workflow requires `aem-block-collection-xwalk` — NOT `ise-boilerplate`. For demos staying on `ise-boilerplate`, use the standard ExMod flow instead.
+
+### What It Does
+
+- Inspects existing code via **AEM Code Connector** GitHub app
+- Migrates content from legacy site to modern AEM block structure
+- Validates migrated content and surfaces errors in agent chat
+- Uploads converted content + assets directly to AEM Cloud Service
+
+### Prerequisites
+
+- AEM as a Cloud Service instance
+- Universal Editor configured
+- GitHub repo access
+- AEM Code Connector app installed on the repo
+
+### Setup Steps
+
+1. Create repo from `aem-block-collection-xwalk` template
+2. Complete Universal Editor tutorial
+3. Delete `paths.json` from repo
+4. Install AEM Code Connector GitHub app
+5. Access Sites console → **Create > Site from template** → choose "AEM Site with Edge Delivery Services Template"
+6. Keep default site name (it's a unique identifier — do not change)
+7. Update `fstab.yaml` with your configuration
+8. Follow main modernization guide to connect GitHub repo and start prompting
+
+### Migration Flow
+
+```
+Connect GitHub repo → Agent analyzes blocks → Content imported → Preview validation → Fix errors via chat → Upload to AEM
+```
+
+### Key Details
+
+- **Site name = unique identifier** — always keep the default, never rename
+- **Error resolution** — use "Add to chat" in the preview panel to target specific errors
+- **Upload options** — download content package OR upload directly to AEM; images optional
+- **After upload** — subsequent code changes follow the standard "Push Code Changes" guide section
+- **Agent is conversational** — chat with it to fix validation issues inline
