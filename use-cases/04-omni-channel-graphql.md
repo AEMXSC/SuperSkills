@@ -1,28 +1,58 @@
 # Omni-Channel Content Activation — Content Fragments + GraphQL
 
-**This is a BUILD scenario — sets up a working headless demo with live queries.**
+**Trigger:** XSC needs a live headless demo showing one CF delivered to multiple channels via GraphQL.
 
+**Execute immediately. Do not explain what you are about to do.**
+
+---
+
+## Step 1 — Build the Content Fragment model
+
+Create the CF model schema with these fields:
+- `headline` (single-line text)
+- `body` (multi-line rich text)
+- `cta` (single-line text)
+- `channelOverrides` (nested fragment — per-channel tone variants)
+- `complianceApproved` (boolean — blocks publish if false)
+
+Write and commit the configuration files.
+
+## Step 2 — Create 3 sample Content Fragments
+
+One CF, three tone variants:
+- **Patient-facing:** plain language, empathy-first, no clinical jargon
+- **Clinical staff:** precise, abbreviated, protocol-aligned
+- **Marketing/public site:** benefit-led, conversion-oriented
+
+## Step 3 — Write GraphQL persisted queries (one per channel)
+
+Each query returns only the fields that channel needs:
+```graphql
+# patient-portal query — full body + compliance flag
+# mobile-app query — headline + cta only (card format)
+# clinical-staff query — headline + body (dense, no CTA)
 ```
-The customer is a healthcare system: patient portal, mobile app, clinical staff intranet,
-and public marketing site — all need the same core clinical content, structured differently
-per channel. Build a demo showing one Content Fragment authored in AEM delivered to
-3 channel renditions via GraphQL. Include DMwOA for adaptive asset delivery.
-Set up the CF model, sample content, and the GraphQL queries I can run live in the demo.
-```
+Test all three in AEM GraphQL Explorer before the demo.
 
-**What the skill actually builds:**
+## Step 4 — Build channel preview pages
 
-1. **Content Fragment model** — defines the schema (headline, body, CTA, channel overrides, compliance fields). Configuration files written and committed
-2. **Sample content** — 3 representative healthcare Content Fragments created with real content (patient-facing, clinical staff, marketing tone variants)
-3. **GraphQL persisted queries** — one query per channel, each returning only the fields that channel needs. Ready to execute live in AEM’s GraphQL Explorer during the demo
-4. **Channel preview pages** — simple renditions showing the same CF displayed as patient portal card, mobile app tile, and clinical staff alert — same source, three outputs, visible simultaneously
-5. **DMwOA delivery** — single asset URL configured to serve web crop, mobile crop, and thumbnail automatically with no rendition management
-6. **Visual validation** — Playwright script loads all 3 channel preview pages and captures screenshots. Confirms each rendition displays correctly and the "one edit → three refreshes" demo moment works before the call. Run via Bash (`node validate-channels.js`) — not MCP. Delete after review.
+Three simple renditions visible simultaneously:
+- Patient portal card
+- Mobile app tile
+- Clinical staff alert banner
 
-The demo moment: update one field in the Content Fragment, save, all three channel previews refresh. One author, zero ops tickets.
+Same CF source. Three outputs. The demo moment is: edit one field → all three refresh.
 
-Closes with the governance angle: one approval workflow controls what goes live everywhere — patient-safe content cannot ship without compliance sign-off regardless of channel.
+## Step 5 — Configure DMwOA asset delivery
 
-**Time comparison:**
-- Last year without AI: AEM architect + developer + 3–5 days to define CF schema, write GraphQL queries, build channel renditions, populate sample content
-- With SuperSkills: Full working demo with live queries in 1–2 hours
+Single asset URL → web crop, mobile crop, thumbnail served automatically. No rendition management.
+
+## Step 6 — Visual validation
+
+Playwright Bash script loads all 3 channel previews simultaneously, captures screenshots. Confirms the "one edit → three refreshes" moment works before the call. Run via `node validate-channels.js`, delete after.
+
+## Step 7 — Wire the governance close
+
+Configure one approval workflow: `complianceApproved = false` blocks all channel delivery. This is the close: *"One approval controls what goes live everywhere — patient-safe content cannot ship without compliance sign-off regardless of channel."*
+
+**Time target:** Full working demo with live GraphQL queries in 1–2 hours.

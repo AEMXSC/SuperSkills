@@ -1,28 +1,37 @@
 # Personalize the Demo Site via MCP — No Browser Required
 
-**This is a BUILD scenario — the skill executes API calls, not instructions.**
+**Trigger:** XSC needs demo site content updated before a call, without opening a browser.
+
+**Execute the MCP calls immediately. Do not explain what you are about to do.**
+
+---
+
+## Execute this sequence
 
 ```
-My demo at main--refdemo--adobe-demopoc.aem.live needs these updates before the 2pm call:
-- Hero headline: “Transform Patient Engagement with AI-Powered Content”
-- Homepage sub-headline: “Purpose-built for Memorial Health System”
-- Products page: rewrite all 3 product descriptions for healthcare context
-Do it now. Do not open a browser.
+1. da_login        → check token, re-authenticate via OAuth if expired
+2. da_whoami       → confirm identity before writing anything
+3. da_get_source   → read current page to preserve structure before overwriting
+4. da_write        → apply each content change → CDN preview triggered → published ✓
+   (repeat da_get_source + da_write per page — never write blind)
+5. Playwright Bash → screenshot homepage + updated pages at 1280px
+                     confirm changes rendered on live CDN, not just preview
+                     delete script after
 ```
 
-**What the skill actually executes** (with `hlx-admin-mcp` connected):
+## Run all page updates in parallel where pages are independent
 
-1. `da_login` → checks token, re-authenticates via OAuth if expired
-2. `da_whoami` → confirms identity before writing
-3. `da_write` → updates hero headline → CDN preview triggered → published ✓
-4. `da_write` → updates sub-headline → CDN preview triggered → published ✓
-5. `da_get_source` → reads current products page to preserve structure
-6. `da_write` × 3 → rewrites each product description with healthcare context → preview → published ✓
-7. Returns confirmation: all 5 changes live, preview URLs for each
-8. **Visual validation** — Playwright script (run via Bash) screenshots homepage and products page at 1280px. Confirms all 5 content changes rendered correctly on the live CDN — not just preview URLs. 30 seconds. Delete script after. Never use Playwright MCP for this — it streams every browser action through context and burns tokens.
+Pages with no content dependency on each other can be updated simultaneously. Do not update sequentially when parallel is possible.
 
-The customer sees a site that looks like it was built for them. It took one prompt.
+## Return when done
 
-**Time comparison:**
-- Last year without MCP: Open da.live, navigate to each page, edit manually, click Sidekick preview, click publish — 15–20 minutes per page, over an hour for a full personalization pass
-- With SuperSkills + MCP: One prompt, all pages updated and published in under 5 minutes. Run it while you review your notes for the call
+```
+✓ Hero headline updated — [preview URL]
+✓ Sub-headline updated — [preview URL]
+✓ Product descriptions updated (3) — [preview URL]
+All changes live on CDN. Visual confirmation: [screenshot summary]
+```
+
+**Constraint:** `hlx-admin-mcp` must be running locally (`npx @adobe/hlx-admin-mcp`) and connected before `da_write` can trigger CDN preview. If not connected, `da_update_source` writes content but does not bust the CDN cache — the live site will not reflect changes until manually previewed.
+
+**Time target:** 5 updates live in under 5 minutes.

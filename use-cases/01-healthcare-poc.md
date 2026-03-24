@@ -1,36 +1,53 @@
 # Build a Custom Healthcare POC Before Tomorrow
 
-**This is a BUILD scenario — the skill executes, not just advises.**
+**Trigger:** XSC needs a branded demo site built for a healthcare customer call.
 
-```
-I have a discovery call with Memorial Health System tomorrow — CMO + digital VP.
-They want to see a healthcare-branded demo site with DA authoring for the content team
-and Universal Editor for the IT team, plus the AI content optimization agent workflow.
-Build it. Base on ise-boilerplate. Deploy to a new GitHub repo.
-```
+**Execute immediately. Do not explain what you are about to do.**
 
-**What the skill actually does:**
+---
 
-First scans every org for existing healthcare assets before building anything new:
-- `AdobeDevXSC`: `blue-shield-ca`, `hillrom-baxter`, `baxter`, `stryker`, `stryker-da`
-- `AEMXSC`: `poc-cr-nationwide` (CLAUDE.md + AGENTS.md pre-wired), `poc-cr-nationwide-mutual`
+## Step 1 — Scan existing assets in parallel before writing any code
+
+Check all three simultaneously:
+- `AdobeDevXSC` org: `blue-shield-ca`, `hillrom-baxter`, `baxter`, `stryker`, `stryker-da`
+- `AEMXSC` org: `poc-cr-nationwide`, `poc-cr-nationwide-mutual`
 - `aemdemos`: summit series with health-adjacent blocks
 
-If a match exists — clones it and adapts branding. If not — scaffolds from `ise-boilerplate` and runs **Playbook A** (full skill chain, not just individual skills):
+If a vertical match exists — clone it, adapt branding, skip to Step 4.
+If no match — scaffold from `aemdemos/ise-boilerplate` and continue.
 
-1. `/block-inventory` + `/block-collection-and-party` — scan AEMXSC/AdobeDevXSC orgs and the Block Collection for existing healthcare blocks. Reuse everything that fits.
-2. `/analyze-and-plan` — define exactly which blocks the healthcare demo narrative needs + acceptance criteria for each
-3. `/content-modeling` — design DA table structure for every block (what the content team will author)
-4. `/building-blocks` — build only blocks with no existing match (`/content-driven-development` orchestrates steps 2–6 automatically)
-5. Universal Editor wired — `component-definition.json`, `component-filters.json`, `component-models.json`, per-block UE model JSON for every block
-6. `/find-test-content` — locate test pages to validate against
-7. `fstab.yaml` configured for DA content mount; GitHub repo created, `aem-code-sync` app installed, code live on CDN
-8. `/code-review` — self-review before the customer ever sees it
-9. `/pagespeed-audit` — must score 100 before you walk into the call
-10. **Visual validation** — Playwright script (Bash, not MCP) captures screenshots at 375px / 768px / 1280px. Confirms brand colors, block layout, no console errors. Script deleted after review.
+## Step 2 — Generate the GSD wave plan for all blocks
 
-Flags the one constraint that bites every XSC: COA requires DMwOA enabled — verify your Showcase environment has it before you promise it live.
+Identify the blocks needed for the healthcare narrative. For 3+ blocks, generate a parallel wave plan internally and execute it:
 
-**Time comparison:**
-- Last year without AI: 2–3 developer days minimum. XSC either waited for  Dev support or showed a generic demo
-- With SuperSkills: 4–6 hours to first live preview. Run it overnight, walk in with a branded healthcare site the customer has never seen before
+```
+Wave 0 (parallel): /block-inventory + /block-collection-and-party
+Wave 1 (parallel): /analyze-and-plan for every block simultaneously
+Wave 2 (parallel): /building-blocks for every block simultaneously
+  — Each block gets: JS + CSS + ue/models/blocks/<name>.json
+Wave 3 (parallel): /code-review + /testing-blocks + /pagespeed-audit
+```
+
+## Step 3 — Wire DA + Universal Editor (dual authoring, no exceptions)
+
+- `fstab.yaml` → DA content mount at `content.da.live/<org>/<repo>/`
+- `component-definition.json`, `component-filters.json`, `component-models.json`
+- Per-block UE model JSON for every block built in Wave 2
+- DA content pages created in block table format
+- Sidekick config in `tools/sidekick/config.json`
+
+## Step 4 — Deploy
+
+- Create GitHub repo, install `aem-code-sync` app, push code
+- `da_write` all content pages → CDN preview triggered → published
+
+## Step 5 — Pre-demo gates (all required before declaring done)
+
+- [ ] `/pagespeed-audit` scores 100 on mobile and desktop
+- [ ] Playwright Bash script: screenshots at 375px / 768px / 1280px — brand colors, layout, no console errors. Delete script after.
+- [ ] All DA pages live and accessible via preview URL
+- [ ] UE edit URL opens and annotations are visible on every block
+
+**Constraint:** COA requires DMwOA enabled — verify Showcase environment has it before promising it live.
+
+**Time target:** 4–6 hours to first live preview with parallel wave execution.
