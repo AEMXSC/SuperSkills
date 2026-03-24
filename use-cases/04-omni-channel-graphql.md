@@ -88,12 +88,17 @@ Test all three in AEM GraphQL Explorer before the demo.
 
 ## Step 4 — Build channel preview pages
 
+Scaffold from `aemdemos/ise-boilerplate`. Read `AGENTS.md` before building any blocks.
+
 Three simple renditions visible simultaneously:
 - Patient portal card
 - Mobile app tile
 - Clinical staff alert banner
 
 Same CF source. Three outputs. The demo moment is: edit one field → all three refresh.
+
+Each channel block must produce 4 files:
+`{block}.js` + `{block}.css` + `{block}-tokens.css` + `ue/models/blocks/{block}.json`
 
 ## Step 5 — Configure DMwOA asset delivery
 

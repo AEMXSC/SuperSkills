@@ -88,15 +88,37 @@ Customer: [name]
 Vertical: [healthcare / insurance / pharma / etc.]
 Existing site: [URL or "none"]
 Key message for demo: [1 sentence — e.g. "patient portal modernization"]
-GitHub org: [your org]
-DA org: [your da.live org]
 Go. Wake me up when it's live.
 ```
+
+*(GitHub org defaults to `AEMXSC`. DA org derived from `da_whoami`. No need to specify either.)*
 
 **YOLO rules — AI executes all of these without stopping:**
 
 ```
 Decision point                     → Rule
+Repo scaffold                      → Always start from aemdemos/ise-boilerplate.
+                                     Check AdobeDevXSC + AEMXSC orgs first for a
+                                     vertical match — clone and adapt if found.
+                                     ise-boilerplate ships with DA + UE wired,
+                                     design tokens per block, AGENTS.md constraints.
+
+AGENTS.md found in repo            → Read it before writing any code. Hard constraints
+                                     in AGENTS.md override all defaults below.
+
+GitHub org                         → Default: AEMXSC. Override only if XSC specifies.
+
+DA org                             → Run da_whoami to derive. Never ask the XSC.
+
+Authoring mode                     → Always DA + UE. Never DA-only. Never UE-only.
+                                     ise-boilerplate handles both — no extra setup needed.
+
+Every block built                  → Must produce exactly 4 files:
+                                     {block}.js
+                                     {block}.css
+                                     {block}-tokens.css  (design tokens — ise-boilerplate pattern)
+                                     ue/models/blocks/{block}.json  (UE annotations)
+
 No exact vertical repo match       → Clone closest match, remap branding. Never wait.
 
 No design spec + existing URL      → Run Playwright render on the live site first.

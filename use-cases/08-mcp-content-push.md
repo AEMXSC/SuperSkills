@@ -6,11 +6,26 @@
 
 ---
 
+## Pre-flight — run before any writes
+
+```
+1. hlx-admin-mcp running?
+   → curl http://localhost:3000 — if no response, start it:
+     npx @adobe/hlx-admin-mcp
+   → Without it, da_write writes content but CDN never busts.
+     XSC sees no change on the live site. Do not skip this check.
+
+2. DA auth valid?
+   → da_login → da_whoami → confirm identity before touching anything
+   → If token expired, re-authenticate via OAuth before proceeding.
+     Do not attempt writes with an expired token.
+```
+
 ## Execute this sequence
 
 ```
 1. da_login        → check token, re-authenticate via OAuth if expired
-2. da_whoami       → confirm identity before writing anything
+2. da_whoami       → confirm identity + derive DA org (no need to ask XSC)
 3. da_get_source   → read current page to preserve structure before overwriting
 4. da_write        → apply each content change → CDN preview triggered → published ✓
    (repeat da_get_source + da_write per page — never write blind)

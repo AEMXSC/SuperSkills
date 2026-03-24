@@ -30,7 +30,7 @@ Total XSC active time:      Weeks           ~2 hours
 How much time do you have?
 ├── Tonight / overnight → YOLO Mode
 │   Pre-flight → AI runs everything → you sleep.
-│   Wake up to: 3 pages live, PageSpeed 100, before/after table,
+│   Wake up to: 3 pages live on ise-boilerplate, PageSpeed 100, before/after table,
 │   DA published, UE wired, customer session deck drafted.
 │   → Run yolo-preflight.sh first, then skip to YOLO Mode below.
 │
@@ -217,15 +217,26 @@ AI drafts the session structure. XSC runs it.
 Customer site: [URL]
 CMS migrating from: [Sitecore / WordPress / AEM Classic]
 Pages: [3 URLs, or "pick home + top-funnel + content-heavy"]
-GitHub org: [your org]
-DA org: [your da.live org]
 Go. I want the full POC package when I wake up.
 ```
+
+*(GitHub org defaults to `AEMXSC`. DA org derived from `da_whoami`. Repo scaffold is always `aemdemos/ise-boilerplate`. No need to specify any of these.)*
 
 **YOLO rules — AI executes all of these without stopping:**
 
 ```
 Decision point                      → Rule
+Repo scaffold                       → Always aemdemos/ise-boilerplate. DA + UE wired,
+                                      design tokens per block, AGENTS.md included.
+                                      Read AGENTS.md before writing any code.
+
+GitHub org                          → Default: AEMXSC. Override only if specified.
+DA org                              → Derive from da_whoami. Never ask the XSC.
+Authoring mode                      → Always DA + UE. ise-boilerplate handles both.
+
+Every block built                   → 4 files: {block}.js + {block}.css +
+                                      {block}-tokens.css + ue/models/blocks/{block}.json
+
 SPA / React / Next.js detected      → Playwright scrape-rendered.js runs first.
                                       Scroll-simulate. Never feed raw HTTP.
 
