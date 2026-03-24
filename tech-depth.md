@@ -255,6 +255,53 @@ All 17 AEM EDS skills mapped to XSC use cases. An XSC building or validating a c
 | Design system extraction from existing site | `/design-system-extractor` then `/design-tokens` | Extract CSS tokens from an existing site before migration |
 | Audit/improve site performance | `/pagespeed-audit` | Core Web Vitals audit — LCP, CLS, INP |
 
+### GSD Parallel Wave Execution — The Speed Multiplier
+
+The single biggest speed gain available to an XSC is running block builds in parallel instead of sequentially. GSD (`/gsd:execute-phase`) spawns independent subagents per wave — each block builds simultaneously in its own 200k context window.
+
+**Sequential build (current default):** 9 blocks × ~35 min each = ~5 hours
+**GSD parallel waves:** 3 waves × longest-block time = ~45–60 minutes
+
+**How to use it for a BUILD:**
+
+Before coding anything, create a phase plan and execute it with GSD:
+
+```
+/gsd:plan-phase 1    → generates PLAN.md with wave structure
+/gsd:execute-phase 1 → spawns parallel agents, one per block per wave
+```
+
+**Wave structure for a typical 10-block site port:**
+
+```
+Wave 0 (parallel) — Scrape + Inventory
+  ├── Playwright render + full DOM capture
+  └── /block-inventory + /block-collection-and-party
+
+Wave 1 (parallel) — Plan all blocks simultaneously
+  ├── /analyze-and-plan → hero
+  ├── /analyze-and-plan → nav + footer
+  ├── /analyze-and-plan → cards variants (3 blocks)
+  └── /analyze-and-plan → custom blocks (ticker, motions, stats)
+
+Wave 2 (parallel) — Build all blocks simultaneously
+  ├── /building-blocks → hero (JS + CSS + UE model)
+  ├── /building-blocks → nav + footer
+  ├── /building-blocks → cards variants
+  └── /building-blocks → ticker + motions + stats bar
+
+Wave 3 (parallel) — Validate everything simultaneously
+  ├── /code-review → all blocks
+  ├── /testing-blocks → Playwright screenshots
+  └── /pagespeed-audit → Lighthouse 100
+```
+
+**Rule:** Tasks within the same wave have no dependencies on each other. Tasks across waves do. GSD enforces this automatically.
+
+**Install GSD:** `npx get-shit-done-cc@latest --claude --local`
+
+---
+
 ### BUILD Playbooks — Complete Skill Chains
 
 The 17 EDS skills work as a system. Running them in the right sequence is where the XSC multiplier comes from. Never invoke a skill in isolation — always use the full chain for your scenario.
@@ -262,6 +309,8 @@ The 17 EDS skills work as a system. Running them in the right sequence is where 
 **Rule #1 — Inventory before build.** Always run `/block-inventory` + `/block-collection-and-party` before touching `/building-blocks`. Never build a block that already exists.
 
 **Rule #2 — Validate before demo.** Every BUILD ends with Playwright screenshots (Bash, not MCP) + `/pagespeed-audit` at 100. No exceptions.
+
+**Rule #3 — Use GSD for any build with 3+ blocks.** Sequential builds are 4–8x slower than parallel wave execution. Always use `/gsd:plan-phase` + `/gsd:execute-phase` for multi-block sites.
 
 #### Playbook A — Greenfield Custom Demo Site
 

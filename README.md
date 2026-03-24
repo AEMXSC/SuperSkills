@@ -47,28 +47,70 @@ Every scenario covers all six dimensions of the XSC role:
 
 ---
 
-## Install in 60 Seconds
+## Install
 
-### Claude Code
+### Advisor-only (any AI assistant — 60 seconds)
+
+Just the skill files. Demo scripts, objection handling, competitive intel, environment guidance.
+
+**Claude Code:**
 ```bash
 npx skills add https://github.com/AEMXSC/SuperSkills
 ```
-Invoke with `/aem-xsc` or just start asking — the skill is auto-discovered.
 
-### GitHub Copilot
-Clone this repo — `.github/copilot-instructions.md` activates the XSC persona automatically.
+**GitHub Copilot:** Clone repo — `.github/copilot-instructions.md` activates automatically.
+**Cursor:** Open folder — `.cursor/rules` activates automatically.
+**Windsurf:** Open folder — `.windsurfrules` activates automatically.
+**Gemini / ChatGPT:** Paste `SKILL.md` as your first message.
 
-### Cursor
-Open this folder — `.cursor/rules` activates automatically.
+---
 
-### Windsurf
-Open this folder — `.windsurfrules` activates automatically.
+### Full Build Stack (Claude Code — enables all BUILD scenarios)
 
-### Gemini / ChatGPT / Any LLM
-Paste `SKILL.md` contents as your first message: *"These are your working instructions:"*
+Installs everything: SuperSkills + 17 EDS skills + GSD parallel execution + MCP servers + AEM CLI + Playwright.
 
-### Agentic / n8n / API
-Use `SKILL.md` as a system prompt. Pure markdown, no tool-calling required.
+```bash
+bash <(curl -s https://raw.githubusercontent.com/AEMXSC/SuperSkills/main/setup.sh)
+```
+
+**What gets installed automatically:**
+
+| Tool | Purpose |
+|---|---|
+| SuperSkills | This skill — advisor + builder |
+| 17 AEM EDS skills | Block dev, import pipeline, testing, PageSpeed |
+| GSD | Parallel wave execution — 4–8x faster builds |
+| AEM CLI (`aem up`) | Local dev server for block testing |
+| Playwright + Chromium | Visual validation before demo calls |
+| DA MCP | Write + preview + publish DA content programmatically |
+| hlx-admin MCP | `da_write` — write + CDN bust in one call |
+| n8n MCP | 525+ workflow automation nodes |
+
+**Manual steps after setup (printed by the script):**
+
+1. **Claude.ai MCP connectors** — connect at claude.ai → Settings → Integrations:
+   - `AEM Content - Prod`
+   - `AEM DA - Prod`
+
+2. **GitHub auth** — `gh auth login`
+
+3. **aem-code-sync GitHub App** — install on your GitHub org:
+   `https://github.com/apps/aem-code-sync`
+
+4. **DA org** — confirm your org exists at `https://da.live`
+
+5. **hlx-admin local server** — run in a separate terminal before any BUILD:
+   `npx @adobe/hlx-admin-mcp`
+
+6. **Adobe internal only** — FluffyJaws MCP: ask your team lead for setup
+
+**Verify your setup is working:**
+```bash
+claude mcp list          # should show da-mcp, hlx-admin, n8n-mcp
+aem --version            # should print AEM CLI version
+aem up                   # should start local dev server on :3000
+npx playwright --version # should print Playwright version
+```
 
 ---
 
