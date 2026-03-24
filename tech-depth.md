@@ -746,3 +746,72 @@ Connect GitHub repo → Agent analyzes blocks → Content imported → Preview v
 - **Upload options** — download content package OR upload directly to AEM; images optional
 - **After upload** — subsequent code changes follow the standard "Push Code Changes" guide section
 - **Agent is conversational** — chat with it to fix validation issues inline
+
+---
+
+## MCP Servers — Team Setup
+
+Adobe IMS handles auth automatically for all Adobe MCP endpoints — no tokens or manual login required.
+
+### DA MCP (Document Authoring)
+
+> Docs: https://docs.da.live/about/early-access/da-mcp
+
+10 tools: `da_list_sources`, `da_get_source`, `da_create_source`, `da_update_source`, `da_delete_source`, `da_copy_content`, `da_move_content`, `da_get_versions`, `da_lookup_media`, `da_lookup_fragment`
+
+### FluffyJaws MCP
+
+> Docs: https://fluffyjaws.adobe.com/docs/api
+
+Tools: `POST /api/v1/stream`, conversation management, FluffyPack queries, app registration. Full Adobe AI assistant access from within Claude Code.
+
+### Team Distribution — `.vscode/mcp.json`
+
+Add to your project repo — every team member gets both MCPs on clone, no manual config:
+
+```json
+{
+  "mcpServers": {
+    "da-prod-mcp": {
+      "url": "https://mcp.adobeaemcloud.com/adobe/mcp/da"
+    },
+    "fluffyjaws": {
+      "url": "https://fluffyjaws.adobe.com/api/v1/mcp"
+    }
+  }
+}
+```
+
+### Global Claude Code (`~/.claude.json`)
+
+For access across all projects:
+
+```json
+"mcpServers": {
+  "da-mcp": {
+    "type": "streamable-http",
+    "url": "https://mcp.adobeaemcloud.com/adobe/mcp/da"
+  },
+  "fluffyjaws": {
+    "type": "streamable-http",
+    "url": "https://fluffyjaws.adobe.com/api/v1/mcp"
+  }
+}
+```
+
+### Claude Desktop (`~/Library/Application Support/Claude/claude_desktop_config.json`)
+
+```json
+{
+  "mcpServers": {
+    "da-mcp": {
+      "type": "streamable-http",
+      "url": "https://mcp.adobeaemcloud.com/adobe/mcp/da"
+    },
+    "fluffyjaws": {
+      "type": "streamable-http",
+      "url": "https://fluffyjaws.adobe.com/api/v1/mcp"
+    }
+  }
+}
+```
