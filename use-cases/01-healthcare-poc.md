@@ -16,16 +16,18 @@ First scans every org for existing healthcare assets before building anything ne
 - `AEMXSC`: `poc-cr-nationwide` (CLAUDE.md + AGENTS.md pre-wired), `poc-cr-nationwide-mutual`
 - `aemdemos`: summit series with health-adjacent blocks
 
-If a match exists — clones it and adapts branding. If not — scaffolds from `ise-boilerplate` and executes the full build sequence:
+If a match exists — clones it and adapts branding. If not — scaffolds from `ise-boilerplate` and runs **Playbook A** (full skill chain, not just individual skills):
 
-1. `fstab.yaml` configured for DA content mount
-2. Custom blocks built for the healthcare demo narrative (`/content-driven-development`)
-3. DA authoring configured — content structure, table format, Sidekick setup
-4. Universal Editor wired — `component-definition.json`, `component-filters.json`, `component-models.json`, per-block UE model files for every block
-5. Demo content pages created in DA table structure
-6. GitHub repo created, `aem-code-sync` app installed, code live on CDN
-7. PageSpeed validated at 100 before you walk into the call (`/testing-blocks`)
-8. **Visual validation** — Playwright script (run via Bash, not MCP) captures screenshots at 375px / 768px / 1280px. Confirms brand colors, block layout, and no console errors. Script deleted after review. Costs zero extra tokens — browser runs outside AI context, only pass/fail returns.
+1. `/block-inventory` + `/block-collection-and-party` — scan AEMXSC/AdobeDevXSC orgs and the Block Collection for existing healthcare blocks. Reuse everything that fits.
+2. `/analyze-and-plan` — define exactly which blocks the healthcare demo narrative needs + acceptance criteria for each
+3. `/content-modeling` — design DA table structure for every block (what the content team will author)
+4. `/building-blocks` — build only blocks with no existing match (`/content-driven-development` orchestrates steps 2–6 automatically)
+5. Universal Editor wired — `component-definition.json`, `component-filters.json`, `component-models.json`, per-block UE model JSON for every block
+6. `/find-test-content` — locate test pages to validate against
+7. `fstab.yaml` configured for DA content mount; GitHub repo created, `aem-code-sync` app installed, code live on CDN
+8. `/code-review` — self-review before the customer ever sees it
+9. `/pagespeed-audit` — must score 100 before you walk into the call
+10. **Visual validation** — Playwright script (Bash, not MCP) captures screenshots at 375px / 768px / 1280px. Confirms brand colors, block layout, no console errors. Script deleted after review.
 
 Flags the one constraint that bites every XSC: COA requires DMwOA enabled — verify your Showcase environment has it before you promise it live.
 

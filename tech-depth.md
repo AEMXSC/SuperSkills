@@ -255,6 +255,65 @@ All 17 AEM EDS skills mapped to XSC use cases. An XSC building or validating a c
 | Design system extraction from existing site | `/design-system-extractor` then `/design-tokens` | Extract CSS tokens from an existing site before migration |
 | Audit/improve site performance | `/pagespeed-audit` | Core Web Vitals audit — LCP, CLS, INP |
 
+### BUILD Playbooks — Complete Skill Chains
+
+The 17 EDS skills work as a system. Running them in the right sequence is where the XSC multiplier comes from. Never invoke a skill in isolation — always use the full chain for your scenario.
+
+**Rule #1 — Inventory before build.** Always run `/block-inventory` + `/block-collection-and-party` before touching `/building-blocks`. Never build a block that already exists.
+
+**Rule #2 — Validate before demo.** Every BUILD ends with Playwright screenshots (Bash, not MCP) + `/pagespeed-audit` at 100. No exceptions.
+
+#### Playbook A — Greenfield Custom Demo Site
+
+```
+1. /block-inventory               ← what blocks already exist in this org + Block Collection?
+2. /block-collection-and-party    ← any reference implementations for the vertical?
+   → reuse everything you can. skip to step 6 for blocks that already exist.
+3. /analyze-and-plan              ← define blocks needed, acceptance criteria
+4. /content-modeling              ← DA table structure for each block
+5. /building-blocks               ← build only what doesn't already exist
+6. /find-test-content             ← locate pages to test against
+7. /code-review                   ← self-review before pushing
+8. /testing-blocks                ← Playwright via Bash: 375/768/1280px screenshots
+9. /pagespeed-audit               ← must score 100. diagnose LCP/CLS/INP if not.
+```
+
+**Orchestrator shortcut:** `/content-driven-development` runs steps 3–7 automatically. Still run steps 1–2 manually first and steps 8–9 after.
+
+#### Playbook B — Migration / ExMod Demo
+
+```
+1. /scrape-webpage                ← fetch + clean HTML, download images
+2. /identify-page-structure       ← section boundaries across scraped pages
+3. /page-decomposition            ← content sequences → named block candidates
+4. /authoring-analysis            ← DA vs UE recommendation per section
+5. /block-inventory               ← do identified block patterns already exist?
+6. /block-collection-and-party    ← find reference implementations for gaps
+7. /generate-import-html          ← EDS-ready block HTML for each page
+8. /building-blocks               ← build only blocks with no existing match
+9. /docs-search                   ← look up EDS patterns if stuck
+10. /preview-import               ← validate first page live before demo
+11. /code-review                  ← review generated blocks before showing customer
+12. /testing-blocks               ← Playwright via Bash: screenshot all imported pages
+13. /pagespeed-audit              ← score 100 on all imported pages
+```
+
+**Orchestrator shortcut:** `/page-import` runs steps 1–4 + 7 + 10 automatically. Run steps 5–6 between 4 and 7, and steps 11–13 after.
+
+#### Playbook C — Content Personalization (MCP)
+
+```
+1. da_login / da_whoami           ← verify auth before writing anything
+2. da_get_source                  ← read current page to preserve structure
+3. da_write                       ← update content → CDN preview triggered → published
+   (repeat per page)
+4. /find-test-content             ← locate the right test pages if needed
+5. Playwright via Bash            ← screenshot live CDN pages to confirm changes rendered
+   node validate-demo.js → delete after
+```
+
+---
+
 ### Content Driven Development (CDD) — Full Workflow
 
 All code changes on EDS follow this process — no exceptions:
@@ -264,7 +323,7 @@ All code changes on EDS follow this process — no exceptions:
   └── /analyze-and-plan          ← requirements + acceptance criteria
   └── /content-modeling          ← block table structure for authors
   └── /building-blocks           ← implement JS + CSS
-  └── /testing-blocks            ← Playwright + linting validation
+  └── /testing-blocks            ← Playwright via Bash (not MCP)
   └── /code-review               ← self-review before PR / before demo call
 ```
 

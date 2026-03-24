@@ -166,15 +166,14 @@ Need to build something custom? See **[tech-depth.md § Repo Inventory](tech-dep
 
 **30+ vertical demos already exist** — check `AdobeDevXSC` and `AEMXSC` orgs before building from scratch. See [tech-depth.md § Vertical Demos](tech-depth.md#vertical-demos-by-industry).
 
-**EDS dev skills available on demand:**
-- Import customer pages → `/page-import`
-- Build custom blocks → `/content-driven-development`
-- Find existing blocks → `/block-inventory` + `/block-collection-and-party`
-- Validate before demo → `/testing-blocks` + `/pagespeed-audit`
+**EDS dev skills — 17 available, use as a system not individually:**
+- Greenfield site → **Playbook A** — [tech-depth.md § BUILD Playbooks](tech-depth.md#build-playbooks--complete-skill-chains)
+- Migration / ExMod → **Playbook B** — [tech-depth.md § BUILD Playbooks](tech-depth.md#build-playbooks--complete-skill-chains)
+- Content personalization → **Playbook C** — [tech-depth.md § BUILD Playbooks](tech-depth.md#build-playbooks--complete-skill-chains)
 
-**Pre-demo BUILD validation (required for all BUILD scenarios):**
-1. `/pagespeed-audit` — must score 100. No exceptions.
-2. **Playwright visual check** — write a temp script, run via `node validate-demo.js` (Bash, not MCP), capture screenshots at 375px / 768px / 1280px. Verify brand, layout, no console errors. Delete script after. Using Playwright MCP instead streams every browser action through AI context and burns tokens unnecessarily.
+**Two rules that apply to every BUILD:**
+1. **Inventory before build** — always run `/block-inventory` + `/block-collection-and-party` first. Never build a block that already exists.
+2. **Validate before demo** — `/pagespeed-audit` (must score 100) + Playwright screenshots via Bash at 375/768/1280px. Never use Playwright MCP — it burns tokens on every browser action.
 
 **Hard constraint:** PageSpeed must score 100. No runtime deps. No build step. See [tech-depth.md § Build Constraints](tech-depth.md#build-hard-constraints).
 

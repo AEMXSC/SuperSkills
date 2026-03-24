@@ -13,17 +13,17 @@ Script the demo AND execute phases 1 and 2.
 
 **What the skill actually builds:**
 
-Runs the full import pipeline — not a walkthrough, actual execution:
+Runs **Playbook B** (full migration skill chain) — not a walkthrough, actual execution:
 
 1. **Site Scope Analyzer** (`main--site-scope--aemsites.aem.live`) — paste the customer URL, AI maps every page template, identifies repeating block patterns, scores migration complexity. Output is a real artifact you show in the demo
-2. **`/page-import` orchestrator** — scrapes the 5 representative pages the customer chose
-3. **`/identify-page-structure`** — analyzes each page’s section boundaries and content types
-4. **`/page-decomposition`** — breaks sections into named block candidates
-5. **`/authoring-analysis`** — recommends DA vs UE per section based on content type
-6. **`/generate-import-html`** — produces EDS-ready HTML for each imported page
-7. **`/preview-import`** — validates first preview is live before the demo call
-8. **Block spec PRD auto-generated** from the block inventory — each identified pattern (hero-banner, specialty-cards, stats-grid, tabs, etc.) becomes a structured spec with fields, DA table input format, and UE model requirements. `/building-blocks` generates the working JS + CSS + UE model JSON for each block directly — same output as aemcoder.adobe.io but via API, no browser required
-9. **Visual validation** — Playwright script screenshots each of the 5 imported pages at desktop (1280px) and mobile (375px) viewports. Confirms imported layout matches source fidelity and no blocks are broken. PageSpeed validated at 100 via `/pagespeed-audit`. Script runs via Bash — not MCP — browser execution stays outside AI context.
+2. **`/page-import` orchestrator** — scrapes the 5 representative pages the customer chose (runs `/scrape-webpage` → `/identify-page-structure` → `/page-decomposition` → `/authoring-analysis` → `/generate-import-html` automatically)
+3. **`/block-inventory` + `/block-collection-and-party`** — cross-reference identified block patterns (hero-banner, specialty-cards, stats-grid, tabs) against existing implementations. Reuse what exists — only build the gaps.
+4. **`/building-blocks`** — generates working JS + CSS + UE model JSON for any block with no existing match. Same output as aemcoder.adobe.io but via API, no browser required.
+5. **`/docs-search`** — look up EDS patterns inline if any block implementation needs clarification
+6. **`/preview-import`** — validates first preview is live before the demo call
+7. **`/code-review`** — review all generated blocks before showing a customer
+8. **Visual validation** — Playwright script (Bash, not MCP) screenshots each of the 5 imported pages at 1280px and 375px. Confirms imported layout matches source fidelity and no blocks are broken.
+9. **`/pagespeed-audit`** — score 100 on all imported pages before the demo.
 
 The customer watches their own pages appear as a live EDS site during the demo. That is not a slide.
 
