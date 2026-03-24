@@ -17,6 +17,7 @@ Set up the CF model, sample content, and the GraphQL queries I can run live in t
 3. **GraphQL persisted queries** — one query per channel, each returning only the fields that channel needs. Ready to execute live in AEM’s GraphQL Explorer during the demo
 4. **Channel preview pages** — simple renditions showing the same CF displayed as patient portal card, mobile app tile, and clinical staff alert — same source, three outputs, visible simultaneously
 5. **DMwOA delivery** — single asset URL configured to serve web crop, mobile crop, and thumbnail automatically with no rendition management
+6. **Visual validation** — Playwright script loads all 3 channel preview pages and captures screenshots. Confirms each rendition displays correctly and the "one edit → three refreshes" demo moment works before the call. Run via Bash (`node validate-channels.js`) — not MCP. Delete after review.
 
 The demo moment: update one field in the Content Fragment, save, all three channel previews refresh. One author, zero ops tickets.
 

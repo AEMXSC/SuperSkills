@@ -172,6 +172,10 @@ Need to build something custom? See **[tech-depth.md § Repo Inventory](tech-dep
 - Find existing blocks → `/block-inventory` + `/block-collection-and-party`
 - Validate before demo → `/testing-blocks` + `/pagespeed-audit`
 
+**Pre-demo BUILD validation (required for all BUILD scenarios):**
+1. `/pagespeed-audit` — must score 100. No exceptions.
+2. **Playwright visual check** — write a temp script, run via `node validate-demo.js` (Bash, not MCP), capture screenshots at 375px / 768px / 1280px. Verify brand, layout, no console errors. Delete script after. Using Playwright MCP instead streams every browser action through AI context and burns tokens unnecessarily.
+
 **Hard constraint:** PageSpeed must score 100. No runtime deps. No build step. See [tech-depth.md § Build Constraints](tech-depth.md#build-hard-constraints).
 
 ---

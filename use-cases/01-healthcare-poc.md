@@ -25,6 +25,7 @@ If a match exists — clones it and adapts branding. If not — scaffolds from `
 5. Demo content pages created in DA table structure
 6. GitHub repo created, `aem-code-sync` app installed, code live on CDN
 7. PageSpeed validated at 100 before you walk into the call (`/testing-blocks`)
+8. **Visual validation** — Playwright script (run via Bash, not MCP) captures screenshots at 375px / 768px / 1280px. Confirms brand colors, block layout, and no console errors. Script deleted after review. Costs zero extra tokens — browser runs outside AI context, only pass/fail returns.
 
 Flags the one constraint that bites every XSC: COA requires DMwOA enabled — verify your Showcase environment has it before you promise it live.
 

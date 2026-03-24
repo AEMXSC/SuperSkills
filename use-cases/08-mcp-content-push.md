@@ -19,6 +19,7 @@ Do it now. Do not open a browser.
 5. `da_get_source` → reads current products page to preserve structure
 6. `da_write` × 3 → rewrites each product description with healthcare context → preview → published ✓
 7. Returns confirmation: all 5 changes live, preview URLs for each
+8. **Visual validation** — Playwright script (run via Bash) screenshots homepage and products page at 1280px. Confirms all 5 content changes rendered correctly on the live CDN — not just preview URLs. 30 seconds. Delete script after. Never use Playwright MCP for this — it streams every browser action through context and burns tokens.
 
 The customer sees a site that looks like it was built for them. It took one prompt.
 
