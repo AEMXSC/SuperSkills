@@ -1,8 +1,36 @@
-# Pre-Demo Crisis: 30 Minutes to Call Time
+# Pre-Demo Checklist + Crisis Playbook
 
-**Trigger:** Something is broken, the call is imminent, XSC needs a diagnosis and fix immediately.
+**Primary trigger:** Run this 30 minutes before every demo call.
+If everything passes, you never need the crisis section below.
+
+**Crisis trigger:** Something is broken, call is imminent — skip to the failure mode table.
 
 **Diagnose and output the fix immediately. Do not ask clarifying questions unless the symptom is completely ambiguous.**
+
+---
+
+## 30-Minute Pre-Call Checklist — run this before every demo
+
+**Execute all checks in parallel. Flag any failure immediately.**
+
+```
+□ Open demo URL in incognito — confirm it loads without auth
+□ Run PageSpeed on demo URL — confirm 95+ (100 preferred)
+□ Open play.llmo.now in incognito — confirm it loads (fallback play)
+□ If ASO demo: paste customer URL, confirm issues appear (not zero)
+□ If EPA demo: confirm Author URL — NOT Publish URL
+□ If COA demo: open AEM Assets → select asset → "Copy URL" →
+               confirm format options visible (= DMwOA active)
+□ If GenStudio demo: confirm Firefly sandbox is live with SE
+□ If EDS/UE demo: open UE edit URL, confirm blocks load and are editable
+□ If DA demo: open da.live, confirm pages are published and accessible
+□ Open Frescopa as backup: main--frescopa--hlxsites.aem.live ✓
+□ Record a 2-min walkthrough NOW if you do not have one on file
+  (Loom or QuickTime — you will need it if anything breaks live)
+```
+
+**If all pass → you are ready. Close this use-case.**
+**If anything fails → continue to the fix section below.**
 
 ---
 

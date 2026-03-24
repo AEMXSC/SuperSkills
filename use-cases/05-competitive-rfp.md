@@ -6,6 +6,42 @@
 
 ---
 
+## Environment check — verify this BEFORE building the script
+
+**If these aren't confirmed, the 60-min arc falls apart mid-demo.**
+
+```
+1. COA / DMwOA enabled in XSC Showcase
+   → AEM Author → Assets → select asset → "Copy URL"
+   → Format options visible = DMwOA active ✓
+   → Single URL only = DMwOA not active → cut COA from the arc,
+     replace with EPA as the AI Agents anchor
+
+2. GenStudio Firefly-enabled sandbox live
+   → Confirm with your SE before building the CSC section
+   → If not ready → replace Beat 30–50 min with LLMO deep-dive
+     (play.llmo.now — zero setup, always works)
+
+3. EPA Author URL onboarded
+   → https://author-<env>.adobeaemcloud.com must be explicitly
+     onboarded, not just accessible
+   → If not onboarded → swap to Governance Agent demo instead
+
+4. LLMO external URL
+   → play.llmo.now — open in incognito, confirm it loads
+   → Never use XSC Showcase LLMO URL externally
+```
+
+**Fallback arc (if GenStudio or COA unavailable):**
+```
+0–10 min:  EDS speed story (always works — Frescopa)
+10–35 min: LLMO — play.llmo.now (zero setup)
+35–55 min: EPA + Governance Agent (Author URL only)
+55–60 min: Proof path + LLMO trial ($0 SKU)
+```
+
+---
+
 ## Demo Brief
 
 ```

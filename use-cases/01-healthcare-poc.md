@@ -6,6 +6,29 @@
 
 ---
 
+## How do you want to build this?
+
+```
+How much time do you have before the call?
+├── Tonight / overnight → YOLO Mode
+│   AI builds everything autonomously. You sleep.
+│   Wake up to: live preview URL, PageSpeed 100, Playwright screenshots,
+│   DA content published, UE wired, decisions log.
+│   Trade-off: AI picks branding defaults, repo, and block set.
+│   You review in the morning — not before.
+│   → Skip to YOLO Mode section at the bottom.
+│
+└── Now / I want to review decisions → Full Build (Steps 1–5)
+    You stay present at key checkpoints:
+    repo selection, branding, block list, pre-demo gates.
+    Trade-off: Takes 4–6 hours with you watching.
+    Best for: high-stakes CMO call, custom branding requirements,
+    or first time building for this vertical.
+    → Continue with Step 1 below.
+```
+
+---
+
 ## Step 1 — Scan existing assets in parallel before writing any code
 
 Check all three simultaneously:
@@ -51,3 +74,101 @@ Wave 3 (parallel): /code-review + /testing-blocks + /pagespeed-audit
 **Constraint:** COA requires DMwOA enabled — verify Showcase environment has it before promising it live.
 
 **Time target:** 4–6 hours to first live preview with parallel wave execution.
+
+---
+
+## YOLO Mode — Wake Up With a Finished Site
+
+**When to use:** You have the customer name, their industry, and optionally their existing site URL. You have a call tomorrow. You are done for the night.
+
+**Give the AI this before you close your laptop:**
+
+```
+Customer: [name]
+Vertical: [healthcare / insurance / pharma / etc.]
+Existing site: [URL or "none"]
+Key message for demo: [1 sentence — e.g. "patient portal modernization"]
+GitHub org: [your org]
+DA org: [your da.live org]
+Go. Wake me up when it's live.
+```
+
+**YOLO rules — AI executes all of these without stopping:**
+
+```
+Decision point                     → Rule
+No exact vertical repo match       → Clone closest match, remap branding. Never wait.
+
+No design spec + existing URL      → Run Playwright render on the live site first.
+                                     Screenshot full page. Extract palette from computed
+                                     styles and background colors — do not read raw HTML
+                                     for colors on React/Tailwind/CSS-in-JS sites.
+                                     Raw HTML will return nothing useful.
+
+No design spec + no URL            → Default vertical palette:
+                                     Healthcare: #003087 navy + #00A3E0 blue + white
+                                     Insurance: #1A3C5E navy + #E87722 orange + white
+                                     Pharma: #004B87 blue + #6CC04A green + white
+
+Block list unclear                 → Default healthcare set: hero, stats, cards, tabs,
+                                     accordion (FAQ), footer. Build all 5.
+
+Block already exists in collection → Use it. Do not rebuild.
+
+Custom fonts detected on live site → Check if self-hostable. If Google Fonts — inline
+                                     the @font-face, preload the woff2. If licensed/
+                                     proprietary — swap to closest system font and flag
+                                     in report. Never load fonts from external CDN.
+
+3rd party scripts on live site     → Do not copy analytics tags, chat widgets, cookie
+                                     banners, or A/B testing scripts into the EDS build.
+                                     EDS site is clean by design. Flag what was stripped.
+
+pagespeed-audit below 100          → Fix inline in this order:
+                                     1. Remove any runtime JS deps
+                                     2. Convert images to WebP, add width/height attrs
+                                     3. Lazy-load below-fold images
+                                     4. Defer non-critical CSS
+                                     Do not declare done below 100.
+
+hlx-admin-mcp not responding       → Check if process is running. If not — fall back to
+                                     da_update_source for all writes. Flag in report:
+                                     "CDN cache not busted — XSC must manually preview
+                                     each page in Sidekick before the call."
+
+GitHub repo creation fails         → Check gh auth status first. If token expired,
+                                     flag immediately — this blocks deploy entirely.
+                                     Do not proceed to deploy step without confirmed
+                                     GitHub access.
+
+aem-code-sync not installed        → Flag in report. Site will not sync without it.
+                                     Install URL: github.com/apps/aem-code-sync
+
+Playwright screenshot fails        → Retry once. If still failing, skip and flag in report.
+
+da_write fails                     → Retry with da_update_source + manual preview trigger.
+                                     Do not stop the build.
+
+Any ambiguity                      → Make a decision. Log it. Keep going.
+```
+
+**Wake-up report — output this when done:**
+
+```
+✓ Site live: [preview URL]
+✓ PageSpeed: [mobile score] / [desktop score]
+✓ Blocks built: [list]
+✓ DA pages published: [list with preview URLs]
+✓ UE edit URL: [url]
+✓ Playwright screenshots: 375px / 768px / 1280px ✓
+
+Decisions made overnight:
+- [repo cloned from X because Y]
+- [brand palette derived from Z]
+- [block X replaced with Block Collection equivalent]
+
+Ready for your call. Open [preview URL].
+```
+
+**The XSC's line on the call:**
+*"I had this built overnight. Here's your site — branded, PageSpeed 100, live on CDN. This is what your team would have spent 3 dev days on."*

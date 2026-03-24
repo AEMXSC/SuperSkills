@@ -120,6 +120,8 @@ npx playwright --version # should print Playwright version
 SuperSkills/
 ├── README.md                  ← This file — index and install guide
 ├── SKILL.md                   ← Master orchestrator — load this to activate
+├── setup.sh                   ← One-shot full stack install (SuperSkills + 17 EDS skills + GSD + MCPs)
+├── yolo-preflight.sh          ← Run before any overnight build — catches blockers before you sleep
 ├── demo-plays.md              ← Full scripts + exact AI prompts for all 10 plays
 ├── environment-matrix.md      ← What works where, pre-demo checklist, 9 failure modes
 ├── tech-depth.md              ← Repos, boilerplates, MCP tools, 17 EDS dev skills

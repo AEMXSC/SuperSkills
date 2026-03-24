@@ -6,6 +6,26 @@
 
 ---
 
+## Environment check — verify this BEFORE reading signals
+
+```
+GenStudio Firefly-enabled Showcase sandbox live?
+├── Yes → Full 3-beat CMO arc below ✓
+└── No  → Fallback arc:
+          Lead with LLMO (play.llmo.now — zero setup, always works)
+          Position GenStudio as the trial milestone:
+          "We will run your first campaign brief live when you
+           have sandbox access."
+          Skip Beat 1 and Beat 2. Open with LLMO traffic story instead.
+
+DMwOA enabled in Showcase? (needed for Beat 2 — one asset, every channel)
+├── Yes → Include Beat 2 as scripted ✓
+└── No  → Replace Beat 2 with Governance Agent story:
+          "One approval workflow controls what goes live everywhere."
+```
+
+---
+
 ## Read the signals — output this analysis first
 
 | Signal in prompt | What it means | How to lead |
@@ -49,3 +69,6 @@ Analytics shows which variant drove conversion. That data feeds the next GenStud
 ## Environment constraint — verify before the call
 
 Requires Firefly-enabled Showcase sandbox with GenStudio pre-configured — XSC Showcase only, not available in trial orgs. Confirm with your SE it is live. If not ready, run the recorded walkthrough and position hands-on as their trial milestone.
+
+**Fallback if GenStudio sandbox is not ready:**
+Lead with LLMO (`play.llmo.now`) as the AI capability story — it needs zero setup, always works, and lands well with CMO audiences who are watching AI eat their organic traffic. Position GenStudio as the hands-on trial milestone: *"We will run your first campaign brief live when you have the sandbox access."*

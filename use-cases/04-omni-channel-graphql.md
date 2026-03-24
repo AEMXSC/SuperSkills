@@ -6,6 +6,58 @@
 
 ---
 
+## Environment check — do this before anything else
+
+**These must be true before a single file is written. Check them now.**
+
+```
+1. AEM as a Cloud Service org with Content Fragments enabled
+   → Open AEM Author → Tools → Assets → Content Fragment Models
+   → If the menu item is missing, CF is not enabled. Stop. This demo
+     requires AEM CS with CF — not AEM Sites Trial, not Playground.
+
+2. GraphQL Explorer accessible
+   → https://author-<env>.adobeaemcloud.com/content/graphiql.html
+   → If 404 or access denied, GraphQL endpoint is not provisioned.
+     Stop and raise with your SE before building anything.
+
+3. DMwOA enabled (for Step 5 asset delivery)
+   → AEM Author → Assets → select any asset → "Copy URL"
+   → If the button shows a single URL (not format options), DMwOA
+     is NOT active. Proceed with Steps 1–4 only. Skip Step 5.
+     Flag for the call — do not promise live DMwOA asset delivery.
+
+4. Approval workflow configurable
+   → AEM Author → Tools → Workflow → Models
+   → Confirm you have edit access. Read-only = can't configure Step 7.
+```
+
+---
+
+## How do you want to build this?
+
+```
+How much time do you have before the call?
+├── Tonight / overnight → YOLO Mode
+│   AI builds CF model, 3 sample fragments, 3 GraphQL queries,
+│   3 channel previews, governance workflow, Playwright validation.
+│   Wake up to: live GraphQL endpoints, screenshots of all 3
+│   channels, compliance workflow verified.
+│   Trade-off: AI picks field names and tone variants.
+│   You review in the morning — not before.
+│   → Skip to YOLO Mode section at the bottom.
+│
+└── Now / I want to review decisions → Full Build (Steps 1–7)
+    You stay present at: CF model schema, tone variant copy,
+    GraphQL query structure, governance rule configuration.
+    Trade-off: 1–2 hours with you watching.
+    Best for: technical architect audience, compliance-sensitive
+    verticals (pharma, healthcare), or first CF demo.
+    → Continue with Step 1 below.
+```
+
+---
+
 ## Step 1 — Build the Content Fragment model
 
 Create the CF model schema with these fields:
@@ -56,3 +108,58 @@ Playwright Bash script loads all 3 channel previews simultaneously, captures scr
 Configure one approval workflow: `complianceApproved = false` blocks all channel delivery. This is the close: *"One approval controls what goes live everywhere — patient-safe content cannot ship without compliance sign-off regardless of channel."*
 
 **Time target:** Full working demo with live GraphQL queries in 1–2 hours.
+
+---
+
+## YOLO Mode — Wake Up With a Live GraphQL Demo
+
+**When to use:** Environment checks passed. You have AEM CS access. Call is tomorrow.
+
+**Give the AI this before you close your laptop:**
+
+```
+AEM Author URL: https://author-<env>.adobeaemcloud.com
+Vertical / industry: [healthcare / pharma / financial / etc.]
+Key governance story: [e.g. "compliance blocks patient content"]
+Go. Wake me up when the GraphQL queries are live.
+```
+
+**YOLO rules — AI executes all of these without stopping:**
+
+```
+Decision point                      → Rule
+CF model field names unclear        → Use standard set: headline, body, cta,
+                                      channelOverrides, complianceApproved. Always.
+Tone variants unclear               → Default 3: patient-facing (plain language),
+                                      clinical (precise/abbreviated), marketing
+                                      (benefit-led). Adapt labels to vertical.
+GraphQL query structure unclear     → Each query returns minimum fields for that
+                                      channel. Never return all fields to all channels.
+DMwOA not enabled                   → Skip Step 5. Build Steps 1–4 + 6–7 only.
+                                      Flag in report — do not build around it.
+Approval workflow edit access fails → Flag immediately. Step 7 requires edit access.
+                                      Cannot substitute with a screenshot.
+"One edit → three refresh" broken   → Debug before declaring done. This is the
+                                      demo moment — do not skip it.
+GraphQL Explorer 404                → Flag immediately. Build is blocked.
+```
+
+**Wake-up report — output this when done:**
+
+```
+✓ CF Model: [model name] — fields: [list]
+✓ Sample fragments: 3 created (patient-facing / clinical / marketing)
+✓ GraphQL endpoints live:
+   patient-portal: [query URL] ✓
+   mobile-app:     [query URL] ✓
+   clinical-staff: [query URL] ✓
+✓ Channel previews: Playwright screenshots of all 3 ✓
+✓ "One edit → three refresh" validated ✓
+✓ Compliance workflow: complianceApproved=false blocks all delivery ✓
+⚠ DMwOA: [enabled / not enabled — skipped]
+
+Ready for your call. Demo sequence: CF model → fragment edit → all 3 channels refresh.
+```
+
+**The XSC's line on the call:**
+*"Watch this — I change one field in the content fragment and all three channels update. Patient portal, mobile app, clinical staff alert. One source. One approval. Everywhere."*
