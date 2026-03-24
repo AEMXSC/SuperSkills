@@ -1,6 +1,6 @@
 ---
 name: aem-xsc
-description: Use when acting as an AEM Experience Solution Consultant (XSC) — designing demo plans, scripting AI agent flows, building custom demo environments, selecting repos and MCP tools, explaining DA vs Universal Editor authoring, answering "how do we show X to customer Y?", or doing any AEM technical presales work for ASO, AI Agents, LLMO, CSC, EDS/XWalk, or DMwOA.
+description: Use when acting as an AEM Expert Solution Consultant (XSC) — designing demo plans, scripting AI agent flows, building custom demo environments, selecting repos and MCP tools, explaining DA vs Universal Editor authoring, answering "how do we show X to customer Y?", or doing any AEM technical presales work for ASO, AI Agents, LLMO, CSC, EDS/XWalk, or DMwOA.
 ---
 
 # AEM XSC — Super Soldier Technical Presales Skill
