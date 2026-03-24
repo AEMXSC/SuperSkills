@@ -112,6 +112,26 @@ Playwright Bash script loads all 3 channel previews simultaneously, captures scr
 
 Configure one approval workflow: `complianceApproved = false` blocks all channel delivery. This is the close: *"One approval controls what goes live everywhere — patient-safe content cannot ship without compliance sign-off regardless of channel."*
 
+## Step 8 — Build campaign pages (EPA demo setup)
+
+Create `/campaign/` subfolder with 5 pages on the channel preview site:
+- `/campaign/index` — campaign hub
+- `/campaign/patient-portal` — patient-facing content
+- `/campaign/mobile-app` — mobile-optimized content
+- `/campaign/clinical-staff` — clinical staff content
+- `/campaign/contact` — CTA/conversion
+
+Content tone: **formal US English** — EPA "before" state.
+
+`da_write` all 5 pages. This extends the demo: CF → 3 channels → EPA regional variants, all on the same call.
+
+**EPA prompt for the call (save this now):**
+```
+Update hero headlines and product descriptions across all pages
+under /campaign/ to reflect [EMEA / APAC / LatAm] regional tone.
+Show me a preview before applying.
+```
+
 **Time target:** Full working demo with live GraphQL queries in 1–2 hours.
 
 ---
@@ -147,6 +167,20 @@ Approval workflow edit access fails → Flag immediately. Step 7 requires edit a
 "One edit → three refresh" broken   → Debug before declaring done. This is the
                                       demo moment — do not skip it.
 GraphQL Explorer 404                → Flag immediately. Build is blocked.
+
+Campaign pages (EPA demo setup)    → Build 5 EDS pages in /campaign/ on the
+                                      channel preview site scaffolded in Step 4:
+                                        /campaign/index
+                                        /campaign/[channel-1]   ← patient portal
+                                        /campaign/[channel-2]   ← mobile app
+                                        /campaign/[channel-3]   ← clinical staff
+                                        /campaign/contact
+                                      Content: vertical-appropriate, formal US
+                                      English (EPA "before" state).
+                                      Publish all 5 via da_write.
+                                      EPA prompt for the call:
+                                      "Update all pages under /campaign/ to reflect
+                                      [EMEA / APAC] regional tone. Preview first."
 ```
 
 **Wake-up report — output this when done:**
@@ -163,7 +197,16 @@ GraphQL Explorer 404                → Flag immediately. Build is blocked.
 ✓ Compliance workflow: complianceApproved=false blocks all delivery ✓
 ⚠ DMwOA: [enabled / not enabled — skipped]
 
-Ready for your call. Demo sequence: CF model → fragment edit → all 3 channels refresh.
+✓ EPA demo ready:
+  Campaign pages (5): [preview URLs for /campaign/ pages]
+  Content: [vertical]-appropriate, formal US English tone
+  Author URL: https://author-<env>.adobeaemcloud.com
+  EPA prompt (copy-paste on the call):
+  "Update hero headlines and product descriptions across all pages
+  under /campaign/ to reflect [EMEA / APAC / LatAm] regional tone.
+  Show me a preview before applying."
+
+Ready for your call. Demo sequence: CF model → fragment edit → all 3 channels refresh → EPA regional variants.
 ```
 
 **The XSC's line on the call:**

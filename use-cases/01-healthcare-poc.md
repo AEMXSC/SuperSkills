@@ -64,12 +64,34 @@ Wave 3 (parallel): /code-review + /testing-blocks + /pagespeed-audit
 - Create GitHub repo, install `aem-code-sync` app, push code
 - `da_write` all content pages → CDN preview triggered → published
 
+## Step 4b — Build campaign pages (EPA demo setup)
+
+Create `/campaign/` subfolder with 5 pages in DA:
+- `/campaign/index` — campaign hub
+- `/campaign/[service-1]` — adapt to vertical (healthcare: patient-programs)
+- `/campaign/[service-2]` — adapt to vertical (healthcare: clinical-services)
+- `/campaign/[service-3]` — adapt to vertical (healthcare: wellness-hub)
+- `/campaign/contact` — CTA/conversion
+
+Content tone: **formal US English** — this is the EPA "before" state. Do not make it casual or regional.
+
+`da_write` all 5 pages. Confirm live on CDN before moving on.
+
+**EPA prompt for the call (save this now):**
+```
+Update hero headlines and product descriptions across all pages
+under /campaign/ to reflect [EMEA / APAC / LatAm] regional tone.
+Show me a preview before applying.
+```
+
 ## Step 5 — Pre-demo gates (all required before declaring done)
 
 - [ ] `/pagespeed-audit` scores 100 on mobile and desktop
 - [ ] Playwright Bash script: screenshots at 375px / 768px / 1280px — brand colors, layout, no console errors. Delete script after.
 - [ ] All DA pages live and accessible via preview URL
 - [ ] UE edit URL opens and annotations are visible on every block
+- [ ] All 5 `/campaign/` pages live and accessible
+- [ ] EPA prompt saved and ready to paste on the call
 
 **Constraint:** COA requires DMwOA enabled — verify Showcase environment has it before promising it live.
 
@@ -172,6 +194,23 @@ da_write fails                     → Retry with da_update_source + manual prev
                                      Do not stop the build.
 
 Any ambiguity                      → Make a decision. Log it. Keep going.
+
+Campaign pages (EPA demo setup)   → Always build these as part of the site.
+                                     Create /campaign/ subfolder with 5 pages:
+                                       /campaign/index        ← campaign hub
+                                       /campaign/[service-1]  ← adapt to vertical
+                                       /campaign/[service-2]  ← adapt to vertical
+                                       /campaign/[service-3]  ← adapt to vertical
+                                       /campaign/contact      ← CTA/conversion
+                                     Healthcare defaults:
+                                       patient-programs, clinical-services,
+                                       wellness-hub, contact
+                                     Content tone: US English, formal (this is
+                                     the EPA "before" state — do not make it
+                                     casual or regional).
+                                     Publish all 5 via da_write.
+                                     These pages make the EPA demo runnable
+                                     the moment the XSC opens Author URL.
 ```
 
 **Wake-up report — output this when done:**
@@ -183,6 +222,15 @@ Any ambiguity                      → Make a decision. Log it. Keep going.
 ✓ DA pages published: [list with preview URLs]
 ✓ UE edit URL: [url]
 ✓ Playwright screenshots: 375px / 768px / 1280px ✓
+
+✓ EPA demo ready:
+  Campaign pages (5): [preview URLs for /campaign/ pages]
+  Content: [vertical]-appropriate, formal US English tone
+  Author URL: https://author-<env>.adobeaemcloud.com
+  EPA prompt (copy-paste on the call):
+  "Update hero headlines and product descriptions across all pages
+  under /campaign/ to reflect [EMEA / APAC / LatAm] regional tone.
+  Show me a preview before applying."
 
 Decisions made overnight:
 - [repo cloned from X because Y]

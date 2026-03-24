@@ -148,6 +148,26 @@ Wave 2 (parallel): /building-blocks → JS + CSS + UE model JSON per block
 **Scripted authoring flow for the demo:**
 Change hero copy → update one card → publish → Lighthouse re-run. This is the live moment. Practice it.
 
+## Step 4b — Build campaign pages (EPA demo setup)
+
+Create `/campaign/` subfolder with 5 pages in DA:
+- `/campaign/index` — campaign hub
+- `/campaign/[page-1]` — adapt to customer's industry
+- `/campaign/[page-2]` — adapt to customer's industry
+- `/campaign/[page-3]` — adapt to customer's industry
+- `/campaign/contact` — CTA/conversion
+
+Content tone: **formal US English** — this is the EPA "before" state.
+
+`da_write` all 5 pages. This is the second act of the demo — migration proof point first, then EPA regional variants on the same site.
+
+**EPA prompt for the call (save this now):**
+```
+Update hero headlines and product descriptions across all pages
+under /campaign/ to reflect [EMEA / APAC / LatAm] regional tone.
+Show me a preview before applying.
+```
+
 ---
 
 ## Step 5 — Results packaging (30 min, AI generates)
@@ -269,6 +289,20 @@ hlx-admin-mcp not responding        → Fall back to da_update_source. Flag: CDN
 
 GitHub auth expired                 → Flag immediately. Blocks deploy entirely.
 aem-code-sync not installed         → Flag. Install: github.com/apps/aem-code-sync
+
+Campaign pages (EPA demo setup)    → After importing the 3 customer pages,
+                                      build 5 campaign pages in /campaign/:
+                                        /campaign/index        ← campaign hub
+                                        /campaign/[page-1]     ← adapt to CMS vertical
+                                        /campaign/[page-2]
+                                        /campaign/[page-3]
+                                        /campaign/contact      ← CTA/conversion
+                                      Content: based on customer's industry,
+                                      formal US English tone (EPA "before" state).
+                                      Publish all 5 via da_write.
+                                      This makes the EPA demo runnable immediately
+                                      after the migration proof point — same call,
+                                      second act.
 ```
 
 **Wake-up report — output this when done:**
@@ -287,6 +321,15 @@ aem-code-sync not installed         → Flag. Install: github.com/apps/aem-code-
 ✓ UE edit URL: [url] — annotations visible on all blocks ✓
 ✓ Playwright screenshots: all 3 pages at 1280px + 375px ✓
 ✓ Customer session structure: drafted (Step 6 format)
+
+✓ EPA demo ready:
+  Campaign pages (5): [preview URLs for /campaign/ pages]
+  Content: [customer industry]-appropriate, formal US English tone
+  Author URL: https://author-<env>.adobeaemcloud.com
+  EPA prompt (copy-paste on the call):
+  "Update hero headlines and product descriptions across all pages
+  under /campaign/ to reflect [EMEA / APAC / LatAm] regional tone.
+  Show me a preview before applying."
 
 Decisions made overnight:
 - [SPA detected — Playwright pre-render used]
