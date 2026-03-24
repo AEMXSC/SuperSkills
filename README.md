@@ -1,7 +1,7 @@
 # AEM XSC Super Soldier Skill Pack
 
 > The most experienced AEM XSC on your team — available at 11pm before a CMO call.
-> Works in Claude, GitHub Copilot, Gemini, Cursor, Windsurf, or any AI assistant.
+> Works in Claude Code, Cursor, Windsurf, and GitHub Copilot.
 
 XSCs do two things: **advise** and **build**. This skill does both.
 
@@ -49,31 +49,15 @@ Every scenario covers all six dimensions of the XSC role:
 
 ## Install
 
-### Advisor-only (any AI assistant — 60 seconds)
+### SuperSkill — Claude Code, Cursor, Windsurf, Copilot
 
-Just the skill files. Demo scripts, objection handling, competitive intel, environment guidance.
-
-**Claude Code:**
-```bash
-npx skills add https://github.com/AEMXSC/SuperSkills
-```
-
-**GitHub Copilot:** Clone repo — `.github/copilot-instructions.md` activates automatically.
-**Cursor:** Open folder — `.cursor/rules` activates automatically.
-**Windsurf:** Open folder — `.windsurfrules` activates automatically.
-**Gemini / ChatGPT:** Paste `SKILL.md` as your first message.
-
----
-
-### Full Build Stack (Claude Code — enables all BUILD scenarios)
-
-Installs everything: SuperSkills + 17 EDS skills + GSD parallel execution + MCP servers + AEM CLI + Playwright.
+One command. Installs everything: SuperSkills + 17 EDS skills + GSD parallel execution + MCP servers + AEM CLI + Playwright.
 
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/AEMXSC/SuperSkills/main/setup.sh)
 ```
 
-**What gets installed automatically:**
+Works in any agent with terminal access and MCP support.
 
 | Tool | Purpose |
 |---|---|
@@ -141,15 +125,14 @@ SuperSkills/
 
 ---
 
-## LLM Plugin Support
+## Agent Support
 
-| AI Assistant | File | Activation |
-|---|---|---|
-| **Claude Code** | `.claude-plugin/plugin.json` | `npx skills add https://github.com/AEMXSC/SuperSkills` |
-| **GitHub Copilot** | `.github/copilot-instructions.md` | Auto-loads when repo is cloned |
-| **Cursor** | `.cursor/rules` | Auto-applied when folder is opened |
-| **Windsurf** | `.windsurfrules` | Auto-applied when folder is opened |
-| **Gemini / ChatGPT** | `SKILL.md` | Paste as system prompt |
+| Agent | Activation |
+|---|---|
+| **Claude Code** | `npx skills add https://github.com/AEMXSC/SuperSkills` or `setup.sh` |
+| **Cursor** | Run `setup.sh` — `.cursor/rules` activates automatically |
+| **Windsurf** | Run `setup.sh` — `.windsurfrules` activates automatically |
+| **GitHub Copilot** | Run `setup.sh` — `.github/copilot-instructions.md` activates automatically |
 
 ---
 
