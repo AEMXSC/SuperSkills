@@ -69,6 +69,7 @@ Works in any agent with terminal access and MCP support.
 | DA MCP | Write + preview + publish DA content programmatically |
 | hlx-admin MCP | `da_write` — write + CDN bust in one call |
 | n8n MCP | 525+ workflow automation nodes |
+| helix-mcp | Bulk preview/publish via admin API — faster than individual da_write calls |
 
 **Manual steps after setup (printed by the script):**
 

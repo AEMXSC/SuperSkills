@@ -88,6 +88,11 @@ claude mcp add n8n-mcp -- npx n8n-mcp 2>/dev/null \
   && ok "n8n MCP (525+ workflow nodes)" \
   || warn "n8n MCP — may already be configured"
 
+# helix-mcp (bulk preview/publish — requires HELIX_ADMIN_API_TOKEN, configured in manual steps)
+claude mcp add helix-mcp -- npx https://github.com/cloudadoption/helix-mcp 2>/dev/null \
+  && ok "helix-mcp (bulk preview/publish — add token in manual steps)" \
+  || warn "helix-mcp — may already be configured"
+
 echo ""
 
 # ── 7. VSCode MCP config ─────────────────────────────────────
@@ -107,6 +112,14 @@ else
     },
     "hlx-admin": {
       "url": "http://localhost:3000"
+    },
+    "helix-mcp": {
+      "command": "npx",
+      "args": ["https://github.com/cloudadoption/helix-mcp"],
+      "env": {
+        "HELIX_ADMIN_API_TOKEN": "YOUR_TOKEN_HERE",
+        "RUM_DOMAIN_KEY": "YOUR_RUM_KEY_HERE"
+      }
     }
   }
 }
@@ -142,9 +155,15 @@ echo "  4. DA ORG"
 echo "     • Confirm your DA org at: https://da.live"
 echo "     • Each new project needs fstab.yaml pointing to your DA org"
 echo ""
-echo "  5. HLX-ADMIN LOCAL SERVER (required for da_write)"
+echo "  5. HLX-ADMIN LOCAL SERVER (required for da_write CDN bust)"
 echo "     • Run in a separate terminal before any BUILD:"
 echo "       npx @adobe/hlx-admin-mcp"
+echo ""
+echo "  6. HELIX-MCP TOKEN (required for bulk preview/publish)"
+echo "     • Get your API token: https://www.aem.live/docs/admin-apikeys"
+echo "       OR capture auth_token cookie from admin.hlx.page/login"
+echo "     • Add to .vscode/mcp.json → helix-mcp → env → HELIX_ADMIN_API_TOKEN"
+echo "     • RUM_DOMAIN_KEY: get from your AEM org admin"
 echo ""
 echo "────────────────────────────────────────────────────────"
 echo -e "${GREEN}Setup complete. You have XSC superpowers.${NC}"
