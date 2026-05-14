@@ -134,6 +134,23 @@ SuperSkills/
 | **Cursor** | Run `setup.sh` — `.cursor/rules` activates automatically |
 | **Windsurf** | Run `setup.sh` — `.windsurfrules` activates automatically |
 | **GitHub Copilot** | Run `setup.sh` — `.github/copilot-instructions.md` activates automatically |
+| **Claude.ai chat** | See instructions below — cross-file routing requires all files in context |
+
+### Claude.ai Chat (No Terminal)
+
+SKILL.md routes to companion files (demo-plays.md, use-cases/06, etc.) — but in claude.ai chat those are dead references unless the files are in context. **Two options:**
+
+**Option A — Claude.ai Project (recommended):**
+1. Create a new Project at claude.ai
+2. Upload all SuperSkills files as Project knowledge (SKILL.md + all companions + use-cases/)
+3. SKILL.md routing works correctly — Claude reads the right companion file on demand
+
+**Option B — Attachments per session:**
+- Paste SKILL.md into chat + attach the specific file you need for that session
+- Prepping an LLMO call → attach `use-cases/06-llmo-ai-search.md`
+- Scripting a demo → attach `demo-plays.md`
+- Competitive objection → attach `competitive-intel.md`
+- Building → attach `tech-depth.md` (note: Build Mode outputs plans + commands but won't execute without terminal access)
 
 ---
 

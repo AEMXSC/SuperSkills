@@ -67,7 +67,7 @@ LLMO tracks the full AI discovery funnel — not just "where am I cited":
    - 5-minute TTL vs Prerender.io's 6+ hour minimum
    - Injects summaries, FAQs, schema for AI — not just prerender
    - *"This is essentially Prerender.io + AI-only + Adobe governance, included in LLMO."*
-5. AEM auto-optimize (Q1 FY26): LLMO commits patches to the repo, triggers Cloud Manager, authors review in AEM, publish via normal workflow. No competitor can do this.
+5. AEM auto-optimize: LLMO commits patches to the repo, triggers Cloud Manager, authors review in AEM, publish via normal workflow. No competitor can do this. (Confirm GA status with Tiger Team before demoing live.)
 
 ### Close (5 min)
 
@@ -147,8 +147,8 @@ Gradial is emerging as a content automation layer. If it comes up: *"Gradial aut
 
 | Gap | What to say |
 |---|---|
-| AEM CS auto-optimize not GA | *"Edge optimization is live now. AEM CS one-click deployment is Q1 FY26 — we can start with edge and migrate."* |
-| AA integration manual until Q1 CY26 | *"Native connector is Q1 CY26. Until then it's export-based — workable for a pilot."* |
+| AEM CS auto-optimize — verify current GA status | *"Edge optimization is live now. Confirm AEM CS one-click deployment status with your Tiger Team contact before claiming it's GA."* |
+| AA integration — verify current GA status | *"Native AA connector targeted H1 CY26. Confirm with Tiger Team before promising — until then it's export-based, which works for a pilot."* |
 | No feedback loop to ChatGPT/Perplexity | *"LLMO surfaces the issue and fixes your content. Pushing corrections directly to the LLMs is not how that works at a platform level — no vendor has this."* |
 | ChatGPT first; Perplexity + Google AI Overviews next | *"GA covers ChatGPT. Perplexity and Google AI Overviews are next on the roadmap."* |
 | No Claude / Alexa / AWS Bedrock integrations | Flag only if asked. Rare objection. |

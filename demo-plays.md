@@ -369,6 +369,8 @@ Prompt: "Which of these are also legal-approved for use in paid media in the EU?
 
 ### LLM Optimizer (LLMO)
 
+> **Full script here:** [use-cases/06-llmo-ai-search.md](use-cases/06-llmo-ai-search.md) — complete 20-min demo, Profound/Scruncher/Prerender competitive responses, honest gaps table, GEO audit flow, overnight handoff. Load that file when you're prepping an LLMO call. Below is the quick-reference summary.
+
 **Value:** Optimize AEM content to be cited and ranked by LLMs (ChatGPT, Perplexity, Gemini, etc.). The emerging channel for AI-generated answers.
 
 **Who owns demos:** XSC Tiger Team. File requests via XSC request process (product "Sites" until LLMO is fully catalogued).
@@ -379,23 +381,27 @@ Prompt: "Which of these are also legal-approved for use in paid media in the EU?
 - Customer TBYB: customer trial org when eligible
 - ⚠ Internal orgs show many brands — NEVER share externally
 
-**Demo script (external, generic):**
+**Two-tool demo story (LLMO + GEO audit):**
 
+| Tool | What it measures | Output |
+|---|---|---|
+| **Citation checker** | Word overlap — how much of the human-visible page an AI crawler can actually read | Score 0–100, Grade A–F |
+| **GEO audit** | Structural signals — JSON-LD, robots.txt, canonical, URL health, heading structure | 16-check score 0–100 + EDS fix per gap |
+
+Run citation checker first (instant hook — "you're a Grade C, here's why"), then GEO audit for the structural diagnosis. EDS closes both gaps natively.
+
+**Demo script (external, generic — `play.llmo.now`):**
 ```
-Scenario: A brand's product pages answer common customer questions perfectly — but when
-customers ask ChatGPT or Perplexity, competitor content gets cited, not theirs.
-
 Step 1: Open play.llmo.now → Frescopa demo
-  → Show current LLM citation score for a Frescopa product page
-  → Value: "This is your brand's presence in AI-generated answers — a channel most brands
-    aren't optimizing yet."
+  → Show current LLM citation score
+  → "This is your brand's presence in AI-generated answers."
 
-Step 2: Show LLMO recommendations for a page
-  → Surface: missing structured data, thin answer content, poor LLM-readable heading structure
-  → Value: "These are the same signals LLMs use to decide what to cite. We can measure them."
+Step 2: Show LLMO recommendations
+  → Surface: missing structured data, thin answer content, poor heading structure
+  → "These are the signals LLMs use to decide what to cite."
 
-Step 3: Show before/after — apply an LLMO recommendation, re-score
-  → Value: "Every improvement here is a better chance your brand gets cited instead of your competitor."
+Step 3: Show before/after — apply a recommendation, re-score
+  → "Every improvement here is a better chance your brand gets cited instead of your competitor."
 ```
 
 **LLMO "Optimize at Edge" — kill the dev bandwidth objection:**
@@ -410,11 +416,6 @@ Step 3: Show before/after — apply an LLMO recommendation, re-score
 **Trial access:** Free for AEM Cloud customers — up to 200 prompts, no barrier
 **Product URL:** `https://llmo.now`
 **Chrome extension:** Available for any site evaluation — no AEM instance required
-
-**For TBYB motions:**
-- Product is self-service; XSC provides guidance and triage — not manual operation
-- Position SC/XSC as sherpas, not full-time operators
-- Direct customers to the self-service quick start; escalate to Tiger Team only for blockers
 
 **Objection — "LLM traffic isn't measurable yet":**
 > "You're right that last-click attribution is still evolving. But LLMO gives you the leading indicators — content that LLMs prefer to cite. Teams that optimize now own the channel before their competitors figure out it exists."
