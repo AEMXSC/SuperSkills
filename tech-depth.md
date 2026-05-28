@@ -923,3 +923,45 @@ For access across all projects:
   }
 }
 ```
+
+
+---
+
+## Experience Workspace
+
+> **Docs:** https://docs.da.live/about/early-access/experience-workspace
+> **Status:** Early Access — verify org eligibility before demoing
+
+Experience Workspace is the next-generation DA authoring surface. Same DA backend and EDS pipeline — new canvas-based editor with WYSIWYG, built-in AI assistant, enterprise brand context, agent collaboration, and author memory. It **replaces** the classic DA text editor for configured orgs/paths.
+
+### What It Is vs. Classic DA vs. UE
+
+| Surface | Where You Edit | Editing Style | AI Built-in | Status |
+|---|---|---|---|---|
+| Classic DA | da.live text editor | Google Docs-style | No | GA |
+| **Experience Workspace** | da.live canvas | WYSIWYG + AI assistant | Yes | Early Access |
+| Universal Editor | Live page (in-browser) | In-context click-to-edit | No | GA |
+
+**The pitch:** "Same DA content pipeline — Google Docs simplicity — but now with a visual canvas and an AI co-author built in. One click from the Sidekick, no new tools to learn."
+
+### Enable Experience Workspace
+
+1. **Prerequisite:** Quick Edit must be implemented in the site's codebase first.
+2. Open DA config admin: `https://da.live/config#/<org>/`
+3. Add key: `editor.path` — value: `/<org>/<site>=https://da.live/canvas#`
+4. Save. The canvas editor replaces the classic DA editor for that site.
+
+> Use the **experience-workspace** Claude Code plugin (`/update-config`) to automate step 2–4.
+
+### Key Demo Talking Points
+
+- **Same pipeline.** Everything authors do in Experience Workspace goes through the exact same DA → EDS → CDN pipeline. No new infra.
+- **AI-native.** The AI assistant is context-aware of the site's brand, past content, and agent history. Not just a text co-pilot — a brand-aware collaborator.
+- **Agent collaboration.** Claude Code agents can write content directly into Experience Workspace; authors see it appear in their canvas in real time.
+- **No training required.** Authoring in the canvas feels like Figma or Canva — intuitive for non-technical authors.
+
+### Guardrails
+
+- Early Access — not yet GA. Do not demo without confirming org eligibility.
+- Requires Quick Edit wiring in the site code (EW uses the Quick Edit module to identify editable regions).
+- Canvas editor replaces the classic DA editor org-wide once enabled — communicate this to authors before enabling.
