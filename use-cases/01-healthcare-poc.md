@@ -96,6 +96,10 @@ Show me a preview before applying.
 
 **Constraint:** COA requires DMwOA enabled — verify Showcase environment has it before promising it live.
 
+**If this build also stands up Content Fragments** (branded CF content alongside the EDS site), do not hand-roll it here — run [`skills/aem-cf-brand-buildout`](../skills/aem-cf-brand-buildout/SKILL.md). It carries the copy → rebrand → image swap → publish → **verify** → rename → audit motion, including the replication check that proves fragments actually went live. Add one gate above:
+
+- [ ] Every fragment reports `cq:lastReplicationAction === 'Activate'` — `publish` returning OK is not proof
+
 **Time target:** 4–6 hours to first live preview with parallel wave execution.
 
 ---

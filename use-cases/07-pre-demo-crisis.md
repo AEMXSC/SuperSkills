@@ -27,6 +27,19 @@ If everything passes, you never need the crisis section below.
 □ Open Frescopa as backup: main--frescopa--hlxsites.aem.live ✓
 □ Record a 2-min walkthrough NOW if you do not have one on file
   (Loom or QuickTime — you will need it if anything breaks live)
+
+If the demo involves Content Fragments (use-cases 04/08/12/13/14):
+□ Confirm the ENVIRONMENT — get-all-aem-author-environments.
+  The tier is NOT in the URL. author-p153659-e1614585 is Showcase PROD.
+□ Confirm every fragment is actually live — NOT that publish returned OK:
+  aem.get('<path>/jcr:content.json') → r.body['cq:lastReplicationAction']
+  must equal 'Activate'. Check the ASSETS too, not just the fragments.
+□ Open the rendered demo and look at the images. A published fragment
+  pointing at an unpublished asset renders broken and publish reported success.
+□ If demoing variations: confirm via ;variation=<name> on the persisted
+  query, NOT the CF editor JSON preview (which always renders Main).
+□ Search for duplicates: search-aem-fragments on your title.
+  Two hits = someone retried a batch write that had already succeeded.
 ```
 
 **If all pass → you are ready. Close this use-case.**
@@ -69,6 +82,51 @@ This is not a retreat. It is the trial close.
 | UE not loading blocks | Missing `component-definition.json` | Copy from ise-boilerplate, redeploy |
 | DA preview not triggering | `aem-code-sync` not installed | Install at `github.com/apps/aem-code-sync`, re-push a commit |
 | Agents not in Playground | Wrong org | Use XSC Showcase — Playground is personal folders only |
+
+## Content Fragment / MCP failures — the ones that look like something else
+
+**Most of these present as "it didn't work" when it did.** Diagnose before you act — the wrong reflex makes it worse.
+
+| Symptom | Actual cause | Fix |
+|---|---|---|
+| `404 Job not found` on create/patch | **The write SUCCEEDED.** Batch ops are async; the result fetch lost the race | **Do not retry.** Verify with `search-aem-fragments` / `search-aem-fragment-models` / variations `action=list` |
+| Duplicate fragments or models appeared | Someone retried on that 404 | Delete the extras. Check `referenced-by` on each before deleting — pick the one things point at |
+| Published, but the site shows old content | `SUCCESS_TRIGGERED` is a **trigger, not a result** | `aem.get('<path>/jcr:content.json')` → `r.body['cq:lastReplicationAction']` must be `Activate`. Re-publish if not |
+| `cq:lastReplicationAction` is `undefined` | `aem.get()` **envelopes** the response | Read `r.body[...]`, not `r[...]`. It is almost certainly published |
+| Image broken in the rendered demo | Fragment published, **referenced asset did not** | Re-publish with `filterReferencesByStatus: ['DRAFT','UNPUBLISHED','MODIFIED']` |
+| Image 403 from the brand CDN | Wrong URL pattern for that brand | Test ONE image before bulk-patching. Citizens: `www.citizensbank.com/dam/...` 403s; `p1.aprimocdn.net/citizensbank/...` works |
+| Patch returns `412` / ETag conflict | Stale ETag — **publishing changes it** | Re-fetch: `search-aem-fragments` `responseFormat=summary` returns id + eTag together. Retry |
+| Variation "missing" in the editor | CF editor JSON preview **always renders Main** | Not a bug. Verify with `;variation=<name>` on the persisted query |
+| `No approval received` on a read | Intermittent gating on single-fragment / model-schema tools | Just retry. Prefer `manage-aem-fragments-batch` for all writes — it is not gated |
+| Model delete says `deletedCount: 0` | Async; returns `QUEUED` then completes | Verify with `search-aem-fragment-models`. It probably worked |
+| Wrote to the wrong environment | **Tier is not derivable from the URL** | See below — this is the serious one |
+
+### You wrote to the wrong environment
+
+The worst case, because it affects other people. `author-p153659-e1614585` is Showcase **prod** and nothing in the string says so.
+
+```
+1. Establish where you actually wrote:
+   get-all-aem-author-environments → match your authorUrl → read `environment`
+2. Find what you created:
+   search-aem-fragments / search-aem-fragment-models, filter modifiedBy=you,
+   modifiedAfter=<when you started>
+3. Before deleting ANYTHING:
+   bulk-get-aem-fragments-referenced-by → is someone else's demo pointing at it?
+   Referenced → leave it, tell the owner. Not referenced → delete.
+4. Do not "clean up" content you did not create. If you cannot tell,
+   say so and leave it.
+```
+
+**Then tell whoever owns that environment.** A stray model in `/conf/global` is everyone's problem, and silence costs a colleague their demo.
+
+### If a CF demo is unrecoverable
+
+Fall back to a **read-only** CF story on content that already works — Frescopa in XSC Showcase has real reference depth. Semantic search (`?{}?`) and `get-aem-fragment-references-tree` both demo in seconds, need no writes, and land harder than a fragment edit:
+
+*"Let me show you something more interesting than an edit — watch me find content by meaning, and then show you everything that would break if we changed it."*
+
+Reads are safe on any environment. That is why they are the fallback.
 
 ## If nothing fixes in 30 minutes
 

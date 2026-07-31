@@ -208,6 +208,11 @@ For **Content Fragments** rather than pages: `create-aem-launch` (sources are CF
 
 **Do not skip the dry run in front of a customer.** `dryRun=true` on the fragment path and the launch diff on the page path exist precisely so you can show *review before commit*. Running a destructive bulk edit live, even successfully, teaches the room the wrong lesson about the platform.
 
+**Two things that will bite you here:**
+
+- **A batch write returning `404 Job not found` has usually SUCCEEDED.** Never retry — verify with `search-aem-fragments` first. Retrying a bulk find-replace creates duplicates across the whole scope, which on a 4,000-page demo is not recoverable in the time you have.
+- **Promotion is async and publish reports a trigger, not a result.** Poll `get-aem-launch-job-status`, then confirm `r.body['cq:lastReplicationAction'] === 'Activate'` on a sample of promoted content before telling the customer it shipped.
+
 ---
 
 ## Step 5 — Results packaging (30 min, AI generates)
