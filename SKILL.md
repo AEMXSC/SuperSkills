@@ -63,6 +63,12 @@ Load these when you need the complete scenario: qualification tree, discovery qu
 | Personalize demo site content via MCP overnight | → [use-cases/08-mcp-content-push.md](use-cases/08-mcp-content-push.md) |
 | CSC deal — deal signals, GenStudio narrative, CMO arc | → [use-cases/09-csc-deal.md](use-cases/09-csc-deal.md) |
 | Gartner MQ / "Optimizely is #1" counter-narrative | → [use-cases/10-gartner-mq.md](use-cases/10-gartner-mq.md) |
+| DA authoring positioning — "do authors learn a new tool?", DA vs SharePoint/GDocs | → [use-cases/11-da-live-authoring.md](use-cases/11-da-live-authoring.md) |
+| Scheduled / multi-brand campaign, staging content, "go live at midnight", launches | → [use-cases/12-campaign-launches.md](use-cases/12-campaign-launches.md) |
+| Content sprawl, migration scoping, "authors can't find content", semantic search | → [use-cases/13-semantic-content-discovery.md](use-cases/13-semantic-content-discovery.md) |
+| Compliance / regulated vertical, blast radius, audit trail, safe deprecation | → [use-cases/14-content-governance-audit.md](use-cases/14-content-governance-audit.md) |
+
+**Content Fragment work routes by backend.** CF / Sites / Assets / Launches on AEM Cloud Service → the `aem-content` + `aem` MCP servers (`tech-depth.md` → *AEM Cloud Service MCP*). EDS document authoring → DA MCP + `hlx-admin-mcp`. Do not mix them.
 
 ### Environments
 | Request | Go to |

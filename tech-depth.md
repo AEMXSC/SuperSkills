@@ -867,6 +867,94 @@ Adobe IMS handles auth automatically for all Adobe MCP endpoints — no tokens o
 
 10 tools: `da_list_sources`, `da_get_source`, `da_create_source`, `da_update_source`, `da_delete_source`, `da_copy_content`, `da_move_content`, `da_get_versions`, `da_lookup_media`, `da_lookup_fragment`
 
+### AEM Cloud Service MCP — `aem-content` + `aem`
+
+Two servers, same host as DA MCP, same IMS auth (no tokens).
+
+**These are the AEM as a Cloud Service authoring APIs — not EDS/DA.** Route by deal type:
+- Deal is **EDS** (DA-authored, `.aem.page`) → DA MCP + `hlx-admin-mcp`
+- Deal is **Cloud Service** (Content Fragments, Sites, Assets, Launches) → the two servers below
+
+| Server | Endpoint | Scope |
+|---|---|---|
+| `aem-content` | `https://mcp.adobeaemcloud.com/adobe/mcp/content` | Content operations — fragments, models, variations, versions, references, launches, pages, assets, publishing |
+| `aem` | `https://mcp.adobeaemcloud.com/adobe/mcp/aem` | API discovery, generic read/write/delete, Brand Governance, feature flags |
+
+```json
+"mcpServers": {
+  "aem":         { "type": "http", "url": "https://mcp.adobeaemcloud.com/adobe/mcp/aem" },
+  "aem-content": { "type": "http", "url": "https://mcp.adobeaemcloud.com/adobe/mcp/content" }
+}
+```
+
+**Routing rule — read this before hand-rolling any API call.** The `aem` server ships its own skill and recipe library. Run `lookup-api-spec` with `skills.search("<goal>")` or `recipes.search("<goal>")` first. Do not duplicate what the server already knows.
+
+> Gotcha: `spec.search()` finds **OpenAPI endpoints only** and returns nothing for endpoint-less domains. Brand Governance is endpoint-less — you must use `skills.search()` to find it.
+
+#### Content Fragments — the tool map
+
+Everything below is a live API call against a real author environment. No config commits, no deploy, no browser.
+
+| Task | Tool |
+|---|---|
+| Discover environments | `get-all-aem-author-environments` — every author URL you can reach + solution flags |
+| Find models | `search-aem-fragment-models` — filter by folder, tags, status, dates. Use `detail=SUMMARY` to keep responses small |
+| Read a model schema | `get-aem-fragment-model` — **required before creating fragments**; also returns the ETag |
+| Create / patch / delete a model | `manage-aem-fragments-batch` target=`models` |
+| Create fragments in bulk | `manage-aem-fragments-batch` target=`fragments` op=`create` — **up to 50 per call** |
+| Patch fragments | same tool, op=`patch` — JSON Patch, one ETag per edit |
+| Variations | `manage-aem-fragment-variations` — list / get / create / patch / delete, **batch 50**, ETag handled internally |
+| Versions | `manage-aem-fragment-versions` — list / get / create / restore |
+| Where used (incoming) | `get-aem-fragment-referenced-by` · `bulk-get-aem-fragments-referenced-by` |
+| Dependency tree (outgoing) | `get-aem-fragment-references-tree` — **transitive**, with author + publish status per node |
+| Semantic search | `search-aem-fragments` with `fullText.text` prefixed `?{}?` |
+| Find & replace | `manage-aem-fragments-batch` op=`findReplace` — supports `dryRun` |
+| HTML preview templates | `create-aem-cf-template` (Handlebars) + `render-aem-fragment-preview` |
+| Publish | `manage-aem-fragments-batch` op=`publish` — **up to 500**, optional `scheduledTime` (epoch ms) |
+
+#### Semantic search — the 10-second demo moment
+
+`search-aem-fragments` supports **vector search**, not just keyword. Prefix the query with `?{}?` and omit `queryMode`:
+
+```
+fullText: { text: "?{}?espresso drinks with steamed milk" }
+```
+
+Verified live against the Frescopa content set in XSC Showcase — returned Latte, Cappuccino, Cortado, Café au Lait, Flat White. **None of those words appear in the query.** No keyword index can do this.
+
+Use it for: migration scoping ("find everything about returns policy"), content audit, and the "your authors can't find their own content" discovery pain.
+
+#### Launches — campaign and scheduled publishing
+
+Two separate tool families. Picking the wrong one is the most common mistake here:
+
+| You want to stage… | Use | Key params |
+|---|---|---|
+| **Content Fragments** | `create-aem-launch` | `sources` = CF **UUIDs**, `isDeep`, `liveDate`, `productionReady` |
+| **Pages** | `create-aem-page-launch` | `srcPathList` = page **paths**, `liveDate`, `shallow`. Multiple paths across different sites = **multisite launch** |
+
+Both are async — poll `get-aem-launch-job-status` before declaring done.
+
+Review and ship: `compute-aem-launch-differences` → `promote-aem-launch` (or `promote-aem-page-launch`, scope `smart`). `rebase-aem-launch` pulls production changes back in.
+
+`liveDate` is the scheduled-publish story: AEM auto-promotes and publishes at that timestamp.
+
+#### Brand Governance — `aem` server
+
+Discovered via `skills.search("brand guidelines")`. Six capabilities: Brand Discovery, Get Brand Guidelines, Get Brand Checks, and Evaluate **Text** / **Image** / **Page** Against Brand Governance.
+
+This is the live answer to the CSC/GenStudio objection *"who enforces brand at scale?"* — see `use-cases/09`.
+
+#### Environment caveat — check before you promise
+
+Feature flag **`FT_AEMAGT-1271`** gates part of the `aem` server's skill library: Templates & Models, Asset Management, and some Publishing skills. Check it with `feature-flag-listing`:
+
+```
+FT_AEMAGT-1271 → effective=false   ← gated
+```
+
+The `aem-content` server has its own write path which may be unaffected. **Verify with a real write in a dev tier before a customer call** — do not assume either way. See `environment-matrix.md`.
+
 ### FluffyJaws MCP
 
 > Docs: https://fluffyjaws.adobe.com/docs/api

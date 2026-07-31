@@ -36,6 +36,11 @@ AEM Playground                  ← SC personal folder only; agents with real da
 | Metadata profile creation | ✅ | — | ❌ | ❌ | Admin required; not possible in trial or playground |
 | Custom workflow creation | ✅ | — | ❌ | ❌ | Admin required; SC can't create in playground |
 | Preflight | ✅ | ✅ | ⚠ | — | Show on Frescopa or dedicated preflight demo instance |
+| CF authoring via `aem-content` MCP | ✅ | ✅ | ⚠ | ⚠ | Reads verified. **Verify writes with a test patch** — see FT flag below |
+| Semantic fragment search (`?{}?`) | ✅ | ✅ | ⚠ | ⚠ | Needs real content to impress — Frescopa set is ideal |
+| Fragment references / where-used | ✅ | ✅ | ⚠ | ⚠ | Needs content with actual reference depth |
+| Launches — pages + CF | ✅ | ⚠ | ⚠ | ⚠ | Async; poll job status. Multisite needs multiple sites |
+| Brand Governance API (`aem` server) | ⚠ | ⚠ | ❌ | ❌ | Requires configured brands; discover via `skills.search()` |
 
 **Legend:** ✅ Works fully | ⚠ Works partially or with caveats | ❌ Does not work | — Not applicable
 
@@ -98,6 +103,49 @@ AEM Playground                  ← SC personal folder only; agents with real da
 
 ---
 
+### MCP + Content Fragment Environment Reality
+
+**Stop guessing which environment to use. Ask the API.**
+
+```
+get-all-aem-author-environments
+```
+
+Returns every author URL your IMS identity can reach, with `programTitle`, `environmentTitle`, tier (`dev`/`stage`/`prod`) and a `solutions` array. Filter on `solutions` before you build:
+
+| Looking for | Filter on |
+|---|---|
+| Content Fragments / Assets | `aemassets` or `aemassetsultimate` |
+| Sites pages, launches | `aemsites` |
+| EDS | `aemedgedeliveryservices` |
+| DMwOA | `dmopenapi` |
+| Content Hub | `contenthub` |
+
+**Verified snapshot (July 2026 — re-run the call, do not trust this list):** 22 reachable environments. Confirmed CF content lives in **AEM XSC Showcase Program (prod)** — Frescopa models (Article, Beverage, Brew Method, Coffee Type, Offer, Quiz + nested quiz models), Air Canada (Flight Offer), and FormsDemo. The Frescopa set has genuine reference depth, which makes it the best target for reference-tree and semantic-search demos.
+
+### ⚠ The write-path gate — check this before every CF demo
+
+```
+feature-flag-listing FT_AEMAGT-1271
+```
+
+**Verified `effective=false` as of July 2026.** This gates part of the `aem` server's skill library: Templates & Models, Asset Management, and some Publishing skills.
+
+The `aem-content` server has a separate write path that may be unaffected — **this has not been confirmed either way.**
+
+```
+Before promising ANY live CF creation to a customer:
+[ ] Run one throwaway create/patch in a DEV tier
+[ ] Works  → proceed, note it
+[ ] Fails  → you have a read-only demo. Re-script BEFORE the call.
+```
+
+**Never test writes on XSC Showcase prod.** It is shared, it carries other people's demo content, and a stray fragment or model is someone else's broken demo. Use `aem-xsc-showcase-program-dev` or `aem-xsc-showcase-dept-proj-dev`.
+
+This is the DMwOA lesson repeating itself: read access working is not evidence that write access works.
+
+---
+
 ## Pre-Demo Setup Checklist
 
 Before any demo with AI agents:
@@ -112,6 +160,21 @@ Before any demo with AI agents:
 [ ] Disable imports/audits on ASO demo after demo onboarding (prevent long-running jobs)
 [ ] For LLMO: confirm which URL is safe to share externally (play.llmo.now = safe; internal orgs = internal only)
 [ ] For custom customer URL demo: pre-run the top-100 page scan; manually remove irrelevant sections (careers, internal)
+```
+
+Additionally, for any Content Fragment / MCP demo (use-cases 04, 08, 12, 13, 14):
+
+```
+[ ] get-all-aem-author-environments → confirm the target env and its solutions[]
+[ ] search-aem-fragment-models → confirm CF is enabled and see what already exists
+    → REUSE an existing model where it fits. Do not pollute a shared env.
+[ ] feature-flag-listing FT_AEMAGT-1271 → note the value
+[ ] Test write in a DEV tier — never on Showcase prod
+[ ] For semantic search: confirm the content set has enough depth to be impressive
+[ ] For references/governance: confirm your target fragment has non-zero totalCount
+    → get-aem-fragment-references-tree; an isolated fragment demos nothing
+[ ] For launches: list-aem-page-launches / list-aem-launches first — do not collide
+    with a colleague's launch on a shared environment
 ```
 
 ---

@@ -6,6 +6,22 @@
 
 ---
 
+## First — which content backend is this?
+
+```
+What am I updating?
+├── EDS site (DA-authored, *.aem.page / *.aem.live)
+│   → DA path. Continue to Pre-flight below.
+│
+└── AEM Cloud Service (Content Fragments, Sites pages)
+    → Cloud Service path. Skip to that section.
+    → Different MCP server, different tools, no hlx-admin-mcp needed.
+```
+
+Do not run `da_write` against a Cloud Service environment or `manage-aem-fragments-batch` against a DA site. They are separate content stores.
+
+---
+
 ## Pre-flight — run before any writes
 
 ```
@@ -63,6 +79,74 @@ All changes live on CDN. Visual confirmation: [screenshot summary]
 **Constraint:** `hlx-admin-mcp` must be running locally (`npx @adobe/hlx-admin-mcp`) and connected before `da_write` can trigger CDN preview. If not connected, `da_update_source` writes content but does not bust the CDN cache — the live site will not reflect changes until manually previewed.
 
 **Time target:** 5 updates live in under 5 minutes.
+
+---
+
+## Cloud Service path — personalize CF content via `aem-content`
+
+**Use when the demo runs on AEM CS, not EDS.** No `hlx-admin-mcp`, no DA auth — IMS handles it.
+
+### Pre-flight
+
+```
+1. get-all-aem-author-environments  → confirm the authorUrl is reachable
+2. feature-flag-listing FT_AEMAGT-1271
+   → effective=false means part of the `aem` skill library is gated.
+     Verify the aem-content write path with one throwaway patch
+     before touching demo content.
+```
+
+### Execute this sequence
+
+```
+1. search-aem-fragments        → find the fragments to personalize.
+                                 Use semantic search when you don't know
+                                 the exact naming:
+                                   fullText: { text: "?{}?hero headline" }
+                                 responseFormat=summary → returns id + eTag
+                                 for every hit, which is exactly what
+                                 the patch call needs next.
+
+2. get-aem-fragment-referenced-by → BEFORE writing, check what else uses
+                                 these fragments. On a shared demo env you
+                                 can break someone else's demo. Do not skip.
+
+3. manage-aem-fragments-batch  → target=fragments, op=patch
+                                 up to 50 edits in ONE call
+                                 each edit: { fragmentId, eTag, operations[] }
+                                 JSON Patch paths: /title, /fields/0/values/0
+
+4. manage-aem-fragments-batch  → op=publish, up to 500 ids in one call
+                                 add scheduledTime (epoch ms) for timed go-live
+
+5. render-aem-fragment-preview → visual confirmation the content rendered,
+                                 per variation if the demo uses them
+```
+
+### Bulk rebrand variant
+
+Personalizing for a named customer across a whole content set:
+
+```
+manage-aem-fragments-batch  → op=findReplace
+                              paths[] (max 200, auto-chunked)
+                              dryRun=true FIRST — always
+                              review the diff, then dryRun=false
+```
+
+For **pages** rather than fragments, use `bulk-find-replace-aem-pages`. Scope it with `launchPath` to stage the change in a launch instead of touching live content — see `use-cases/12`.
+
+### Return when done
+
+```
+✓ Fragments patched: [n] — [paths]
+✓ Published: [n] fragments
+✓ Rendered previews confirmed: [variation names]
+⚠ Referenced elsewhere: [list — or "none, safe to change"]
+⚠ FT_AEMAGT-1271: [effective — write path verified by test patch]
+```
+
+**Time target:** 20 fragments patched and published in under 3 minutes — one batch call each way.
 
 ---
 

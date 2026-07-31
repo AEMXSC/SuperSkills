@@ -37,13 +37,17 @@ Every scenario covers all six dimensions of the XSC role:
 | [1](use-cases/01-healthcare-poc.md) | Build a Custom Healthcare POC | **BUILD** | Scans all adobe orgs, builds branded DA+UE site overnight | 2–3 dev days → 4–6 hrs |
 | [2](use-cases/02-exmod-migration.md) | ExMod Migration — Sitecore 4,000 Pages | **BUILD** | Site analyzed, 5 pages live as EDS proof point | Months → 2–3 hrs |
 | [3](use-cases/03-skeptical-architect.md) | Skeptical IT/AI Architect | Advisory | Product truth table wins the room | — |
-| [4](use-cases/04-omni-channel-graphql.md) | Omni-Channel Content Fragments + GraphQL | **BUILD** | CF model, queries, 3-channel demo with live GraphQL | 3–5 dev days → 1–2 hrs |
+| [4](use-cases/04-omni-channel-graphql.md) | Omni-Channel Content Fragments + GraphQL | **BUILD** | CF model, fragment, 3 variations, 3 renders — all live MCP calls | 3–5 dev days → 30 min |
 | [5](use-cases/05-competitive-rfp.md) | Competitive RFP — Three-Way Bake-Off | Advisory | Full 60-min strategy vs Sitecore + Contentful | — |
 | [6](use-cases/06-llmo-ai-search.md) | LLMO — AI Search Traffic Loss | Advisory | GEO from zero to scripted demo in 20 min | — |
 | [7](use-cases/07-pre-demo-crisis.md) | Pre-Demo Crisis: 30 Min to Call | Advisory | Troubleshoot + fallback before the call | — |
 | [8](use-cases/08-mcp-content-push.md) | Personalize Demo Site via MCP | **BUILD** | All pages updated and published — no browser | 1 hr manual → 5 min |
 | [9](use-cases/09-csc-deal.md) | CSC Deal — The Expert Advisor | Advisory | Deal-signal reading, GenStudio narrative, CMO arc | — |
 | [10](use-cases/10-gartner-mq.md) | Gartner MQ — "Optimizely Is #1" | Advisory | Data-backed counter + 2027 pivot | — |
+| [11](use-cases/11-da-live-authoring.md) | DA Authoring — The Story That Closes EDS | Reference | DA vs SharePoint/GDocs, dual authoring, objections | — |
+| [12](use-cases/12-campaign-launches.md) | Scheduled Multi-Brand Campaign — Launches | **BUILD** | Multisite launch, bulk edit, diff review, scheduled go-live | War room → 15 min |
+| [13](use-cases/13-semantic-content-discovery.md) | Semantic Content Discovery | **BUILD** | Vector search over fragments — find by meaning, not keyword | Weeks of audit → live query |
+| [14](use-cases/14-content-governance-audit.md) | Content Governance — Blast Radius + Audit | **BUILD** | Reference trees, version history, enforced safe deprecation | Services engagement → 5 calls |
 
 ---
 
@@ -68,6 +72,8 @@ Works in any agent with terminal access and MCP support.
 | Playwright + Chromium | Visual validation before demo calls |
 | DA MCP | Write + preview + publish DA content programmatically |
 | hlx-admin MCP | `da_write` — write + CDN bust in one call |
+| **AEM Content MCP** | **Cloud Service content ops — Content Fragments, models, variations, references, launches, pages, publishing** |
+| **AEM MCP** | **API spec + skills/recipes discovery, Brand Governance, feature flags** |
 | n8n MCP | 525+ workflow automation nodes |
 | helix-mcp | Bulk preview/publish via admin API — faster than individual da_write calls |
 
@@ -91,7 +97,7 @@ Works in any agent with terminal access and MCP support.
 
 **Verify your setup is working:**
 ```bash
-claude mcp list          # should show da-mcp, hlx-admin, n8n-mcp
+claude mcp list          # should show da-mcp, aem-content, aem, hlx-admin, n8n-mcp
 aem --version            # should print AEM CLI version
 aem up                   # should start local dev server on :3000
 npx playwright --version # should print Playwright version
@@ -121,7 +127,11 @@ SuperSkills/
     ├── 07-pre-demo-crisis.md
     ├── 08-mcp-content-push.md
     ├── 09-csc-deal.md
-    └── 10-gartner-mq.md
+    ├── 10-gartner-mq.md
+    ├── 11-da-live-authoring.md
+    ├── 12-campaign-launches.md
+    ├── 13-semantic-content-discovery.md
+    └── 14-content-governance-audit.md
 ```
 
 ---
@@ -173,5 +183,6 @@ SKILL.md routes to companion files (demo-plays.md, use-cases/06, etc.) — but i
 
 | File | Last Verified |
 |---|---|
-| All skill files | Mar 2026 |
-| Use cases | Mar 2026 |
+| All skill files | Jul 2026 |
+| Use cases | Jul 2026 |
+| AEM CS MCP coverage (`tech-depth.md`, use-cases 04/08/12/13/14) | Jul 2026 — reads verified live against XSC Showcase; **writes not verified**, see `environment-matrix.md` → FT_AEMAGT-1271 |

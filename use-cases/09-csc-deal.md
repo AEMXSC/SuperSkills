@@ -60,6 +60,27 @@ Analytics shows which variant drove conversion. That data feeds the next GenStud
 
 *"Canva is great for individuals. What it does not solve is brand governance at scale — who approves before it goes live, where is the audit trail, and how does it connect to your performance data?"*
 
+**Then stop asserting it and run it.** Brand governance is no longer a talking point — it is a live API on the `aem` MCP server.
+
+```
+skills.search("brand guidelines")   ← discover it this way.
+                                      spec.search() returns NOTHING for
+                                      brand governance — it is endpoint-less.
+
+Brand Discovery                     → which brands are configured, resolve by URL
+Get Brand Guidelines                → full cascade-resolved brand context
+Get Brand Checks                    → the configured rules
+Evaluate Text  Against Governance   → score copy against the brand
+Evaluate Image Against Governance   → score creative against the brand
+Evaluate Page  Against Governance   → score a whole page
+```
+
+**The demo beat that kills the Canva objection:** take a piece of the customer's own off-brand creative, run `Evaluate Image Against Brand Governance`, and show the scored result against their actual configured brand rules.
+
+*"That is the difference. Canva lets anyone make something that looks good. This tells you — automatically, before it ships — whether it is allowed to carry your name."*
+
+For a CMO audience, lead with the number of assets, not the mechanism: *"Every asset, every agency, scored against your brand book before it goes live. No review meeting required."*
+
 ## Discovery questions for the call
 
 - *"What happens between a campaign brief being approved and the first asset going live — how many handoffs?"*

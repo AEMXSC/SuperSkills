@@ -171,6 +171,45 @@ Show me a preview before applying.
 
 ---
 
+## Step 4c — Answer the 4,000-page question (15 min)
+
+**They will ask it.** *"Fine, you migrated 5. What happens when it is 4,000 and we need to change something across all of them?"*
+
+On Sitecore that is a services engagement. Have the answer ready as a live demo, not a promise.
+
+**The safe-at-scale pattern — staged in a launch, never against live content:**
+
+```
+1. create-aem-page-launch      → srcPathList: the paths in scope
+                                 shallow=false to include descendants
+                                 liveDate: optional scheduled go-live
+                                 Multiple paths from DIFFERENT sites in one
+                                 launch = multisite. Say that out loud —
+                                 it is the multi-brand answer.
+
+2. bulk-find-replace-aem-pages → launchPath: <the launch>
+                                 authorPaths: ORIGINAL pre-launch paths
+                                 (the tool translates them into the launch —
+                                  never hand-prefix them yourself)
+                                 propertyGroups: ['content','metadata']
+                                   add 'tags' only for a true brand rename
+
+3. compute-aem-launch-differences → the diff. THIS is the demo artifact.
+                                    Poll get-aem-launch-job-status until done.
+
+4. promote-aem-page-launch     → promotionScope='smart' (only pages that
+                                 actually differ). deleteAfterPromotion optional.
+```
+
+For **Content Fragments** rather than pages: `create-aem-launch` (sources are CF UUIDs, not paths) → `manage-aem-fragments-batch` op=`findReplace` with `dryRun=true` first → `compute-aem-launch-differences` → `promote-aem-launch`.
+
+**The line that lands:**
+*"Every one of those changes is staged in a branch. Nothing touched production until you looked at the diff and approved it. That is your 4,000-page rebrand — reviewed, scheduled, reversible."*
+
+**Do not skip the dry run in front of a customer.** `dryRun=true` on the fragment path and the launch diff on the page path exist precisely so you can show *review before commit*. Running a destructive bulk edit live, even successfully, teaches the room the wrong lesson about the platform.
+
+---
+
 ## Step 5 — Results packaging (30 min, AI generates)
 
 Output the before/after table automatically from baseline (Step 2) vs live EDS site:

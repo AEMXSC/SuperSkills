@@ -1,0 +1,8 @@
+# Normalize all text to LF in the repository.
+# setup.sh and yolo-preflight.sh are curl-piped to bash on macOS/Linux —
+# CRLF line endings break them with "bad interpreter: /bin/bash^M".
+* text=auto eol=lf
+
+*.sh text eol=lf
+*.md text eol=lf
+*.json text eol=lf

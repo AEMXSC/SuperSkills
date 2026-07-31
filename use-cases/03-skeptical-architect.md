@@ -23,6 +23,42 @@
 - **Content Advisor + approval workflows:** *"The governance story is the demo. One approval workflow controls what goes live everywhere. That is the feature, not the constraint."*
 - **EPA + Author URL only:** *"We onboard Author URLs specifically so the agent has write access to fix what it finds. That is what makes it different from an SEO tool that only recommends."*
 
+## Then stop talking and prove it — run this live
+
+An architect who has been oversold does not want another claim. Give them a terminal.
+
+**The question behind every architect objection is: *"what happens when something changes?"*** Answer it with a live call, not a slide.
+
+```
+get-aem-fragment-references-tree   → transitive dependency tree for a fragment
+get-aem-fragment-referenced-by     → everything that would break if it changed
+bulk-get-aem-fragments-referenced-by → same, across a whole set
+```
+
+Verified live in XSC Showcase: one call on the Latte fragment returned its full chain —
+`Latte → baseCoffeeType → Roasted Guatemala Reserve 99 → bestBrewingMethod → Turkish Coffee` —
+with created-by, modified-by, timestamps and publish status on every node.
+
+That is impact analysis and an audit trail in a single request. Most CMSes answer this question with "run a report and check back tomorrow."
+
+**Second live proof — content operations are scriptable:**
+
+```
+manage-aem-fragments-batch   → 50 fragments created or patched per call
+                               500 published per call, schedulable
+search-aem-fragments         → semantic vector search, not keyword
+                               "?{}?espresso drinks with steamed milk"
+                               returns Latte, Cappuccino, Cortado, Flat White
+```
+
+The line: *"Your content operations get the same automation, governance and audit trail your code already has. Not a roadmap item — an API you can call right now."*
+
+**Be honest about the gate.** `FT_AEMAGT-1271` currently resolves `effective=false` and restricts part of the model/template skill surface. Say so before they find it:
+
+*"Here is a flag that is off in my environment today. I would rather show you that than have your team discover it in week three."*
+
+That sentence buys more credibility than the entire truth table.
+
 ## Recommended pilot sequence — give this directly
 
 1. **Week 1:** LLMO on their public site — zero infrastructure, immediate AI citation data

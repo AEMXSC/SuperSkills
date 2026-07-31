@@ -76,6 +76,21 @@ claude mcp add da-mcp \
   && ok "DA MCP (da.live write/preview/publish)" \
   || warn "DA MCP — may already be configured"
 
+# AEM Cloud Service — content operations (fragments, models, variations,
+# references, launches, pages, assets, publishing)
+claude mcp add aem-content \
+  --transport http \
+  --url https://mcp.adobeaemcloud.com/adobe/mcp/content 2>/dev/null \
+  && ok "AEM Content MCP (Content Fragments, launches, pages — IMS auth)" \
+  || warn "AEM Content MCP — may already be configured"
+
+# AEM Cloud Service — API discovery, skills/recipes, Brand Governance, feature flags
+claude mcp add aem \
+  --transport http \
+  --url https://mcp.adobeaemcloud.com/adobe/mcp/aem 2>/dev/null \
+  && ok "AEM MCP (API spec, skills/recipes, Brand Governance)" \
+  || warn "AEM MCP — may already be configured"
+
 # hlx-admin-mcp
 claude mcp add hlx-admin \
   --transport http \
@@ -109,6 +124,12 @@ else
   "mcpServers": {
     "da-prod-mcp": {
       "url": "https://mcp.adobeaemcloud.com/adobe/mcp/da"
+    },
+    "aem-content": {
+      "url": "https://mcp.adobeaemcloud.com/adobe/mcp/content"
+    },
+    "aem": {
+      "url": "https://mcp.adobeaemcloud.com/adobe/mcp/aem"
     },
     "hlx-admin": {
       "url": "http://localhost:3000"
