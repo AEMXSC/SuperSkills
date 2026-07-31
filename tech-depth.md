@@ -970,6 +970,38 @@ An agent that treats the error as failure and retries will create **duplicate mo
 
 Delete has the mirror-image behaviour: model delete returns `deletedCount: 0` with `batchJobStatus: QUEUED` and then completes. Verify rather than believing the count.
 
+#### Publish returns a trigger, not a result
+
+`manage-aem-fragments-batch` op=`publish` returns **`SUCCESS_TRIGGERED`**. That means the request was accepted — **not** that the content is live. Never report "published" off that response.
+
+Ground truth is the replication status on the node:
+
+```js
+// aem read-api against the AUTHOR instance
+const r = await aem.get('<fragment-path>/jcr:content.json');
+return r.body['cq:lastReplicationAction'];   // === 'Activate' when live
+```
+
+**The response is enveloped.** `aem.get()` returns `{status, body, etag, location}` — the JCR properties are under `.body`. Reading `r['cq:lastReplicationAction']` returns `undefined` and looks exactly like "not published." This costs people ten minutes every time.
+
+Verified live on `/content/dam/frescopa/en/coffee-types/roasted-guatemalareserve99`:
+
+| Property | Value |
+|---|---|
+| `cq:lastReplicationAction` | `Activate` |
+| `cq:lastReplicated` | `Fri Feb 21 2025 11:52:13 GMT+0000` |
+| `cq:lastReplicatedBy` | `workflow-process-service` |
+| `cq:lastReplicatedBy_publish` | per-agent variant — check this when targeting a specific agent |
+| `jcr:mixinTypes` | `["cq:ReplicationStatus","cq:ReplicationStatus2"]` |
+
+Publish references along with the fragment or the asset stays unpublished and the demo renders a broken image:
+
+```
+publish: { ids: [...], filterReferencesByStatus: ['DRAFT','UNPUBLISHED','MODIFIED'] }
+```
+
+**Delivery-tier verification is separate.** The publish-tier GraphQL endpoint is scoped to `adobe.io` and **is not reachable from Claude's network** — you cannot curl it from here. Verify author-side with `cq:lastReplicationAction`, then confirm delivery in-app or in a browser.
+
 #### ETag gotcha
 
 `get-aem-fragment-model` **does not return an ETag**, despite its description saying it does. Model patch and delete both require one.
@@ -980,6 +1012,37 @@ Get a model's ETag:  search-aem-fragment-models  ids=[...]  detail=FULL
 ```
 
 Fragments are fine — `search-aem-fragments` with `responseFormat=summary` returns `id` + `eTag` together, which is exactly what batch patch/delete need.
+
+#### Operations the Content MCP has no tool for
+
+Some things you need constantly are not in `aem-content`. Use the `aem` write-api with Sling POST semantics. **These exact forms are field-proven — the obvious alternatives fail.**
+
+**Create a DAM folder** (asset import cannot create one, and there is no folder tool):
+
+```js
+aem.form('<dam-path>', { 'jcr:primaryType': 'sling:OrderedFolder', 'jcr:title': '<Title>' })
+```
+
+Do **not** use the `POST /folders` MCP operation — it lands a stray node at the repo root.
+
+**Rename or move, preserving the UUID** (so existing references keep resolving):
+
+```js
+aem.form('<srcPath>', { ':operation': 'move', ':dest': '<destPath>', ':replace': 'false' })  // → 201
+```
+
+Do **not** use `/api/assets/*.move` — returns 409 and is unreliable.
+
+**Read raw JCR** for anything the fragment API doesn't expose (replication status, mixins, custom metadata):
+
+```js
+const r = await aem.get('<path>/jcr:content.json');
+return r.body;   // remember the envelope
+```
+
+Reads run with `confirmed:false`. Writes prompt for approval — expected, not an error.
+
+> **Intermittent gating:** single-fragment create/patch tools and model-schema reads are sometimes gated with *"No approval received."* `manage-aem-fragments-batch` is not. **Prefer the batch tool for all writes**, and simply retry a gated read.
 
 #### Environment gate — `FT_AEMAGT-1271`
 

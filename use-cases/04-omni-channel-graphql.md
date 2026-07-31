@@ -147,11 +147,26 @@ Scaffold from `aemdemos/ise-boilerplate`. Read `AGENTS.md` before building any b
 
 Use the rich path only when the deal needs the EDS delivery story too. Otherwise the fast path wins on time and has fewer failure modes.
 
-## Step 5 — Publish
+## Step 5 — Publish, then PROVE it published
 
 **Tool:** `manage-aem-fragments-batch` operation=`publish`
 
-Up to 500 fragment IDs per call. Accepts `scheduledTime` (epoch ms) if the demo needs a future go-live.
+Up to 500 fragment IDs per call. Accepts `scheduledTime` (epoch ms) for a future go-live.
+
+**Always pass `filterReferencesByStatus: ['DRAFT','UNPUBLISHED','MODIFIED']`** — without it the fragment goes live pointing at an unpublished image, and the demo renders broken.
+
+**`publish` returns `SUCCESS_TRIGGERED`. That is a trigger, not a result.** Never report published off it:
+
+```js
+const r = await aem.get('<fragment-path>/jcr:content.json');
+return r.body['cq:lastReplicationAction'];   // === 'Activate' when live
+```
+
+The response is enveloped — `r.body[...]`, not `r[...]`. Reading it wrong returns `undefined` and looks identical to "not published."
+
+Publish-tier GraphQL is scoped to `adobe.io` and **not reachable from Claude's network**. Verify author-side, then confirm delivery in a browser. Do not claim end-to-end delivery you could not observe.
+
+> Building the whole branded environment rather than demoing one fragment? Use [`skills/aem-cf-brand-buildout`](../skills/aem-cf-brand-buildout/SKILL.md) — it runs copy → rebrand → image swap → publish → verify → rename → audit as one motion.
 
 ## Step 6 — Configure DMwOA asset delivery
 

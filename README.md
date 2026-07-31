@@ -117,6 +117,8 @@ SuperSkills/
 ├── environment-matrix.md      ← What works where, pre-demo checklist, 9 failure modes
 ├── tech-depth.md              ← Repos, boilerplates, MCP tools, 17 EDS dev skills
 ├── competitive-intel.md       ← Competitive breakdowns, Gartner MQ, 20+ stats
+├── skills/                    ← Executable workflows (run them to produce artefacts)
+│   └── aem-cf-brand-buildout/ ← Copy → rebrand → image swap → publish → verify → rename → audit
 └── use-cases/                 ← Full scenario details, prompts, and build steps
     ├── 01-healthcare-poc.md
     ├── 02-exmod-migration.md

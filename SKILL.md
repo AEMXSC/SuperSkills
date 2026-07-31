@@ -70,6 +70,16 @@ Load these when you need the complete scenario: qualification tree, discovery qu
 
 **Content Fragment work routes by backend.** CF / Sites / Assets / Launches on AEM Cloud Service → the `aem-content` + `aem` MCP servers (`tech-depth.md` → *AEM Cloud Service MCP*). EDS document authoring → DA MCP + `hlx-admin-mcp`. Do not mix them.
 
+### Executable Skills — `skills/`
+
+Use-cases are demo narratives: what to show, what to say, how to handle the room. **Skills are executable workflows** — run them to produce the artefact.
+
+| Task | Skill |
+|---|---|
+| Build a branded CF demo from an existing brand — copy, rebrand, image swap, publish, verify, rename, audit | [`skills/aem-cf-brand-buildout`](skills/aem-cf-brand-buildout/SKILL.md) |
+
+Reach for the skill when the ask is *"build me a `<brand>` demo"* or *"rebrand these fragments."* Reach for `use-cases/04` when the ask is *"how do I demo Content Fragments."* They pair: the skill builds the environment, the use-case runs the call.
+
 ### Environments
 | Request | Go to |
 |---|---|
