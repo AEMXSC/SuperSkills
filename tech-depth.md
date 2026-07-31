@@ -945,15 +945,60 @@ Discovered via `skills.search("brand guidelines")`. Six capabilities: Brand Disc
 
 This is the live answer to the CSC/GenStudio objection *"who enforces brand at scale?"* — see `use-cases/09`.
 
-#### Environment caveat — check before you promise
+#### ⚠ Batch writes report failure on success — do not retry blindly
 
-Feature flag **`FT_AEMAGT-1271`** gates part of the `aem` server's skill library: Templates & Models, Asset Management, and some Publishing skills. Check it with `feature-flag-listing`:
+**The single most important thing on this page.**
+
+`manage-aem-fragments-batch` and `manage-aem-fragment-variations` queue **async jobs**. The tool queues the job, then immediately tries to fetch its results — and frequently loses that race, returning:
 
 ```
-FT_AEMAGT-1271 → effective=false   ← gated
+Failed to fetch batch job results:
+{"status":404,"detail":"Job not found","title":"Not Found"}
 ```
 
-The `aem-content` server has its own write path which may be unaffected. **Verify with a real write in a dev tier before a customer call** — do not assume either way. See `environment-matrix.md`.
+**The write succeeded anyway.** Verified three times in a row (model create, fragment create, 2-variation batch create) — every one returned this 404 and every one landed correctly.
+
+```
+NEVER retry a batch write on error.
+ALWAYS verify first:
+  fragments  → search-aem-fragments
+  models     → search-aem-fragment-models
+  variations → manage-aem-fragment-variations action=list
+```
+
+An agent that treats the error as failure and retries will create **duplicate models and fragments** on a shared environment. In YOLO mode, unattended, it will do that repeatedly.
+
+Delete has the mirror-image behaviour: model delete returns `deletedCount: 0` with `batchJobStatus: QUEUED` and then completes. Verify rather than believing the count.
+
+#### ETag gotcha
+
+`get-aem-fragment-model` **does not return an ETag**, despite its description saying it does. Model patch and delete both require one.
+
+```
+Get a model's ETag:  search-aem-fragment-models  ids=[...]  detail=FULL
+                     → the `etag` field
+```
+
+Fragments are fine — `search-aem-fragments` with `responseFormat=summary` returns `id` + `eTag` together, which is exactly what batch patch/delete need.
+
+#### Environment gate — `FT_AEMAGT-1271`
+
+**Verified July 2026: `effective=false` does NOT block the `aem-content` write path.**
+
+Tested end to end on `aem-xsc-showcase-program-dev` with the flag off:
+
+| Operation | Result |
+|---|---|
+| Create CF model (`dryRun`) | ✅ `models_validated` |
+| Create CF model (real) | ✅ `models_created` |
+| Create fragment | ✅ created (behind a 404 job-result error) |
+| Create 2 variations (batch) | ✅ both created (same 404 pattern) |
+| Delete fragment | ✅ `fragment_deleted`, HTTP 204 |
+| Delete model | ✅ deleted (async, `QUEUED` then gone) |
+
+The flag gates skills in the **`aem` server's skill library** only. The `aem-content` server has an independent write path that works regardless.
+
+Still check the flag before a call — it tells you which surface you are on — but a `false` value is **not** a reason to re-script a Content Fragment demo. See `environment-matrix.md`.
 
 ### FluffyJaws MCP
 

@@ -163,26 +163,46 @@ Returns every author URL your IMS identity can reach, with `programTitle`, `envi
 
 **Verified snapshot (July 2026 — re-run the call, do not trust this list):** 22 reachable environments. Confirmed CF content lives in **AEM XSC Showcase Program (prod)** — Frescopa models (Article, Beverage, Brew Method, Coffee Type, Offer, Quiz + nested quiz models), Air Canada (Flight Offer), and FormsDemo. The Frescopa set has genuine reference depth, which makes it the best target for reference-tree and semantic-search demos.
 
-### ⚠ The write-path gate — check this before every CF demo
+### The write path — RESOLVED, July 2026
 
 ```
-feature-flag-listing FT_AEMAGT-1271
+feature-flag-listing FT_AEMAGT-1271   → effective=false
 ```
 
-**Verified `effective=false` as of July 2026.** This gates part of the `aem` server's skill library: Templates & Models, Asset Management, and some Publishing skills.
+**`effective=false` does NOT block Content Fragment writes.** Tested end to end on `aem-xsc-showcase-program-dev` with the flag off: model create (dryRun + real), fragment create, batch variation create, fragment delete, model delete — **all succeeded**. Test artefacts removed.
 
-The `aem-content` server has a separate write path that may be unaffected — **this has not been confirmed either way.**
+The flag gates the **`aem` server's skill library** (Templates & Models, Asset Management, some Publishing). The **`aem-content` server has an independent write path** that is unaffected.
+
+**What this means for your call:** a `false` value is not a reason to re-script a CF demo. Check it to know which surface you are on, then proceed.
+
+### ⚠ Batch writes report failure on success
+
+**Read this before any unattended build.**
+
+`manage-aem-fragments-batch` and `manage-aem-fragment-variations` are **async**. They routinely return a 404 `Job not found` error on writes that **succeeded**:
 
 ```
-Before promising ANY live CF creation to a customer:
-[ ] Run one throwaway create/patch in a DEV tier
-[ ] Works  → proceed, note it
-[ ] Fails  → you have a read-only demo. Re-script BEFORE the call.
+Failed to fetch batch job results: {"status":404,"detail":"Job not found"}
 ```
 
-**Never test writes on XSC Showcase prod.** It is shared, it carries other people's demo content, and a stray fragment or model is someone else's broken demo. Use `aem-xsc-showcase-program-dev` or `aem-xsc-showcase-dept-proj-dev`.
+Observed on three consecutive successful writes. The job is queued; the result fetch loses the race.
 
-This is the DMwOA lesson repeating itself: read access working is not evidence that write access works.
+```
+NEVER retry a batch write on error. Verify first:
+  fragments  → search-aem-fragments
+  models     → search-aem-fragment-models
+  variations → manage-aem-fragment-variations action=list
+```
+
+An agent that retries on this error creates **duplicate models and fragments**. Overnight, unattended, on a shared environment, it will keep doing it. This is now the most likely way to damage a shared demo env — more likely than picking the wrong tier.
+
+Model delete behaves the same way in reverse: returns `deletedCount: 0`, `QUEUED`, then completes. Verify rather than trusting the count.
+
+### Testing writes — where
+
+**Never test writes on XSC Showcase prod.** It is shared and carries other people's demo content. Use `aem-xsc-showcase-program-dev` or `aem-xsc-showcase-dept-proj-dev`.
+
+Name throwaway artefacts with a `ZZ ` prefix so they sort last and are obviously disposable, and delete them in the same session. If you cannot delete something, say so — a stray model in `/conf/global` is everyone's problem.
 
 ---
 

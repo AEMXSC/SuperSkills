@@ -185,4 +185,4 @@ SKILL.md routes to companion files (demo-plays.md, use-cases/06, etc.) — but i
 |---|---|
 | All skill files | Jul 2026 |
 | Use cases | Jul 2026 |
-| AEM CS MCP coverage (`tech-depth.md`, use-cases 04/08/12/13/14) | Jul 2026 — reads verified live against XSC Showcase; **writes not verified**, see `environment-matrix.md` → FT_AEMAGT-1271 |
+| AEM CS MCP coverage (`tech-depth.md`, use-cases 04/08/12/13/14) | Jul 2026 — **reads and writes both verified live** on `aem-xsc-showcase-program-dev` (model/fragment/variation create + delete). `FT_AEMAGT-1271=false` does **not** block CF writes. |

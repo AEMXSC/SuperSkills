@@ -90,10 +90,14 @@ All changes live on CDN. Visual confirmation: [screenshot summary]
 
 ```
 1. get-all-aem-author-environments  → confirm the authorUrl is reachable
+                                       AND check the tier — see
+                                       environment-matrix.md → Environment selection
 2. feature-flag-listing FT_AEMAGT-1271
-   → effective=false means part of the `aem` skill library is gated.
-     Verify the aem-content write path with one throwaway patch
-     before touching demo content.
+   → effective=false does NOT block CF writes (verified July 2026).
+     Note it and proceed.
+3. ⚠ Batch writes return a 404 "Job not found" on SUCCESS.
+   NEVER retry — verify with search-aem-fragments instead.
+   Retrying creates duplicates.
 ```
 
 ### Execute this sequence

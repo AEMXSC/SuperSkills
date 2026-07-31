@@ -27,10 +27,11 @@
 
 3. Write path actually works?
    → feature-flag-listing FT_AEMAGT-1271
-   → If effective=false, part of the `aem` server's model/template
-     skills are gated. The aem-content write path may still work —
-     PROVE IT with one throwaway fragment in a dev tier before you
-     promise anything. Do not assume either way.
+   → effective=false does NOT block CF writes. Verified July 2026:
+     the aem-content write path is independent of this flag.
+     Note the value, proceed. Re-test only if writes actually fail.
+   → Reminder: batch writes return a 404 "Job not found" on SUCCESS.
+     Verify, never retry. See environment-matrix.md.
 
 4. GraphQL Explorer accessible (only if demoing GraphQL live)
    → https://author-<env>.adobeaemcloud.com/content/graphiql.html
@@ -242,9 +243,20 @@ GraphQL query structure unclear     → Generate from get-aem-fragment-model sch
                                       Minimum fields per channel. Never all-to-all.
 GraphQL Explorer 404                → Drop the GraphQL beat. Build everything else.
                                       Flag it. Do not block the whole build on it.
-FT_AEMAGT-1271 effective=false      → Test one throwaway write in a dev tier.
-                                      Works  → proceed, note it in the report.
-                                      Fails  → STOP. Flag as blocked. Do not fake it.
+Batch write returns 404             → DO NOT RETRY. "Failed to fetch batch job
+"Job not found"                       results / Job not found" appears on writes
+                                      that SUCCEEDED — the job is async and the
+                                      result fetch loses the race.
+                                      VERIFY, then continue:
+                                        search-aem-fragments / -models, or
+                                        variations action=list
+                                      Retrying creates DUPLICATES on a shared env.
+Model ETag needed                   → get-aem-fragment-model does NOT return it.
+                                      Use search-aem-fragment-models
+                                      ids=[...] detail=FULL → `etag` field.
+FT_AEMAGT-1271 effective=false      → NOT a blocker. Verified July 2026: the
+                                      aem-content write path works with the flag
+                                      off. Note it and proceed.
 DMwOA not enabled                   → Skip Step 6. Flag in report.
 "One edit → three renders" broken   → Debug before declaring done. This is the
                                       demo moment — do not skip it.
