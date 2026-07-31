@@ -103,6 +103,46 @@ AEM Playground                  ← SC personal folder only; agents with real da
 
 ---
 
+### Environment selection — the one thing you must never infer
+
+**This overrides the YOLO "never ask the XSC / make a decision and keep going" rule.** That rule is correct for content decisions — tone, field names, page order. Getting those wrong costs a rewrite in the morning.
+
+Environment selection is a different class of decision. Getting it wrong means writing into a shared environment and breaking a colleague's demo, or spending the night building on an environment the customer will never see. Neither is recoverable by editing a headline.
+
+**The rule — apply it to every write, CF or page:**
+
+```
+1. XSC named an environment
+   → Use it. Even if it's prod. It's their call and they made it.
+
+2. XSC did not name one
+   → get-all-aem-author-environments
+   → Filter: environment === 'dev'  AND  solutions[] contains what you need
+   → Exactly one match  → use it, state it loudly in the report
+   → Several matches    → pick one, name it in the report, keep going
+   → ZERO matches       → STOP AND ASK. Do not fall back to stage or prod.
+
+3. Never auto-select a shared prod environment for writes.
+   XSC Showcase prod carries other people's demo content.
+   Reads are fine. Writes need an explicit human decision.
+```
+
+The tier comes back in the `environment` field of `get-all-aem-author-environments` — this is a filter, not a guess. There is no ambiguity to resolve.
+
+> **You cannot tell the tier from the URL.** Author URLs are opaque: `https://author-p153659-e1614585.adobeaemcloud.com` is XSC Showcase **prod**, and nothing in that string says so. The tier lives only in the `environment` / `environmentTitle` fields of `get-all-aem-author-environments`.
+>
+> This means an XSC pasting a URL into the handoff block is **not** evidence they picked a safe tier. Resolve every URL through the API before writing, including one they named. `yolo-preflight.sh` warns about this and cannot check it for you — bash has no way to resolve the tier.
+
+**Capture it up front, not mid-build.** The point of YOLO mode is that nobody is awake to answer questions at 2am. So ask at handoff, in the block the XSC fills in before closing the laptop:
+
+```
+AEM Author URL: https://author-<env>.adobeaemcloud.com   ← REQUIRED for any CF write
+```
+
+If it is blank and no dev tier qualifies, fail at preflight — loudly, while the XSC is still at the keyboard. Do not discover it at 2am and stall, and do not "make a decision and keep going" into a shared environment.
+
+**Reads are exempt.** `get-all-aem-author-environments`, `search-aem-fragment-models`, `search-aem-fragments`, reference trees — run these against anything, freely. Discovery is how you answer the question. The gate is on writes.
+
 ### MCP + Content Fragment Environment Reality
 
 **Stop guessing which environment to use. Ask the API.**

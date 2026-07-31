@@ -40,6 +40,26 @@ else
   fail "DA MCP not configured — run: claude mcp add da-mcp --transport http --url https://mcp.adobeaemcloud.com/adobe/mcp/da"
 fi
 
+# ── 3b. AEM Cloud Service MCP configured ─────────────────
+if claude mcp list 2>/dev/null | grep -q "aem-content"; then
+  ok "AEM Content MCP configured (Content Fragments, launches, pages)"
+else
+  warn "AEM Content MCP not configured — needed for use-cases 04/08/12/13/14. Run: claude mcp add aem-content --transport http --url https://mcp.adobeaemcloud.com/adobe/mcp/content"
+fi
+
+# ── 3c. Target author environment named ──────────────────
+# Environment selection is the ONE decision the agent must not infer.
+# See environment-matrix.md → "Environment selection".
+if [ -n "$AEM_AUTHOR_URL" ]; then
+  ok "Target author environment: $AEM_AUTHOR_URL"
+  # NOTE: the tier (dev/stage/prod) is NOT derivable from the URL — author URLs
+  # are opaque (author-p153659-e1614585). Only get-all-aem-author-environments
+  # returns the `environment` field. This script cannot verify it; the agent must.
+  warn "Tier not verifiable from the URL — author URLs are opaque. The agent MUST confirm via get-all-aem-author-environments before any write. If this resolves to a shared prod env, writes can break a colleague's demo."
+else
+  warn "AEM_AUTHOR_URL not set — the agent will auto-select a DEV tier via get-all-aem-author-environments, or stop if none qualifies. Export it now to be certain:  export AEM_AUTHOR_URL=https://author-<env>.adobeaemcloud.com"
+fi
+
 # ── 4. aem-code-sync app ─────────────────────────────────
 if gh api /user/installations 2>/dev/null | grep -q "aem-code-sync"; then
   ok "aem-code-sync GitHub App installed"

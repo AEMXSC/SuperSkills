@@ -18,6 +18,8 @@ The answer is Launches, and it is now fully scriptable. This is one of the stron
 
 ## Environment check
 
+> **Launches write content.** If the XSC did not name an environment, auto-select from **dev tiers only** — never a shared prod. See `environment-matrix.md` → *Environment selection*.
+
 ```
 1. get-all-aem-author-environments  → pick an env with "aemsites"
 2. Content in scope exists?

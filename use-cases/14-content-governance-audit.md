@@ -65,6 +65,8 @@ The bulk variant is the deprecation tool: *"we are retiring these forty fragment
 
 ## Play 2 — Safe deprecation
 
+> **Plays 1, 3 and 4 are read-only — run them anywhere.** Play 2 unpublishes and deletes. Run it **only** on an environment the XSC named or a dev tier you selected deliberately. See `environment-matrix.md` → *Environment selection*.
+
 The real enterprise workflow, end to end:
 
 ```

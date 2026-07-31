@@ -158,6 +158,9 @@ For **pages** rather than fragments, use `bulk-find-replace-aem-pages`. Scope it
 
 ```
 Demo site: [preview URL or DA org/repo]
+AEM Author URL: [REQUIRED if this is Cloud Service, not EDS —
+                 blank means dev-tier auto-select or a hard stop.
+                 See environment-matrix.md → Environment selection]
 Customer / vertical: [name + industry]
 Regional market: [e.g. EMEA / APAC / LatAm — or "keep US English"]
 Updates needed: [e.g. "hero headline to emphasize patient outcomes" or "all product descriptions to financial services tone"]

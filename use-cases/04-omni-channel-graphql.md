@@ -215,6 +215,16 @@ Go. Wake me up when the fragments are live.
 
 ```
 Decision point                      → Rule
+Author URL blank in the handoff     → get-all-aem-author-environments,
+                                      filter environment==='dev' AND
+                                      solutions[] has aemassets.
+                                      One+ match → use it, NAME IT in the report.
+                                      Zero match → STOP. Do not fall back to
+                                      stage or prod. This is the ONE thing you
+                                      escalate instead of deciding.
+                                      → environment-matrix.md → Environment selection
+Tempted to write to Showcase prod   → Don't. Reads yes, writes no.
+                                      It carries other people's demo content.
 Existing model already fits         → REUSE IT. search-aem-fragment-models first.
                                       Never create a duplicate model on a shared env.
 CF model field names unclear        → Use standard set: headline, body, cta,
@@ -260,6 +270,8 @@ Campaign pages (EPA demo setup)    → Build 5 EDS pages in /campaign/ on the
                                       "Update all pages under /campaign/ to reflect
                                       [EMEA / APAC] regional tone. Preview first."
 Any ambiguity                       → Make a decision. Log it. Keep going.
+                                      EXCEPT environment selection — see the
+                                      first rule. That one you escalate.
 ```
 
 **Wake-up report — output this when done:**
