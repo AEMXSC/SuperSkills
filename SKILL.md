@@ -56,7 +56,7 @@ Load these when you need the complete scenario: qualification tree, discovery qu
 | Scenario | Go to |
 |---|---|
 | Build a custom vertical demo / healthcare POC overnight | → [use-cases/01-healthcare-poc.md](use-cases/01-healthcare-poc.md) |
-| ExMod proof point — migration with before/after metrics | → [use-cases/02-exmod-migration.md](use-cases/02-exmod-migration.md) |
+| Migration off WordPress / Contentful / Sitecore / AEM Classic, license deadline, rebrand a satellite, before/after metrics | → [use-cases/02-redesign-led-migration.md](use-cases/02-redesign-led-migration.md) |
 | Skeptical IT architect — GA objections, production readiness | → [use-cases/03-skeptical-architect.md](use-cases/03-skeptical-architect.md) |
 | Omni-channel Content Fragments + GraphQL live demo | → [use-cases/04-omni-channel-graphql.md](use-cases/04-omni-channel-graphql.md) |
 | Competitive RFP — 60-min bake-off vs Sitecore + Contentful | → [use-cases/05-competitive-rfp.md](use-cases/05-competitive-rfp.md) |
@@ -69,9 +69,15 @@ Load these when you need the complete scenario: qualification tree, discovery qu
 | Scheduled / multi-brand campaign, staging content, "go live at midnight", launches | → [use-cases/12-campaign-launches.md](use-cases/12-campaign-launches.md) |
 | Content sprawl, migration scoping, "authors can't find content", semantic search | → [use-cases/13-semantic-content-discovery.md](use-cases/13-semantic-content-discovery.md) |
 | Compliance / regulated vertical, blast radius, audit trail, safe deprecation | → [use-cases/14-content-governance-audit.md](use-cases/14-content-governance-audit.md) |
-| Migration where the site is also off-brand or dated, license/contract deadline, "make it look like our flagship", Stardust / Snowflake | → [use-cases/15-redesign-led-migration.md](use-cases/15-redesign-led-migration.md) |
+**Migration routes by what the customer wants to KEEP, not by source CMS:**
 
-**Migration routes by intent, not by source CMS.** *"Move our N pages"* → `use-cases/02` (`/page-import`, canonical EDS blocks). *"Move us and make it on-brand"* → `use-cases/15` (`/stardust:*` → `/snowflake`, design preserved, DA-authorable). The `snowflake` skill enforces this: it explicitly defers canonical block-rewrite migrations to `page-import`.
+| They keep | Flow | Sells on |
+|---|---|---|
+| The **design** — platform only | `/stardust:replica` — pixel-perfect, measured fidelity gate | Volume, cost, zero brand risk |
+| The **content** — donor design | `/stardust:reskin` — byte-level content fidelity | Brand consolidation as a migration |
+| Neither — new design | `extract → direct → prototype`, or `/stardust:uplift` for a POC | Modernization, performance |
+
+All three run through [use-cases/02](use-cases/02-redesign-led-migration.md) and [`skills/eds-redesign-migration`](skills/eds-redesign-migration/SKILL.md). `/page-import` remains the answer for a canonical EDS block rewrite outside the Stardust pipeline.
 
 **Content Fragment work routes by backend.** CF / Sites / Assets / Launches on AEM Cloud Service → the `aem-content` + `aem` MCP servers (`tech-depth.md` → *AEM Cloud Service MCP*). EDS document authoring → DA MCP + `hlx-admin-mcp`. Do not mix them.
 
@@ -82,6 +88,7 @@ Use-cases are demo narratives: what to show, what to say, how to handle the room
 | Task | Skill |
 |---|---|
 | Build a branded CF demo from an existing brand — copy, rebrand, image swap, publish, verify, rename, audit | [`skills/aem-cf-brand-buildout`](skills/aem-cf-brand-buildout/SKILL.md) |
+| Migrate a site to EDS — replica / reskin / redesign, plan, prototype, rollout, QA, switch report | [`skills/eds-redesign-migration`](skills/eds-redesign-migration/SKILL.md) |
 
 Reach for the skill when the ask is *"build me a `<brand>` demo"* or *"rebrand these fragments."* Reach for `use-cases/04` when the ask is *"how do I demo Content Fragments."* They pair: the skill builds the environment, the use-case runs the call.
 

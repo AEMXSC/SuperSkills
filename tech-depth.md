@@ -1065,7 +1065,7 @@ Still check the flag before a call — it tells you which surface you are on —
 
 ### Stardust + Snowflake — redesign-led migration
 
-Not MCP servers — Claude Code skills. They cover the migration path where the customer wants a **better** site, not a faithful port. See `use-cases/15`.
+Not MCP servers — Claude Code skills. They cover the migration path where the customer wants a **better** site, not a faithful port. See `use-cases/02`.
 
 **Installed: `adobe/stardust` 0.12.0** — ships `extract`, `direct`, `prototype`, `migrate`, `prepare-migration`, `uplift`, `deploy`, `diff`. Soft-depends on `impeccable`. `snowflake` is a separate skill.
 
@@ -1083,7 +1083,7 @@ Not MCP servers — Claude Code skills. They cover the migration path where the 
 
 ```
 "Move our N pages"                  → /page-import chain   (use-cases/02)
-"Move us AND make it on-brand"      → /stardust:* → /snowflake  (use-cases/15)
+"Move us AND make it on-brand"      → /stardust:* → /snowflake  (use-cases/02)
 ```
 
 Snowflake accepts static HTML from any generator — Stardust, Mobirise, Relume, Lovable, v0, hand-coded Figma exports.

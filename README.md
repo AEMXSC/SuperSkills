@@ -35,7 +35,7 @@ Every scenario covers all six dimensions of the XSC role:
 | # | Scenario | Type | One Line | Time Savings |
 |---|---|---|---|---|
 | [1](use-cases/01-healthcare-poc.md) | Build a Custom Healthcare POC | **BUILD** | Scans all adobe orgs, builds branded DA+UE site overnight | 2–3 dev days → 4–6 hrs |
-| [2](use-cases/02-exmod-migration.md) | ExMod Migration — Sitecore 4,000 Pages | **BUILD** | Site analyzed, 5 pages live as EDS proof point | Months → 2–3 hrs |
+| [2](use-cases/02-redesign-led-migration.md) | Migration — Replica / Reskin / Redesign | **BUILD** | Off the old CMS *and* onto the right design, in one motion | Two projects → 48 hrs |
 | [3](use-cases/03-skeptical-architect.md) | Skeptical IT/AI Architect | Advisory | Product truth table wins the room | — |
 | [4](use-cases/04-omni-channel-graphql.md) | Omni-Channel Content Fragments + GraphQL | **BUILD** | CF model, fragment, 3 variations, 3 renders — all live MCP calls | 3–5 dev days → 30 min |
 | [5](use-cases/05-competitive-rfp.md) | Competitive RFP — Three-Way Bake-Off | Advisory | Full 60-min strategy vs Sitecore + Contentful | — |
@@ -48,7 +48,6 @@ Every scenario covers all six dimensions of the XSC role:
 | [12](use-cases/12-campaign-launches.md) | Scheduled Multi-Brand Campaign — Launches | **BUILD** | Multisite launch, bulk edit, diff review, scheduled go-live | War room → 15 min |
 | [13](use-cases/13-semantic-content-discovery.md) | Semantic Content Discovery | **BUILD** | Vector search over fragments — find by meaning, not keyword | Weeks of audit → live query |
 | [14](use-cases/14-content-governance-audit.md) | Content Governance — Blast Radius + Audit | **BUILD** | Reference trees, version history, enforced safe deprecation | Services engagement → 5 calls |
-| [15](use-cases/15-redesign-led-migration.md) | Redesign-Led Migration — Stardust + Snowflake | **BUILD** | Off a dying CMS *and* onto the flagship brand, in one motion | Redesign + migration projects → 48 hrs |
 
 ---
 
@@ -119,10 +118,11 @@ SuperSkills/
 ├── tech-depth.md              ← Repos, boilerplates, MCP tools, 17 EDS dev skills
 ├── competitive-intel.md       ← Competitive breakdowns, Gartner MQ, 20+ stats
 ├── skills/                    ← Executable workflows (run them to produce artefacts)
-│   └── aem-cf-brand-buildout/ ← Copy → rebrand → image swap → publish → verify → rename → audit
+│   ├── aem-cf-brand-buildout/ ← Copy → rebrand → image swap → publish → verify → rename → audit
+│   └── eds-redesign-migration/← Stardust: route → audit → plan → prototype → rollout → QA → report
 └── use-cases/                 ← Full scenario details, prompts, and build steps
     ├── 01-healthcare-poc.md
-    ├── 02-exmod-migration.md
+    ├── 02-redesign-led-migration.md
     ├── 03-skeptical-architect.md
     ├── 04-omni-channel-graphql.md
     ├── 05-competitive-rfp.md
@@ -134,8 +134,7 @@ SuperSkills/
     ├── 11-da-live-authoring.md
     ├── 12-campaign-launches.md
     ├── 13-semantic-content-discovery.md
-    ├── 14-content-governance-audit.md
-    └── 15-redesign-led-migration.md
+    └── 14-content-governance-audit.md
 ```
 
 ---
