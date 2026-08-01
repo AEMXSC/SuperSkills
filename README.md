@@ -48,6 +48,7 @@ Every scenario covers all six dimensions of the XSC role:
 | [12](use-cases/12-campaign-launches.md) | Scheduled Multi-Brand Campaign — Launches | **BUILD** | Multisite launch, bulk edit, diff review, scheduled go-live | War room → 15 min |
 | [13](use-cases/13-semantic-content-discovery.md) | Semantic Content Discovery | **BUILD** | Vector search over fragments — find by meaning, not keyword | Weeks of audit → live query |
 | [14](use-cases/14-content-governance-audit.md) | Content Governance — Blast Radius + Audit | **BUILD** | Reference trees, version history, enforced safe deprecation | Services engagement → 5 calls |
+| [15](use-cases/15-redesign-led-migration.md) | Redesign-Led Migration — Stardust + Snowflake | **BUILD** | Off a dying CMS *and* onto the flagship brand, in one motion | Redesign + migration projects → 48 hrs |
 
 ---
 
@@ -133,7 +134,8 @@ SuperSkills/
     ├── 11-da-live-authoring.md
     ├── 12-campaign-launches.md
     ├── 13-semantic-content-discovery.md
-    └── 14-content-governance-audit.md
+    ├── 14-content-governance-audit.md
+    └── 15-redesign-led-migration.md
 ```
 
 ---

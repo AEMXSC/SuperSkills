@@ -69,6 +69,9 @@ Load these when you need the complete scenario: qualification tree, discovery qu
 | Scheduled / multi-brand campaign, staging content, "go live at midnight", launches | → [use-cases/12-campaign-launches.md](use-cases/12-campaign-launches.md) |
 | Content sprawl, migration scoping, "authors can't find content", semantic search | → [use-cases/13-semantic-content-discovery.md](use-cases/13-semantic-content-discovery.md) |
 | Compliance / regulated vertical, blast radius, audit trail, safe deprecation | → [use-cases/14-content-governance-audit.md](use-cases/14-content-governance-audit.md) |
+| Migration where the site is also off-brand or dated, license/contract deadline, "make it look like our flagship", Stardust / Snowflake | → [use-cases/15-redesign-led-migration.md](use-cases/15-redesign-led-migration.md) |
+
+**Migration routes by intent, not by source CMS.** *"Move our N pages"* → `use-cases/02` (`/page-import`, canonical EDS blocks). *"Move us and make it on-brand"* → `use-cases/15` (`/stardust:*` → `/snowflake`, design preserved, DA-authorable). The `snowflake` skill enforces this: it explicitly defers canonical block-rewrite migrations to `page-import`.
 
 **Content Fragment work routes by backend.** CF / Sites / Assets / Launches on AEM Cloud Service → the `aem-content` + `aem` MCP servers (`tech-depth.md` → *AEM Cloud Service MCP*). EDS document authoring → DA MCP + `hlx-admin-mcp`. Do not mix them.
 

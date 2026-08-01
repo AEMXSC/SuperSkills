@@ -6,6 +6,30 @@
 
 ---
 
+## First — faithful port, or redesign-led?
+
+**Answer this before running anything.** The tooling forks here and the two plays sell differently.
+
+```
+What is the customer actually asking for?
+├── "Can you move our N pages?"           → THIS use-case.
+│   Existing design rebuilt as canonical      /page-import chain.
+│   EDS blocks. Volume, cost, timeline.
+│
+└── "Can you move us AND make it look     → use-cases/15.
+    like our flagship brand?"                 /stardust:* → /snowflake.
+    Or: a hard deadline (license expiry)      Brand consolidation, value, speed.
+    plus an off-brand site.
+```
+
+The `snowflake` skill draws the same line: *"Do NOT use for canonical EDS block-rewrite migrations — that's the page-import skill."*
+
+**Mixed asks are normal** — "move everything, make the top 20 on-brand" is UC15 for the 20 and UC02 for the rest. Name the split explicitly; it shows you know the difference.
+
+→ [use-cases/15-redesign-led-migration.md](15-redesign-led-migration.md)
+
+---
+
 ## Traditional vs AI-Accelerated Timeline
 
 ```

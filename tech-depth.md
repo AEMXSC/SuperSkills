@@ -1063,6 +1063,35 @@ The flag gates skills in the **`aem` server's skill library** only. The `aem-con
 
 Still check the flag before a call — it tells you which surface you are on — but a `false` value is **not** a reason to re-script a Content Fragment demo. See `environment-matrix.md`.
 
+### Stardust + Snowflake — redesign-led migration
+
+Not MCP servers — Claude Code skills. They cover the migration path where the customer wants a **better** site, not a faithful port. See `use-cases/15`.
+
+**Installed: `adobe/stardust` 0.12.0** — ships `extract`, `direct`, `prototype`, `migrate`, `prepare-migration`, `uplift`, `deploy`, `diff`. Soft-depends on `impeccable`. `snowflake` is a separate skill.
+
+| Skill | Does |
+|---|---|
+| `/stardust:uplift <URL>` | **One-shot presales.** URL in → brand surface extracted, design tension identified, 3 differentiated variants out. Skips the extract/direct/prototype chain |
+| `/stardust:extract <URL>` | Crawls the site, seeds `stardust/current/` with PRODUCT.md, DESIGN.md, DESIGN.json, page inventory, brand surface. **The inventory doubles as a migration scope artifact** |
+| `/stardust:direct` | Sets redesign direction against a brand reference; writes target spec + a reviewable reasoning trace at `stardust/direction.md` |
+| `/stardust:prototype` | Builds pages against the target spec |
+| `/stardust:prepare-migration` → `/stardust:migrate` | Moves content into the new structure |
+| `/stardust:deploy` → `/stardust:diff` | Deploy, then diff against source to prove nothing was dropped |
+| `/snowflake` | **Static HTML → EDS**, design preserved, content authorable in DA. Page-level (overlay + slot markers) or block-level (each section its own block) |
+
+**Routing rule — the skills define it themselves.** `snowflake`: *"Do NOT use for canonical EDS block-rewrite migrations — that's the page-import skill."*
+
+```
+"Move our N pages"                  → /page-import chain   (use-cases/02)
+"Move us AND make it on-brand"      → /stardust:* → /snowflake  (use-cases/15)
+```
+
+Snowflake accepts static HTML from any generator — Stardust, Mobirise, Relume, Lovable, v0, hand-coded Figma exports.
+
+> **`/stardust:audit` is NOT in 0.12.0.** The field references it for generating the customer-facing before/after switch report, with the comparison as a further prompt. It is not in the installed skill set. Check with Paolo (`paolomoz`) for the current skill or prompt — do not promise a customer a report you have not generated.
+
+**Field proof:** Fiserv/Clover, July 2026 — `blog.clover.com` off WordPress and redesigned to clover.com's design in 48 hours, DNS switched two weeks after the ask. Example switch report: `paolomoz.github.io/stardust-site/audit/clover-blog/switch-report.html`. Satellite POC: `main--uplift-cardvalet-eds--paolomoz.aem.page` (cardvalet.com rebuilt in **Fiserv's** design).
+
 ### FluffyJaws MCP
 
 > Docs: https://fluffyjaws.adobe.com/docs/api
