@@ -48,6 +48,7 @@ Every scenario covers all six dimensions of the XSC role:
 | [12](use-cases/12-campaign-launches.md) | Scheduled Multi-Brand Campaign — Launches | **BUILD** | Multisite launch, bulk edit, diff review, scheduled go-live | War room → 15 min |
 | [13](use-cases/13-semantic-content-discovery.md) | Semantic Content Discovery | **BUILD** | Vector search over fragments — find by meaning, not keyword | Weeks of audit → live query |
 | [14](use-cases/14-content-governance-audit.md) | Content Governance — Blast Radius + Audit | **BUILD** | Reference trees, version history, enforced safe deprecation | Services engagement → 5 calls |
+| [15](use-cases/15-onboarding.md) | New XSC Onboarding — Claude Code + Adobe MCP Setup | Reference | Get a new XSC's own machine demo-ready: GitHub org, Adobe connectors, DA content root, local dev | Half-day fumbling → guided 30 min |
 
 ---
 
@@ -134,7 +135,8 @@ SuperSkills/
     ├── 11-da-live-authoring.md
     ├── 12-campaign-launches.md
     ├── 13-semantic-content-discovery.md
-    └── 14-content-governance-audit.md
+    ├── 14-content-governance-audit.md
+    └── 15-onboarding.md
 ```
 
 ---

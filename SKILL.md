@@ -69,6 +69,7 @@ Load these when you need the complete scenario: qualification tree, discovery qu
 | Scheduled / multi-brand campaign, staging content, "go live at midnight", launches | → [use-cases/12-campaign-launches.md](use-cases/12-campaign-launches.md) |
 | Content sprawl, migration scoping, "authors can't find content", semantic search | → [use-cases/13-semantic-content-discovery.md](use-cases/13-semantic-content-discovery.md) |
 | Compliance / regulated vertical, blast radius, audit trail, safe deprecation | → [use-cases/14-content-governance-audit.md](use-cases/14-content-governance-audit.md) |
+| New XSC joining the team / setting up their own machine, Claude Code + Adobe MCP connectors, GitHub `-adobe` org, local `aem up` dev server, readiness checklist | → [use-cases/15-onboarding.md](use-cases/15-onboarding.md) |
 **Migration routes by what the customer wants to KEEP, not by source CMS:**
 
 | They keep | Flow | Sells on |
