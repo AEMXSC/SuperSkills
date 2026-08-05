@@ -443,12 +443,14 @@ mountpoints:
 
 ## GitHub Apps Required
 
-Install on the **org** (not just the user account) for AEMXSC repos:
+Install scope just has to match wherever the repo lives — on the **AEMXSC org** for
+AEMXSC repos, on your **personal account** for repos you host there. Confirmed working
+on personal accounts in practice; there is no hard org-only requirement for either app.
 
 | App | Purpose | Install Scope |
 |---|---|---|
 | `aem-code-sync` | Publishes code to CDN, purges cache on push | Selected repos — must add each repo manually |
-| `AEM Code Connector` | aemcoder.adobe.io push access, preview rendering | Must install on org, not just personal account |
+| `AEM Code Connector` | aemcoder.adobe.io push access, preview rendering | Selected repos or personal account — works on both |
 
 **AEM Preview URL format:** `https://main--<repo>--<org>.aem.page/`
 
@@ -1171,12 +1173,15 @@ Experience Workspace is the next-generation DA authoring surface. Same DA backen
 
 ### Enable Experience Workspace
 
-1. **Prerequisite:** Quick Edit must be implemented in the site's codebase first.
-2. Open DA config admin: `https://da.live/config#/<org>/`
-3. Add key: `editor.path` — value: `/<org>/<site>=https://da.live/canvas#`
-4. Save. The canvas editor replaces the classic DA editor for that site.
+1. **Prerequisite:** an EDS project with DA as the content source, and Quick Edit implemented in the site's codebase.
+2. **Guided setup (recommended):** `https://da.live/app/adobe-rnd/ew-extensions/tools/ew-setup/ew-setup` — flips the flags AND surfaces the AI agent in DA's browse view.
+3. **Or manually** in the `flags` sheet at `https://da.live/config#/<org>/<site>` (site-level overrides org-level):
+   - `ew.enabled` = `true` (off by default)
+   - Optional: `ew.disableChat` = `true`; `ew.canvasDefaultView` = `layout`/`content`/`split`; `ew.canvasDefaultPanel` = `outline`/`files`/library item (`blocks`, `templates`)
+4. Point Sidekick at the canvas via `https://admin.hlx.page/config/ORG/sites/SITE/sidekick.json`:
+   `"editUrlPattern": "https://da.live/canvas#/{{org}}/{{site}}{{pathname}}"`
 
-> Use the **experience-workspace** Claude Code plugin (`/update-config`) to automate step 2–4.
+> The old `editor.path` config key is superseded by the `ew.*` flags above.
 
 ### Key Demo Talking Points
 
